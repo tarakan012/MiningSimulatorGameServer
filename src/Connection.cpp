@@ -30,6 +30,10 @@ namespace MS {
         }
 
         void CConnection::Start() {
+            Read();
+        }
+
+        void CConnection::Read() {
             m_Socket.async_read_some(boost::asio::buffer(m_Buffer),
                                      boost::bind(&CConnection::HandleRead, this,
                                                  boost::asio::placeholders::error,
@@ -40,7 +44,6 @@ namespace MS {
             if (!error) {
                 bool ret = CKernel::GetInstance().HandleMsgFromGC(m_Buffer.data(),
                                                                   bytes_transferred, m_pGCInfo);
-                //assert(ret);
             } else {
 
             }
@@ -52,6 +55,7 @@ namespace MS {
             } else {
                 LogPrint(LogFlags::ALL, "Send Msg Fail, error %d\n", error);
             }
+            Read();
         }
     }
 }
