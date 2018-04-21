@@ -47,6 +47,7 @@ namespace MS {
         }
 
         int CUserManager::RemoveUser(CUser *pUser) {
+            DBPoster_UpdateUser(pUser);
             m_cUserGUIDMap.erase(pUser->GetGameUserID());
             delete pUser;
             return 0;

@@ -1,6 +1,7 @@
 #include "Kernel.h"
 #include <iostream>
 #include "util.h"
+#include "UserManager.h"
 
 namespace MS {
     namespace Server {
@@ -45,7 +46,9 @@ namespace MS {
                 bool ret = CKernel::GetInstance().HandleMsgFromGC(m_Buffer.data(),
                                                                   bytes_transferred, m_pGCInfo);
             } else {
-
+                LogPrint(LogFlags::ALL, "Handle Read Fail, error: %s\n", error.message());
+                CUser * user = CUserManager::GetInstance().GetUserByNetInfo(m_pGCInfo);
+                if(user) CUserManager::GetInstance().RemoveUser(user);
             }
         }
 
