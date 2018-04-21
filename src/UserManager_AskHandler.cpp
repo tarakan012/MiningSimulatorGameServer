@@ -19,13 +19,14 @@ namespace MS {
             } else {
                 std::cout << "UserLogin New" << std::endl;
                 CUser *pUser = new CUser();
-                int n32GUID = CombineGameUserID();
+                int guid = CombineGameUserID();
                 SUserNetInfo netinfo(pGCInfo->GetGCID());
-                m_AllUserNameIDMap.insert(std::make_pair(sUserCombineKey, n32GUID));
-                SUserDBData &sStartSet = CConfigManager::GetInstance().GetStartSet();
+                m_AllUserNameIDMap.insert(std::make_pair(sUserCombineKey, guid));
+                SUserDBData &sUserDBData = CConfigManager::GetInstance().GetStartSet();
+                sUserDBData.sPODUserDBData.n32DBId = guid;
                 AddUser(pUser);
-                pUser->LoadDBData(sStartSet);
-                InsertNewUserToDB(rLogin, pUser, n32GUID);
+                pUser->LoadDBData(sUserDBData);
+                InsertNewUserToDB(rLogin, pUser, guid);
                 pUser->OnOnline(netinfo);
 
             }
