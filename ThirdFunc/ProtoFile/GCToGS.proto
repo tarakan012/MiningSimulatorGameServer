@@ -1,0 +1,30 @@
+syntax = "proto2";
+
+package GCToGS;
+option optimize_for=LITE_RUNTIME;
+enum MsgId
+{
+	eMsgToGSFromGC_AskUpdateItemRet = 100;
+	eMsgToGSFromGC_AskLogin = 101;
+	eMsgToGSFromGC_AskStartMining = 102;
+}
+
+message AskUpdateItemRet
+{
+	optional MsgId id=1 [default = eMsgToGSFromGC_AskUpdateItemRet];
+	required uint32 userid = 2;
+	required uint32 itemid=3;
+}
+
+message AskLogin
+{
+	optional MsgId id=1 [default = eMsgToGSFromGC_AskLogin];
+        required string nameGooglePlus = 2;
+        required int32 id_gps = 3;
+}
+
+message AskStartMining
+{
+	optional MsgId msgid = 1 [default = eMsgToGSFromGC_AskStartMining];
+	required uint32 compid = 2;
+}

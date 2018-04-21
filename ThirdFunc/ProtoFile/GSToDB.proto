@@ -1,0 +1,31 @@
+syntax = 'proto2';
+
+package GSToDB;
+
+enum MsgID
+{
+eExeSQL_Call = 1000;
+eUserUpdate_DBCallback = 1001;
+eQueryUser_DBCallBack = 1002;
+}
+
+message ExeSQL_Call
+{
+	optional MsgID id = 1 [default = eExeSQL_Call];
+	optional string sql = 2;
+}
+
+message UserUpdate
+{
+	optional MsgID id = 1 [default = eUserUpdate_DBCallback];
+	optional string sql = 2;
+
+}
+
+message QueryUserReq
+{
+  	optional MsgID msgid = 1 [default = eQueryUser_DBCallBack];
+	optional string logininfo = 2;
+	optional uint32 gcnetid = 3;
+	optional uint32 gudbid = 4;
+}
