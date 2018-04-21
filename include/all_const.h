@@ -4,51 +4,19 @@
 #include <map>
 #include <cstring>
 
-
 const int cMaxLenNameItem = 32;
 const int cMaxItemInComp = 32;
 const int cMaxItemInShop = 32;
-const int cMaxCompInStartSet =32;
+const int cMaxCompInStartSet = 32;
 
-struct SUserNetInfo
-{
-    int n32GCConnID;
-    SUserNetInfo(int n32GCConnID)
-    : n32GCConnID(n32GCConnID)
-    {
-    }
-    SUserNetInfo()
-    {
-        Clear();
-    }
-    void Clear()
-    {
-        n32GCConnID = 0;
-    }
-    bool IsValid()
-    {
-        return n32GCConnID != 0;
-    }
-    void operator = (const SUserNetInfo &  sUserNetInfo)
-    {
-        n32GCConnID = sUserNetInfo.n32GCConnID;
-    }
-    bool operator < (const SUserNetInfo &  sUserNetInfo) const
-    {
-        return  n32GCConnID < sUserNetInfo.n32GCConnID;
-    }
-};
-
-enum eDBOperation
-{
+enum eDBOperation {
     eOperationTypeNone = 0,
     eOperationTypeAdd,
     eOperationTypeUpdate,
     eOperationTypeDel
 };
 
-struct SItemRecord
-{
+struct SItemRecord {
 
     int n32Id;
     int n32DBId;
@@ -63,42 +31,40 @@ struct SItemRecord
     int n32LvlGrind;
     int n32Cost;
     int n32Strength;
-    SItemRecord()
-    {
-       std::memset(this, 0, sizeof(*this));
+
+    SItemRecord() {
+        std::memset(this, 0, sizeof(*this));
     }
 };
 
-struct SShopCfg
-{
+struct SShopCfg {
 
     int n32typePage;
     int szItemId[cMaxItemInShop];
-    SShopCfg()
-    {
-       std::memset(this, 0, sizeof(*this));
+
+    SShopCfg() {
+        std::memset(this, 0, sizeof(*this));
     }
 };
-struct SPODComputerInfo
-{
+
+struct SPODComputerInfo {
     int n32ID;
     int n32MiningGold;
 };
-struct SComputerInfo
-{
+
+struct SComputerInfo {
     SPODComputerInfo sPODComputerInfo;
     int n32ID;
     int n32DBId;
     int n32MiningGold;
-    std::map<int,SItemRecord> ItemRecordMap;
-    SComputerInfo()
-    {
+    std::map<int, SItemRecord> ItemRecordMap;
+
+    SComputerInfo() {
         //memset(&sPODComputerInfo, 0, sizeof(sPODComputerInfo));
         Clear();
     }
 
-    SComputerInfo & operator=(const SComputerInfo & sComputerInfo)
-    {
+    SComputerInfo &operator=(const SComputerInfo &sComputerInfo) {
         if (this == &sComputerInfo) {
             return *this;
         }
@@ -107,8 +73,7 @@ struct SComputerInfo
         return *this;
     }
 
-    void Clear()
-    {
+    void Clear() {
         ItemRecordMap.clear();
         n32ID = 0;
         n32DBId = 0;
@@ -116,10 +81,9 @@ struct SComputerInfo
     }
 };
 
-typedef std::map<int,SComputerInfo> ComputerInfoMap;
+typedef std::map<int, SComputerInfo> ComputerInfoMap;
 
-struct SStartSetCfg
-{
+struct SStartSetCfg {
     ComputerInfoMap CompInfoMap;
 };
 

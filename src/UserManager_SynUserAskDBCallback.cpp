@@ -62,9 +62,9 @@ namespace MS {
         }
 
         bool CUserManager::DBPoster_UpdateUser(CUser *pUser) {
-            SUserDBData & rsUserDBData = pUser->GetUserDBData();
+            SUserDBData &rsUserDBData = pUser->GetUserDBData();
             CUserDbDataMgr::UpdateUserDbData(rsUserDBData, m_SaveUserStream);
-            if (!m_SaveUserStream.str().empty()){
+            if (!m_SaveUserStream.str().empty()) {
                 GSToDB::UserUpdate sUpdateUser;
 
                 sUpdateUser.set_sql(m_SaveUserStream.str());

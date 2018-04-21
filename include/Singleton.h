@@ -2,7 +2,6 @@
 #define SINGLETON_H
 
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -19,9 +18,9 @@ static cls & GetInstance() \
     return *m_pInstance; \
 } \
 
-    #define IMPLEMENT_SINGLETON(cls) \
-	cls* cls::m_pInstance = nullptr;
-    
+#define IMPLEMENT_SINGLETON(cls) \
+    cls* cls::m_pInstance = nullptr;
+
 #ifdef __cplusplus
 }
 #endif

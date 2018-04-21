@@ -18,6 +18,5 @@ namespace MS {
             pConnector->ExecQuery(sUserUpdate.sql());
             pConnector->CloseQuery();
         }
-
     }
 }

@@ -53,18 +53,17 @@ namespace MS {
             return 0;
         }
 
-        CUser *CUserManager::GetUserByNetInfo(const CGCInfo *pGCInfo) {
+        CUser *CUserManager::GetUserByNetInfo(const SUserNetInfo netinfo) {
             CUser *pcUser = NULL;
-            SUserNetInfo lSUserNetInfo(pGCInfo->GetGCID());
-            auto iterUser = m_cUserNetMap.find(lSUserNetInfo);
+            auto iterUser = m_cUserNetMap.find(netinfo);
             if (m_cUserNetMap.end() != iterUser) {
                 pcUser = iterUser->second;
             }
             return pcUser;
         }
 
-        CUser *CUserManager::CheckAndGetUserByNetInfo(const CGCInfo *pGCInfo) {
-            CUser *pcUser = GetUserByNetInfo(pGCInfo);
+        CUser *CUserManager::CheckAndGetUserByNetInfo(const SUserNetInfo netinfo) {
+            CUser *pcUser = GetUserByNetInfo(netinfo);
             if (pcUser == NULL) {
                 LogPrint(LogFlags::ALL, "CheckGetUserByNetInfo failed\n");
 
@@ -202,8 +201,6 @@ namespace MS {
                     SComputerInfo &rCompInfo = comp.second;
                     UpdateUserComputer(rCompInfo, eDBOperation::eOperationTypeAdd);
                 }
-
-
             }
         }
 
@@ -274,14 +271,13 @@ namespace MS {
 
         }
 
-        bool CUserManager::PostMsgToGC_AskReturn(const CGCInfo *pGCInfo, int n32ProtocolId, int n32RetFlag) {
+        bool CUserManager::PostMsgToGC_AskReturn(const SUserNetInfo netinfo, int n32ProtocolId, int n32RetFlag) {
             GSToGC::AskRet msg;
             msg.set_askid(n32ProtocolId);
             msg.set_errorcode(n32RetFlag);
-            CKernel::GetInstance().PostMsgToGC(pGCInfo->GetGCID(), msg, msg.msgid());
+            CKernel::GetInstance().PostMsgToGC(netinfo.n32GCConnID, msg, msg.msgid());
             return false;
         }
-
     }
 }
 

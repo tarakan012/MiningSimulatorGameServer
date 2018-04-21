@@ -14,31 +14,47 @@ namespace MS {
     namespace Server {
 
 #ifdef __cplusplus
-extern "C" {
+        extern "C" {
 #endif
 
-        class CUser
-        {
+        class CUser {
         public:
             CUser();
-            void LoadDBData(SUserDBData & sUserDBData);
-            int GetGameUserID() {return m_sUserDBData.sPODUserDBData.n32DBId;};
-            void OnHeartBeart(int64_t n64Milsec, int64_t n64TickSpawn);
-            int KickOutOldUser();
-            int StartMiningByComputer(GCToGS::AskStartMining & rsMsg);
-            SUserNetInfo & GetUserNetInfo(){return m_sUserNetInfo;};
-            void ClearNetInfo();
-            void PostMsgToGC(google::protobuf::MessageLite & rMsg, int n32MsgID);
-            void OnOnline(SUserNetInfo & sUserNetInfo);
-                void OnOfline();
-            void SetUserNetInfo(const SUserNetInfo & sUserNetInfo);
-            void SynUserGameInfo();
-            void SynPayInfo();
-            SUserDBData & GetUserDBData() {return m_sUserDBData;}
 
-            bool AskUpdateItem(GCToGS::AskUpdateItemRet & Msg, CConnection * pConn);
+            void LoadDBData(SUserDBData &sUserDBData);
+
+            int GetGameUserID() { return m_sUserDBData.sPODUserDBData.n32DBId; };
+
+            void OnHeartBeart(int64_t n64Milsec, int64_t n64TickSpawn);
+
+            int KickOutOldUser();
+
+            int StartMiningByComputer(GCToGS::AskStartMining &rsMsg);
+
+            SUserNetInfo &GetUserNetInfo() { return m_sUserNetInfo; };
+
+            void ClearNetInfo();
+
+            void PostMsgToGC(google::protobuf::MessageLite &rMsg, int n32MsgID);
+
+            void OnOnline(SUserNetInfo &sUserNetInfo);
+
+            void OnOfline();
+
+            void SetUserNetInfo(const SUserNetInfo &sUserNetInfo);
+
+            void SynUserGameInfo();
+
+            void SynPayInfo();
+
+            SUserDBData &GetUserDBData() { return m_sUserDBData; }
+
+            bool AskUpdateItem(GCToGS::AskUpdateItemRet &Msg, CConnection *pConn);
+
             bool CheckComputerById(int n32CompId);
+
             bool CheckIfEnoughPay(eUserDBData_Type eType, int n32Pay);
+
             int GetMiningGoldComputerById(int n32CompId);
 
         private:
@@ -49,7 +65,7 @@ extern "C" {
         };
 
 #ifdef __cplusplus
-}
+        }
 #endif
     }
 }

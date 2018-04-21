@@ -5,10 +5,7 @@ namespace MS {
 
         boost::atomic_int CConnectionManager::n32CurNunConn(0);
 
-        CConnectionManager::CConnectionManager()
-        //: m_n32CurNunConn({0})
-        {
-            //m_n32CurNunConn=0;
+        CConnectionManager::CConnectionManager() {
             m_setConnections.clear();
         }
 

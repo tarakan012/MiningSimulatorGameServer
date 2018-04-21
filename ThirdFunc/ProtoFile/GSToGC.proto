@@ -4,32 +4,28 @@ import "util.proto";
 option optimize_for = LITE_RUNTIME;
 package GSToGC;
 
-enum MsgId
-{
-	eUserGameInfo = 10;
+enum MsgId {
+    eUserGameInfo = 10;
     eUserPayInfo = 11;
     eAskRet = 12;
 }
 
-message UserGameInfo
-{
-    optional MsgId msgid = 1[default = eUserGameInfo];
+message UserGameInfo {
+    optional MsgId msgid = 1 [default = eUserGameInfo];
     required uint32 gold = 2;
     repeated ComputerInfo comp = 3;
 
 }
 
-message UserPayInfo
-{
-    optional MsgId msgid = 1[default = eUserPayInfo];
+message UserPayInfo {
+    optional MsgId msgid = 1 [default = eUserPayInfo];
     required uint32 gold = 2;
     required uint32 energy = 3;
 
 }
 
-message AskRet
-{
-    optional MsgId msgid = 1[default = eAskRet];
+message AskRet {
+    optional MsgId msgid = 1 [default = eAskRet];
     required uint32 askid = 2;
     required uint32 errorcode = 3;
 }

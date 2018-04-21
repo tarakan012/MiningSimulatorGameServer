@@ -1,47 +1,44 @@
 [
-    {
-	"id" : 1000,
-    "name" : "1030_nvidia",
-	"type": 1,
-	"lvl" : 1,
-	"icon" : 1,
-	"miningGold" : 60,
- 	"miningResourses" : 10,
-	"powerConsumption" : 40,
-	"expansionSlot" : 3,
-	"lvlGrind" : 10,
-    "strength" : 100,
-	"cost" : 5000
-    },
-
-    {
-	"id" : 1001,
-    "name" : "1050_nvidia",
-	"type": 1,
-	"lvl" : 1,
-	"icon" : 2,
-	"miningGold" : 90,
- 	"miningResourses" : 10,
-	"powerConsumption" : 100,
-	"expansionSlot" : 3,
-	"lvlGrind" : 1,
-    "strength" : 100,
-	"cost" : 8000
-    },
-
-    {
-	"id" : 2000,
-    "name" : "xeon_e5_2780v2",
-	"type": 2,
-	"lvl" : 1,
-	"icon" : 10,
-	"miningGold" : 10,
- 	"miningResourses" : 100,
-	"powerConsumption" : 120,
-	"expansionSlot" : 3,
-	"lvlGrind" : 1,
-    "strength" : 100,
-	"cost" : 10500
-    }
-
+  {
+    "id": 1000,
+    "name": "1030_nvidia",
+    "type": 1,
+    "lvl": 1,
+    "icon": 1,
+    "miningGold": 60,
+    "miningResourses": 10,
+    "powerConsumption": 40,
+    "expansionSlot": 3,
+    "lvlGrind": 10,
+    "strength": 100,
+    "cost": 5000
+  },
+  {
+    "id": 1001,
+    "name": "1050_nvidia",
+    "type": 1,
+    "lvl": 1,
+    "icon": 2,
+    "miningGold": 90,
+    "miningResourses": 10,
+    "powerConsumption": 100,
+    "expansionSlot": 3,
+    "lvlGrind": 1,
+    "strength": 100,
+    "cost": 8000
+  },
+  {
+    "id": 2000,
+    "name": "xeon_e5_2780v2",
+    "type": 2,
+    "lvl": 1,
+    "icon": 10,
+    "miningGold": 10,
+    "miningResourses": 100,
+    "powerConsumption": 120,
+    "expansionSlot": 3,
+    "lvlGrind": 1,
+    "strength": 100,
+    "cost": 10500
+  }
 ]

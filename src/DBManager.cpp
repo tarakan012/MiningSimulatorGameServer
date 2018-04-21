@@ -12,7 +12,6 @@ namespace MS {
             m_n32ServerPGVersion = 0;
             m_TotalFields = 0;
             m_TotalRows = 0;
-
         }
 
         bool CDBConnector::ExecQuery(const std::string &rData) {
@@ -46,13 +45,11 @@ namespace MS {
             if (iter != m_FieldsValue.end()) {
                 rstrData = iter->second.data();
             }
-
         }
 
         int CDBConnector::GetQueryFieldRowNum() {
             return m_TotalRows;
         }
-
 
         void CDBConnector::GetQueryFields() {
             m_FiledVec.clear();
@@ -62,18 +59,15 @@ namespace MS {
             if (!m_TotalRows) {
                 LogPrint(LogFlags::DB, "Rows NULL\n");
                 return;
-
             }
             for (int field = 0; field < m_TotalFields; ++field) {
                 strNameColumn = PQfname(m_pPGResult, field);
                 strValue = PQgetvalue(m_pPGResult, m_CurRowIndx, field);
                 m_FieldsValue[strNameColumn] = strValue;
                 m_FiledVec.push_back(strNameColumn);
-
             }
             m_CurRowIndx++;
         }
-
 
         void CDBConnector::CloseQuery() {
             m_FieldsValue.clear();
@@ -105,7 +99,5 @@ namespace MS {
             m_n32ServerPGVersion = PQserverVersion(m_pPGConn);
             return true;
         }
-
     }
 }
-

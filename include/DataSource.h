@@ -2,28 +2,29 @@
 #define DATASOURCE_H
 
 #include "DBManager.h"
-namespace MS { 
+
+namespace MS {
     namespace Server {
-        
-    
+
+
 #ifdef __cplusplus
-extern "C" {
+        extern "C" {
 #endif
 
-    class CDataSource
-    {
-    public:
-        
-        void Start();
-        CDBConnector * GetDBConnector();
-    private:
-        CDBConnector * m_pDBConnector;
-    };
+        class CDataSource {
+        public:
 
+            void Start();
+
+            CDBConnector *GetDBConnector();
+
+        private:
+            CDBConnector *m_pDBConnector;
+        };
 
 
 #ifdef __cplusplus
-}
+        }
 #endif
 
     }

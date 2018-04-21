@@ -39,7 +39,6 @@ namespace MS {
             pConnector->GetQueryFieldData("btc", sUserDBData.sPODUserDBData.n32Gold);
             pConnector->CloseQuery();
             DBAsyn_QueryUserComputers(pConnector, guid, sQueryUser);
-            //sUserDBData.n32GUBTC += sQueryUser.bufgold();
             for (int i = 0; i < sQueryUser.computer_size(); ++i) {
                 auto comp = sQueryUser.mutable_computer(i);
                 sUserDBData.sPODUserDBData.n32Gold += comp->bufgold();
@@ -110,7 +109,6 @@ namespace MS {
                 auto item = rsComputerInfo.add_item();
                 item->set_id(l_n32ItemId);
             }
-
         }
     }
 }

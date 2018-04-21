@@ -2,39 +2,33 @@ syntax = 'proto2';
 
 package DBToGS;
 
-enum MsgID
-{
-	eQueryAllAccount_CallBack = 1;
-	eQueryUser_DBCallBack = 2;
+enum MsgID {
+    eQueryAllAccount_CallBack = 1;
+    eQueryUser_DBCallBack = 2;
 }
 
-message QueryAllAccount
-{
-	optional MsgID id = 1 [default = eQueryAllAccount_CallBack];
-	message Account
-	{
-            optional int32 id = 1;
-            optional string nameGooglePlus = 2;
-            optional int32 id_gps = 3;
-            optional string nickname = 4;
-	}
-	repeated Account account = 2;
+message QueryAllAccount {
+    optional MsgID id = 1 [default = eQueryAllAccount_CallBack];
+    message Account {
+        optional int32 id = 1;
+        optional string nameGooglePlus = 2;
+        optional int32 id_gps = 3;
+        optional string nickname = 4;
+    }
+    repeated Account account = 2;
 }
 
-message QueryUser
-{
+message QueryUser {
     optional MsgID msgid = 1 [default = eQueryUser_DBCallBack];
     optional uint32 btc = 2;
     optional uint32 gcnetid = 4;
     optional bytes db = 5;
-    message ComputerInfo
-    {
+    message ComputerInfo {
         optional uint32 id = 1;
         optional uint32 worktime = 2;
         optional uint32 mininggold = 3;
         optional uint32 bufgold = 5;
-        message ItemInfo
-        {
+        message ItemInfo {
             optional uint32 id = 1;
 
         }

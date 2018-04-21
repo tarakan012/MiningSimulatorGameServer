@@ -69,6 +69,4 @@ void CActive::Consume() {
         m_QueueSwap.pop();
         m_Callback(pBuffer);
     }
-
-
 }

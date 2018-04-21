@@ -1,7 +1,7 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-#include "GCInfo.h"
+#include "UserNetInfo.h"
 
 #include "boost/asio.hpp"
 #include "boost/array.hpp"
@@ -14,42 +14,49 @@ namespace MS {
     namespace Server {
 
 #ifdef __cplusplus
-extern "C" {
+        extern "C" {
 #endif
 
-        class CConnection
-        {
+        class CConnection {
         public:
-            CConnection(boost::asio::io_service &  io_service);
+            CConnection(boost::asio::io_service &io_service);
+
             ~CConnection();
+
             void Start();
-            void Stop()
-            {
+
+            void Stop() {
                 m_Socket.close();
             }
-            void Send(const char * pBuffer, int n32Len);
+
+            void Send(const char *pBuffer, int n32Len);
+
             void Read();
+
             void SetConnID(int n32ConnID);
+
             int GetConnID();
-            boost::asio::ip::tcp::socket & GetSocket()
-            {
+
+            boost::asio::ip::tcp::socket &GetSocket() {
                 return m_Socket;
             }
-            void HandleRead(const boost::system::error_code& error,
-        std::size_t bytes_transferred);
-            void HandleWrite( const boost::system::error_code& error, size_t length);
+
+            void HandleRead(const boost::system::error_code &error,
+                            std::size_t bytes_transferred);
+
+            void HandleWrite(const boost::system::error_code &error, size_t length);
+
         private:
             boost::asio::ip::tcp::socket m_Socket;
             boost::array<char, 8192> m_Buffer;
-            CGCInfo * m_pGCInfo;
+            SUserNetInfo m_sUserNerInfo;
         };
 
         typedef boost::shared_ptr<CConnection> ConnectionPtr;
 
 
-
 #ifdef __cplusplus
-}
+        }
 #endif
 
     }

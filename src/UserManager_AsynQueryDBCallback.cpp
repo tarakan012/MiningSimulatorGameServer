@@ -14,7 +14,5 @@ namespace MS {
             DBAsynQueryUser(sUserDBData, sQueryUser, pConnector);
             EncodeAndSendToLogicThread(sQueryUser, sQueryUser.msgid());
         }
-
-
     }
 }

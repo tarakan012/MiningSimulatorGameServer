@@ -78,7 +78,6 @@ namespace MS {
             m_pAcceptor->async_accept(m_shpNewConnecion->GetSocket(),
                                       boost::bind(&CKernel::HandleAccept, this,
                                                   boost::asio::placeholders::error));
-
         }
 
         void CKernel::HandleAccept(const boost::system::error_code &ec) {
@@ -96,7 +95,7 @@ namespace MS {
 
         }
 
-        bool CKernel::HandleMsgFromGC(const char *pMsg, int n32MsgLength, CGCInfo *pGCInfo) {
+        bool CKernel::HandleMsgFromGC(const char *pMsg, int n32MsgLength, SUserNetInfo netinfo) {
             std::cout << "HandleMsgFromGC call n32MsgLength: " << n32MsgLength << std::endl;
             for (int i = 0; i < n32MsgLength; i++) {
                 std::cout << (int) pMsg[i] << "\t";
@@ -109,15 +108,12 @@ namespace MS {
             auto iter = m_GCMsgHandlerMap.find(n32MsgId);
             if (iter != m_GCMsgHandlerMap.end()) {
                 std::cout << "HandleMsgFromGC call find " << std::endl;
-                (iter->second)(pMsg + 2 * sizeof(int), n32MsgLen, pGCInfo);
+                (iter->second)(pMsg + 2 * sizeof(int), n32MsgLen, netinfo);
                 return true;
             } else {
                 std::cout << "HandleMsgFromGC call no find " << std::endl;
                 return false;
             }
-
         }
-
-
     }
 }

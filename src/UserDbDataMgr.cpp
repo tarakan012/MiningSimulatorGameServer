@@ -8,31 +8,25 @@ void CUserDbDataMgr::UpdateUserDbData(SUserDBData &userdb, std::stringstream &st
     stream.clear();
     stream.str("");
 
-    if(userdb.sPODUserDBData.bIfChangeArr[eUserDBData_Gold])
-    {
+    if (userdb.sPODUserDBData.bIfChangeArr[eUserDBData_Gold]) {
         CheckStreamAndInit(stream);
         stream << "btc=" << userdb.sPODUserDBData.n32Gold;
         userdb.sPODUserDBData.bIfChangeArr[eUserDBData_Gold] = true;
     }
-    if(userdb.sPODUserDBData.bIfChangeArr[eUserDBData_Energy])
-    {
+    if (userdb.sPODUserDBData.bIfChangeArr[eUserDBData_Energy]) {
         CheckStreamAndInit(stream);
         stream << "energy=" << userdb.sPODUserDBData.n32Energy;
         userdb.sPODUserDBData.bIfChangeArr[eUserDBData_Energy] = true;
     }
-    if (!stream.str().empty())
-    {
+    if (!stream.str().empty()) {
         stream << " where id=" << userdb.sPODUserDBData.n32DBId;
     }
 }
 
-void CUserDbDataMgr::CheckStreamAndInit(std::stringstream &mystream){
-    if (!mystream.str().empty())
-    {
-        mystream <<",";
-    }
-    else
-    {
+void CUserDbDataMgr::CheckStreamAndInit(std::stringstream &mystream) {
+    if (!mystream.str().empty()) {
+        mystream << ",";
+    } else {
         mystream << "update game_user set ";
     }
 }

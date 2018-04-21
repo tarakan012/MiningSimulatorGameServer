@@ -62,31 +62,31 @@
 #define SPINE_EXTENSION_H_
 
 /* All allocation uses these. */
-#define MALLOC(TYPE,COUNT) ((TYPE*)_spMalloc(sizeof(TYPE) * (COUNT), __FILE__, __LINE__))
-#define CALLOC(TYPE,COUNT) ((TYPE*)_spCalloc(COUNT, sizeof(TYPE), __FILE__, __LINE__))
-#define REALLOC(PTR,TYPE,COUNT) ((TYPE*)_spRealloc(PTR, sizeof(TYPE) * (COUNT)))
+#define MALLOC(TYPE, COUNT) ((TYPE*)_spMalloc(sizeof(TYPE) * (COUNT), __FILE__, __LINE__))
+#define CALLOC(TYPE, COUNT) ((TYPE*)_spCalloc(COUNT, sizeof(TYPE), __FILE__, __LINE__))
+#define REALLOC(PTR, TYPE, COUNT) ((TYPE*)_spRealloc(PTR, sizeof(TYPE) * (COUNT)))
 #define NEW(TYPE) CALLOC(TYPE,1)
 
 /* Gets the direct super class. Type safe. */
 #define SUPER(VALUE) (&VALUE->super)
 
 /* Cast to a super class. Not type safe, use with care. Prefer SUPER() where possible. */
-#define SUPER_CAST(TYPE,VALUE) ((TYPE*)VALUE)
+#define SUPER_CAST(TYPE, VALUE) ((TYPE*)VALUE)
 
 /* Cast to a sub class. Not type safe, use with care. */
-#define SUB_CAST(TYPE,VALUE) ((TYPE*)VALUE)
+#define SUB_CAST(TYPE, VALUE) ((TYPE*)VALUE)
 
 /* Casts away const. Can be used as an lvalue. Not type safe, use with care. */
-#define CONST_CAST(TYPE,VALUE) (*(TYPE*)&VALUE)
+#define CONST_CAST(TYPE, VALUE) (*(TYPE*)&VALUE)
 
 /* Gets the vtable for the specified type. Not type safe, use with care. */
-#define VTABLE(TYPE,VALUE) ((_##TYPE##Vtable*)((TYPE*)VALUE)->vtable)
+#define VTABLE(TYPE, VALUE) ((_##TYPE##Vtable*)((TYPE*)VALUE)->vtable)
 
 /* Frees memory. Can be used on const types. */
 #define FREE(VALUE) _spFree((void*)VALUE)
 
 /* Allocates a new char[], assigns it to TO, and copies FROM to it. Can be used on const types. */
-#define MALLOC_STR(TO,FROM) strcpy(CONST_CAST(char*, TO) = (char*)MALLOC(char, strlen(FROM) + 1), FROM)
+#define MALLOC_STR(TO, FROM) strcpy(CONST_CAST(char*, TO) = (char*)MALLOC(char, strlen(FROM) + 1), FROM)
 
 #define PI 3.1415926535897932385f
 #define PI2 (PI * 2)
@@ -97,13 +97,13 @@
 #define SIGNUM(A) ((A) < 0? -1: (A) > 0 ? 1 : 0)
 
 #ifdef __STDC_VERSION__
-#define FMOD(A,B) fmodf(A, B)
-#define ATAN2(A,B) atan2f(A, B)
+#define FMOD(A, B) fmodf(A, B)
+#define ATAN2(A, B) atan2f(A, B)
 #define SIN(A) sinf(A)
 #define COS(A) cosf(A)
 #define SQRT(A) sqrtf(A)
 #define ACOS(A) acosf(A)
-#define POW(A,B) pow(A, B)
+#define POW(A, B) pow(A, B)
 #else
 #define FMOD(A,B) (float)fmod(A, B)
 #define ATAN2(A,B) (float)atan2(A, B)
@@ -151,29 +151,42 @@ extern "C" {
  * Internal API available for extension:
  */
 
-void* _spMalloc (size_t size, const char* file, int line);
-void* _spCalloc (size_t num, size_t size, const char* file, int line);
-void* _spRealloc(void* ptr, size_t size);
-void _spFree (void* ptr);
-float _spRandom ();
+void *_spMalloc(size_t size, const char *file, int line);
 
-void _spSetMalloc (void* (*_malloc) (size_t size));
-void _spSetDebugMalloc (void* (*_malloc) (size_t size, const char* file, int line));
-void _spSetRealloc(void* (*_realloc) (void* ptr, size_t size));
-void _spSetFree (void (*_free) (void* ptr));
-void _spSetRandom(float (*_random) ());
+void *_spCalloc(size_t num, size_t size, const char *file, int line);
 
-char* _spReadFile (const char* path, int* length);
+void *_spRealloc(void *ptr, size_t size);
+
+void _spFree(void *ptr);
+
+float _spRandom();
+
+void _spSetMalloc(void *(*_malloc)(size_t size));
+
+void _spSetDebugMalloc(void *(*_malloc)(size_t size, const char *file, int line));
+
+void _spSetRealloc(void *(*_realloc)(void *ptr, size_t size));
+
+void _spSetFree(void (*_free)(void *ptr));
+
+void _spSetRandom(float (*_random)());
+
+char *_spReadFile(const char *path, int *length);
 
 
 /*
  * Math utilities
  */
 float _spMath_random(float min, float max);
+
 float _spMath_randomTriangular(float min, float max);
+
 float _spMath_randomTriangularWith(float min, float max, float mode);
-float _spMath_interpolate(float (*apply) (float a), float start, float end, float a);
+
+float _spMath_interpolate(float (*apply)(float a), float start, float end, float a);
+
 float _spMath_pow2_apply(float a);
+
 float _spMath_pow2out_apply(float a);
 
 /**/

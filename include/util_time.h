@@ -7,9 +7,9 @@
 extern "C" {
 #endif
 
-    int64_t GetTimeMillis();
-    int64_t GetTimeMicros();
-    std::string DataTimeStrFormat(const char *cpszFormat, int64_t n64Time);
+int64_t GetTimeMillis();
+int64_t GetTimeMicros();
+std::string DataTimeStrFormat(const char *cpszFormat, int64_t n64Time);
 
 
 #ifdef __cplusplus

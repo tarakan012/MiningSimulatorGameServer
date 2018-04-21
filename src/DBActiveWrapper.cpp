@@ -36,6 +36,5 @@ MS::Server::CDBConnector *CDBActiveWrapper::GetDBConnector() {
     if (m_pDataSource) {
         return m_pDataSource->GetDBConnector();
     }
-
     return NULL;
 }

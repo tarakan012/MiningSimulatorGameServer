@@ -1,7 +1,7 @@
 #ifndef STDAFX_H
 #define STDAFX_H
 
-#include "GCInfo.h"
+#include "UserNetInfo.h"
 
 #include <functional>
 #include <map>
@@ -10,15 +10,14 @@
 extern "C" {
 #endif
 
-    namespace MS {
-        namespace Server {
+namespace MS {
+    namespace Server {
 
 
-
-            typedef std::function<int( const char* pData, int n32DataLength,CGCInfo * pGCInfo)> PFGCMsgHandler;
-            typedef std::map<int,PFGCMsgHandler> GCMsgHandlerMap;
-        }
+        typedef std::function<int(const char *pData, int n32DataLength, SUserNetInfo netinfo)> PFGCMsgHandler;
+        typedef std::map<int, PFGCMsgHandler> GCMsgHandlerMap;
     }
+}
 
 #ifdef __cplusplus
 }

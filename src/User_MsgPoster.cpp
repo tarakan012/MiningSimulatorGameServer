@@ -31,7 +31,5 @@ namespace MS {
             sUserPayInfo.set_energy(GetUserDBData().sPODUserDBData.n32Energy);
             PostMsgToGC(sUserPayInfo, sUserPayInfo.msgid());
         }
-
-
     }
 }

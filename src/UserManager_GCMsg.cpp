@@ -6,14 +6,14 @@
 namespace MS {
     namespace Server {
 
-        int CUserManager::OnMSgFromGC_AskLogin(const char *pMsg, int n32MsgLength, CGCInfo *pGCInfo) {
+        int CUserManager::OnMSgFromGC_AskLogin(const char *pMsg, int n32MsgLength, SUserNetInfo netinfo) {
             std::string lstrMsg(pMsg, n32MsgLength);
             GCToGS::AskLogin lMsg;
             if (!ParseProtoMsg(pMsg, n32MsgLength, lMsg)) {
                 LogPrint(LogFlags::ALL, "Login Fail with Msg Analysis Error\n");
                 return 0;
             }
-            int n32RetFlag = UserAskLogin(lMsg, pGCInfo);
+            int n32RetFlag = UserAskLogin(lMsg, netinfo);
             if (eNormal != n32RetFlag) {
 
             }
@@ -31,9 +31,9 @@ namespace MS {
 
         }
 
-        int CUserManager::OnMSgFromGC_AskStartMining(const char *pMsg, int n32MsgLength, const CGCInfo *pGCInfo) {
+        int CUserManager::OnMSgFromGC_AskStartMining(const char *pMsg, int n32MsgLength, const SUserNetInfo netinfo) {
 
-            CUser *pcUser = CheckAndGetUserByNetInfo(pGCInfo);
+            CUser *pcUser = CheckAndGetUserByNetInfo(netinfo);
 
             if (pcUser == NULL) {
 
@@ -46,7 +46,7 @@ namespace MS {
 
             int n32RetFlag = pcUser->StartMiningByComputer(sMsg);
             if (eNormal != n32RetFlag) {
-                PostMsgToGC_AskReturn(pGCInfo, sMsg.msgid(), n32RetFlag);
+                PostMsgToGC_AskReturn(netinfo, sMsg.msgid(), n32RetFlag);
             }
             return 1;
         }

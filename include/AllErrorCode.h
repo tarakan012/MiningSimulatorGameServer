@@ -1,13 +1,11 @@
 #ifndef MININGSIMULATORGAMESERVER_ALLERRORCODE_H
 #define MININGSIMULATORGAMESERVER_ALLERRORCODE_H
 
-enum ePreDefineErrorCode
-{
+enum ePreDefineErrorCode {
     eNormal = 0
 };
 
-enum eAllErrorCode
-{
+enum eAllErrorCode {
     eEC_Begin = 0,
     eEC_InvalidCompId,
     eEC_NotEnoughEnergy,

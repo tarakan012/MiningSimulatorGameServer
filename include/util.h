@@ -13,16 +13,15 @@ extern "C" {
 //
 //
 //}
-    enum LogFlags
-    {
-        NONE = 0,
-        DB = (1 << 0),
-        CFG = (1 << 1),
-        eLog_KERNEL = (1 << 2),
-        ALL = ~(int)0,
-    };
+enum LogFlags {
+    NONE = 0,
+    DB = (1 << 0),
+    CFG = (1 << 1),
+    eLog_KERNEL = (1 << 2),
+    ALL = ~(int) 0,
+};
 
-    int LogPrintStr(std::string  str);
+int LogPrintStr(std::string str);
 
 #define LogPrint(category, ...) do { \
     std::string logMsg; \

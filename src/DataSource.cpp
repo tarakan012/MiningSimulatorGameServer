@@ -13,7 +13,5 @@ namespace MS {
             m_pDBConnector = new CDBConnector();
             m_pDBConnector->ConnectDB(0, 0, 0, 0);
         }
-
-
     }
 }

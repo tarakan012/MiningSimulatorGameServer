@@ -7,20 +7,19 @@ namespace MS {
     namespace Server {
 
         CConnection::CConnection(boost::asio::io_service &io_service)
-                : m_Socket(io_service), m_pGCInfo(new CGCInfo()) {
-
+                : m_Socket(io_service) {
         }
 
         CConnection::~CConnection() {
-            delete m_pGCInfo;
+
         }
 
         void CConnection::SetConnID(int n32ConnID) {
-            m_pGCInfo->SetGCID(n32ConnID);
+            m_sUserNerInfo.n32GCConnID = n32ConnID;
         }
 
         int CConnection::GetConnID() {
-            return m_pGCInfo->GetGCID();
+            return m_sUserNerInfo.n32GCConnID;
         }
 
         void CConnection::Send(const char *pBuffer, int n32Len) {
@@ -44,11 +43,11 @@ namespace MS {
         void CConnection::HandleRead(const boost::system::error_code &error, std::size_t bytes_transferred) {
             if (!error) {
                 bool ret = CKernel::GetInstance().HandleMsgFromGC(m_Buffer.data(),
-                                                                  bytes_transferred, m_pGCInfo);
+                                                                  bytes_transferred, m_sUserNerInfo);
             } else {
                 LogPrint(LogFlags::ALL, "Handle Read Fail, error: %s\n", error.message());
-                CUser * user = CUserManager::GetInstance().GetUserByNetInfo(m_pGCInfo);
-                if(user) CUserManager::GetInstance().RemoveUser(user);
+                CUser *user = CUserManager::GetInstance().GetUserByNetInfo(m_sUserNerInfo);
+                if (user) CUserManager::GetInstance().RemoveUser(user);
             }
         }
 
