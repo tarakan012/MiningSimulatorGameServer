@@ -28,6 +28,7 @@ extern "C" {
                 m_Socket.close();
             }
             void Send(const char * pBuffer, int n32Len);
+            void Read();
             void SetConnID(int n32ConnID);
             int GetConnID();
             boost::asio::ip::tcp::socket & GetSocket()
@@ -37,8 +38,6 @@ extern "C" {
             void HandleRead(const boost::system::error_code& error,
         std::size_t bytes_transferred);
             void HandleWrite( const boost::system::error_code& error, size_t length);
-
-
         private:
             boost::asio::ip::tcp::socket m_Socket;
             boost::array<char, 8192> m_Buffer;
