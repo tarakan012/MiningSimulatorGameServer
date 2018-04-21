@@ -96,7 +96,7 @@ namespace MS {
 
         bool CUserManager::Initialize() {
             m_UserCacheDBActiveWrapper = new CDBActiveWrapper(
-                    std::bind(&CUserManager::UserAskDBAsynHandler, this, std::placeholders::_1),
+                    std::bind(&CUserManager::UserCacheDBAsynHandler, this, std::placeholders::_1),
                     std::bind(&CUserManager::DBAsyn_QueryWhenThreadBegin, this));
             m_UserCacheDBActiveWrapper->Start();
             m_LoginDBWrapper = new CDBActiveWrapper(
