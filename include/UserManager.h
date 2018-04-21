@@ -25,6 +25,7 @@
 
 #include "google/protobuf/util/json_util.h"
 #include "google/protobuf/message.h"
+#include <sstream>
 
 namespace MS {
     namespace Server{
@@ -85,7 +86,7 @@ extern "C" {
             void DBAsynQueryUserCallBack();
             void SynUserAskDBCallBack();
             void SynHandleQueryUserCallback(CBuffer * pBuffer);
-            bool DBPoster_UpdateUser(CUser * pUser);// empty 1
+            bool DBPoster_UpdateUser(CUser * pUser);
             void SynHandleAllAccountCallback(CBuffer * pBuffer);
             void InsertNewUserToDB(GCToGS::AskLogin & rLogin, CUser * pUser, int n32DBGameUserID);
             void UpdateUserItem(SItemRecord & rsItemRecord, eDBOperation operation);
@@ -116,6 +117,8 @@ extern "C" {
             UserMap						m_cUserGUIDMap;
             UserMap						m_cUserOnlineMap;
             std::map<SUserNetInfo, CUser*>	m_cUserNetMap;
+            std::stringstream m_SaveUserStream;
+
         };
 
 

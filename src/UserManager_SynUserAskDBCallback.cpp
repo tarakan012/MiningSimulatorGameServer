@@ -1,4 +1,5 @@
 #include "UserManager.h"
+#include "UserDbDataMgr.h"
 
 namespace MS {
     namespace Server {
@@ -61,7 +62,14 @@ namespace MS {
         }
 
         bool CUserManager::DBPoster_UpdateUser(CUser *pUser) {
+            SUserDBData & rsUserDBData = pUser->GetUserDBData();
+            CUserDbDataMgr::UpdateUserDbData(rsUserDBData, m_SaveUserStream);
+            if (!m_SaveUserStream.str().empty()){
+                GSToDB::UserUpdate sUpdateUser;
 
+                sUpdateUser.set_sql(m_SaveUserStream.str());
+                m_UserCacheDBActiveWrapper->EncodeAndSendToDBThread(sUpdateUser, sUpdateUser.msgid());
+            }
         }
 
         void CUserManager::GPSThreadBeginCallback() {

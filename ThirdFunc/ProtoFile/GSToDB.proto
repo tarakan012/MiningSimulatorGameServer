@@ -17,7 +17,7 @@ message ExeSQL_Call
 
 message UserUpdate
 {
-	optional MsgID id = 1 [default = eUserUpdate_DBCallback];
+	optional MsgID msgid = 1 [default = eUserUpdate_DBCallback];
 	optional string sql = 2;
 
 }

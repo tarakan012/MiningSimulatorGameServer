@@ -15,7 +15,7 @@ namespace MS {
             GSToDB::UserUpdate sUserUpdate;
             int n32Result = sUserUpdate.ParseFromArray(pBuffer->GetCurData(), pBuffer->GetDataLength());
             if (!n32Result) return;
-            pConnector->ExecQuery(sUserUpdate.SerializeAsString());
+            pConnector->ExecQuery(sUserUpdate.sql());
             pConnector->CloseQuery();
         }
 

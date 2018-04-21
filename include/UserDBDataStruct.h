@@ -9,19 +9,21 @@ extern "C" {
 
 enum eUserDBData_Type
 {
-    eUserDBData_Gold = 0,
-    eUserDBData_Energy
+    eUserDBData_None = 0,
+    eUserDBData_Gold,
+    eUserDBData_Energy,
+    eUserDBData_End
 };
 struct SPODUserDBData
 {
     int n32DBId;
     int n32Gold;
     int n32Energy;
+    bool bIfChangeArr[eUserDBData_End];
 };
 struct SUserDBData
 {
     SPODUserDBData sPODUserDBData;
-
     std::map<int,SComputerInfo> CompInfoMap;
     SUserDBData()
     {
@@ -49,9 +51,9 @@ struct SUserDBData
             {
                 sPODUserDBData.n32Energy += value;
                 break;
-
             }
         }
+        sPODUserDBData.bIfChangeArr[type] = true;
     }
     SUserDBData & operator=(const SUserDBData & sUsrDBData)
     {
