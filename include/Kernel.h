@@ -4,18 +4,15 @@
 #define BOOST_SIGNALS_NAMESPACE boost_signals
 #define BOOST_SIGNALS_NO_DEPRECATION_WARNING
 
+#include "stdafx.h"
+#include "PreDefine.h"
 #include "UserNetInfo.h"
 #include "ConnectionManager.h"
-#include "stdafx.h"
 
+#include "google/protobuf/message_lite.h"
 #include "boost/signal.hpp"
 #include "boost/asio.hpp"
 #include "boost/bind.hpp"
-
-#include <cstdlib>
-#include <map>
-
-#include "google/protobuf/message.h"
 
 namespace MS {
     namespace Server {
@@ -23,23 +20,22 @@ namespace MS {
 #ifdef __cplusplus
         extern "C" {
 #endif
-
+        //struct SUserNetInfo;
         class CKernel {
         public:
             static CKernel &GetInstance();
 
-            bool HandleMsgFromGC(const char *pMsg, int n32MsgLength, SUserNetInfo netinfo);
+            bool HandleMsgFromGC(const CHAR *pMsg, INT32 n32MsgLength, SUserNetInfo netinfo);
 
             void MainLoop();
 
-            void PostMsgToGC(int n32ConnID, google::protobuf::MessageLite &rMsg, int n32MsgID);
+            void PostMsgToGC(INT32 n32ConnID, google::protobuf::MessageLite &rMsg, INT32 n32MsgID);
 
             void HandleStop();
 
-            void InitNetService(int n32ThreadCount);
+            void InitNetService(INT32 n32ThreadCount);
 
             bool Initialize();
-            //~Ckernel();
         private:
             CKernel();
 
@@ -56,7 +52,6 @@ namespace MS {
             boost::asio::signal_set *m_pSignalQuit;
         };
 
-
 #ifdef __cplusplus
         }
 #endif
@@ -65,4 +60,3 @@ namespace MS {
 }
 
 #endif /* KERNEL_H */
-

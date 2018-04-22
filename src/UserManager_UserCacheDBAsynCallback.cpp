@@ -13,7 +13,7 @@ namespace MS {
 
         void CUserManager::DBAsynUpdateUserCallback(CBuffer *pBuffer, CDBConnector *pConnector) {
             GSToDB::UserUpdate sUserUpdate;
-            int n32Result = sUserUpdate.ParseFromArray(pBuffer->GetCurData(), pBuffer->GetDataLength());
+            INT32 n32Result = sUserUpdate.ParseFromArray(pBuffer->GetCurData(), pBuffer->GetDataLength());
             if (!n32Result) return;
             pConnector->ExecQuery(sUserUpdate.sql());
             pConnector->CloseQuery();

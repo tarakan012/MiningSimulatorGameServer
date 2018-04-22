@@ -1,8 +1,8 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
+#include "PreDefine.h"
 #include "UserNetInfo.h"
-
 #include "boost/asio.hpp"
 #include "boost/array.hpp"
 #include "boost/bind.hpp"
@@ -16,7 +16,6 @@ namespace MS {
 #ifdef __cplusplus
         extern "C" {
 #endif
-
         class CConnection {
         public:
             CConnection(boost::asio::io_service &io_service);
@@ -29,13 +28,13 @@ namespace MS {
                 m_Socket.close();
             }
 
-            void Send(const char *pBuffer, int n32Len);
+            void Send(const char *pBuffer, INT32 n32Len);
 
             void Read();
 
-            void SetConnID(int n32ConnID);
+            void SetConnID(INT32 n32ConnID);
 
-            int GetConnID();
+            INT32 GetConnID();
 
             boost::asio::ip::tcp::socket &GetSocket() {
                 return m_Socket;
@@ -48,7 +47,7 @@ namespace MS {
 
         private:
             boost::asio::ip::tcp::socket m_Socket;
-            boost::array<char, 8192> m_Buffer;
+            boost::array<CHAR, 8192> m_Buffer;
             SUserNetInfo m_sUserNerInfo;
         };
 

@@ -1,4 +1,5 @@
 #include "Kernel.h"
+#include "Logging.h"
 #include "ConfigManager.h"
 #include "UserManager.h"
 #include "ScriptManager.h"
@@ -6,11 +7,10 @@
 #include "google/protobuf/util/json_util.h"
 #include "google/protobuf/message.h"
 #include <string>
-#include <iostream>
+#include <tinyformat.h>
 #include "GCToGS.pb.h"
 #include "boost/thread.hpp"
 #include "boost/atomic.hpp"
-#include <cstdlib>
 
 namespace MS {
     namespace Server {
@@ -40,8 +40,8 @@ namespace MS {
             g_stcpIOService->run();
         }
 
-        void CKernel::InitNetService(int n32ThreadCount) {
-            for (int i = 0; i < n32ThreadCount; ++i) {
+        void CKernel::InitNetService(INT32 n32ThreadCount) {
+            for (INT32 i = 0; i < n32ThreadCount; ++i) {
                 g_stcNetServiceThread[i] = new boost::thread(&NetServiceRun);
             }
         }
@@ -49,7 +49,7 @@ namespace MS {
         bool CKernel::Initialize() {
             bool ret = CConfigManager::GetInstance().Initialize();
             if (ret) {
-                LogPrint(LogFlags::ALL, "Config initialize Success\n");
+                LogPrint(LogFlags::ALL, "Config Initialize Success\n");
             } else {
 
             }
@@ -82,36 +82,31 @@ namespace MS {
 
         void CKernel::HandleAccept(const boost::system::error_code &ec) {
             if (!m_pAcceptor->is_open()) {
-                LogPrint(eLog_KERNEL, "Acceptor close.\n");
+                LogPrintDebug("Acceptor Close\n");
                 return;
             }
             if (!ec) {
-                LogPrint(eLog_KERNEL, "Handle Accept succes\n");
+                LogPrintDebug("Handle Accept Succes\n");
                 m_ConnectionManager.Start(m_shpNewConnecion);
             } else {
-                LogPrint(eLog_KERNEL, "Handle Accept error:\t\n", ec);
+                LogPrintDebug("Handle Accept Error: \n", ec);
             }
             PrepareForNextAccept();
 
         }
 
-        bool CKernel::HandleMsgFromGC(const char *pMsg, int n32MsgLength, SUserNetInfo netinfo) {
-            std::cout << "HandleMsgFromGC call n32MsgLength: " << n32MsgLength << std::endl;
-            for (int i = 0; i < n32MsgLength; i++) {
-                std::cout << (int) pMsg[i] << "\t";
-            }
-            std::cout << std::endl;
-            int n32MsgLen = n32MsgLength - 2 * sizeof(int);
-            int n32MsgId = *(int *) (pMsg + 1 * sizeof(int));
-            std::cout << "CKernel::HandleMsgFromGC call MSGID: " << n32MsgId << std::endl;
+        bool CKernel::HandleMsgFromGC(const CHAR *pMsg, INT32 n32MsgLength, SUserNetInfo netinfo) {
+            INT32 n32MsgLen = n32MsgLength - 2 * sizeof(INT32);
+            INT32 n32MsgId = *(INT32 *) (pMsg + 1 * sizeof(INT32));
+            LogPrintDebug("Message ID: %d\n", n32MsgId);
             if (!GCToGS::MsgId_IsValid(n32MsgId)) return false;
             auto iter = m_GCMsgHandlerMap.find(n32MsgId);
             if (iter != m_GCMsgHandlerMap.end()) {
-                std::cout << "HandleMsgFromGC call find " << std::endl;
-                (iter->second)(pMsg + 2 * sizeof(int), n32MsgLen, netinfo);
+                LogPrintDebug("Handle Message Find\n");
+                (iter->second)(pMsg + 2 * sizeof(INT32), n32MsgLen, netinfo);
                 return true;
             } else {
-                std::cout << "HandleMsgFromGC call no find " << std::endl;
+                LogPrintDebug("Handle Message No Find\n");
                 return false;
             }
         }

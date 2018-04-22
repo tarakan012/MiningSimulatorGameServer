@@ -5,7 +5,7 @@
 
 #include <strstream>
 #include <GSToGC.pb.h>
-#include "util_time.h"
+#include "Time.h"
 
 namespace MS {
     namespace Server {
@@ -30,8 +30,8 @@ namespace MS {
         }
 
         void CUserManager::OnUsersUpdate() {
-            int64_t n64TimeNow = GetTimeMillis();
-            int64_t n64TickSpawn = m_n64LastUpdateTime - m_n64LastUpdateTime;
+            TIME_MILSEC n64TimeNow = GetTimeMillis();
+            TIME_MILSEC n64TickSpawn = m_n64LastUpdateTime - m_n64LastUpdateTime;
             m_n64LastUpdateTime = n64TimeNow;
 
             for (auto const &user : m_cUserOnlineMap) {
@@ -40,13 +40,13 @@ namespace MS {
             }
         }
 
-        int CUserManager::AddUser(CUser *pUser) {
+        INT32  CUserManager::AddUser(CUser *pUser) {
             unsigned un32ObjIndex = pUser->GetGameUserID();
             m_cUserGUIDMap.insert(std::make_pair(un32ObjIndex, pUser));
             return 0;
         }
 
-        int CUserManager::RemoveUser(CUser *pUser) {
+        INT32 CUserManager::RemoveUser(CUser *pUser) {
             DBPoster_UpdateUser(pUser);
             m_cUserGUIDMap.erase(pUser->GetGameUserID());
             delete pUser;
@@ -72,14 +72,14 @@ namespace MS {
 
         }
 
-        int CUserManager::OnUserOnline(CUser *pcUser, const SUserNetInfo &crsUserNetInfo) {
+        INT32 CUserManager::OnUserOnline(CUser *pcUser, const SUserNetInfo &crsUserNetInfo) {
             m_cUserNetMap.insert(std::make_pair(crsUserNetInfo, pcUser));
             m_cUserOnlineMap.insert(std::make_pair(pcUser->GetGameUserID(), pcUser));
             pcUser->SetUserNetInfo(crsUserNetInfo);
             return 0;
         }
 
-        int CUserManager::OnUserOffline(CUser *pcUser) {
+        INT32 CUserManager::OnUserOffline(CUser *pcUser) {
             m_cUserNetMap.erase(pcUser->GetUserNetInfo());
 
             m_cUserOnlineMap.erase(pcUser->GetGameUserID());
@@ -87,7 +87,7 @@ namespace MS {
             return 0;
         }
 
-        void CUserManager::EncodeAndSendToLogicThread(google::protobuf::Message &rMsg, int n32MsgId) {
+        void CUserManager::EncodeAndSendToLogicThread(google::protobuf::Message &rMsg, INT32 n32MsgId) {
             CBuffer *pBuffer = m_CallbackQueuePool.AcquireObject();
             CDBActiveWrapper::EncodeProtoMsgToBuffer(rMsg, n32MsgId, pBuffer);
             m_DBCallbackQueue.push(pBuffer);
@@ -108,22 +108,22 @@ namespace MS {
             m_n32MaxItemDBID = 0;
         }
 
-        int CUserManager::CombineGameUserID() {
+        INT32 CUserManager::CombineGameUserID() {
             m_n32MaxGameUserID++;
             return m_n32MaxGameUserID;
         }
 
-        int CUserManager::CombineComputerID() {
+        INT32 CUserManager::CombineComputerID() {
             m_n32MaxComputerID++;
             return m_n32MaxComputerID;
         }
 
-        int CUserManager::GenerateItemDBID() {
+        INT32 CUserManager::GenerateItemDBID() {
             m_n32MaxItemDBID++;
             return m_n32MaxItemDBID;
         }
 
-        CDBConnector *CUserManager::GetDBSource(int actorID) {
+        CDBConnector *CUserManager::GetDBSource(INT32 actorID) {
             return m_LoginDBWrapper->GetDBConnector();
         }
 
@@ -133,7 +133,7 @@ namespace MS {
 
         void CUserManager::DBAsyn_ExeSQL(CBuffer *pBuffer, CDBConnector *pConnector) {
             GSToDB::ExeSQL_Call exeSql;
-            int n32Result = exeSql.ParsePartialFromArray(pBuffer->GetCurData(), pBuffer->GetDataLength());
+            INT32 n32Result = exeSql.ParsePartialFromArray(pBuffer->GetCurData(), pBuffer->GetDataLength());
             if (!n32Result) return;
             pConnector->ExecQuery(exeSql.sql());
             pConnector->CloseQuery();
@@ -150,19 +150,13 @@ namespace MS {
         }
 
 
-        bool CUserManager::DBSynQueryAskUserItem(int n32UserId, int n32ItemId) {
+        bool CUserManager::DBSynQueryAskUserItem(INT32 n32UserId, INT32 n32ItemId) {
             std::stringstream ss;
             ss << "select * from account where id=" << n32UserId;
             std::string str = ss.str();
-//            m_pDBConnector->ExecQuery(str);
-//
-//            int balusd = 0;
-//            m_pDBConnector->GetQueryFieldData("balusd", balusd);
-//
-//            m_pDBConnector->CloseQuery();
         }
 
-        void CUserManager::InsertNewUserToDB(GCToGS::AskLogin &rLogin, CUser *pUser, int n32DBGameUserID) {
+        void CUserManager::InsertNewUserToDB(GCToGS::AskLogin &rLogin, CUser *pUser, INT32 n32DBGameUserID) {
             GSToDB::ExeSQL_Call exeSql;
             std::stringstream strSql;
 
@@ -176,8 +170,8 @@ namespace MS {
                 strSql << "insert into game_user(id, btc, comp_id) values(" << n32DBGameUserID << ",0,'{";
 
                 auto &rsUserCompInfo = pUser->GetUserDBData().CompInfoMap;
-                int counter = 0;
-                int n32NumComp = rsUserCompInfo.size();
+                INT32 counter = 0;
+                INT32 n32NumComp = rsUserCompInfo.size();
                 for (auto &comp : rsUserCompInfo) {
                     counter++;
                     SComputerInfo &rCompInfo = comp.second;
@@ -206,9 +200,9 @@ namespace MS {
 
         void CUserManager::SynHandleAllAccountCallback(CBuffer *pBuffer) {
             DBToGS::QueryAllAccount queryAllAccount;
-            int n32Result = queryAllAccount.ParseFromArray(pBuffer->GetCurData(), pBuffer->GetDataLength());
+            INT32 n32Result = queryAllAccount.ParseFromArray(pBuffer->GetCurData(), pBuffer->GetDataLength());
             if (!n32Result) return;
-            for (int i = 0; i < queryAllAccount.account_size(); i++) {
+            for (INT32 i = 0; i < queryAllAccount.account_size(); i++) {
                 auto pAccount = queryAllAccount.account(i);
                 SUserCombineKey sUserCombineKey;
                 sUserCombineKey.m_nameGooglePlus = pAccount.namegoogleplus();
@@ -230,9 +224,9 @@ namespace MS {
                     strSql << "insert into computer_user(id,item_id,mining_gold) values(";
                     strSql << rsComputerInfo.n32ID << ", '{";
 
-                    int n32CountDelim = rsComputerInfo.ItemRecordMap.size() - 1;
-                    int genItemID = 0;
-                    int ln32MiningGoldComp = 0;
+                    INT32 n32CountDelim = rsComputerInfo.ItemRecordMap.size() - 1;
+                    INT32 genItemID = 0;
+                    INT32 ln32MiningGoldComp = 0;
                     for (auto &item : rsComputerInfo.ItemRecordMap) {
                         SItemRecord &rItemRecord = item.second;
                         ln32MiningGoldComp += rItemRecord.n32MiningGold;
@@ -271,7 +265,7 @@ namespace MS {
 
         }
 
-        bool CUserManager::PostMsgToGC_AskReturn(const SUserNetInfo netinfo, int n32ProtocolId, int n32RetFlag) {
+        bool CUserManager::PostMsgToGC_AskReturn(const SUserNetInfo netinfo, INT32 n32ProtocolId, INT32 n32RetFlag) {
             GSToGC::AskRet msg;
             msg.set_askid(n32ProtocolId);
             msg.set_errorcode(n32RetFlag);
@@ -280,4 +274,3 @@ namespace MS {
         }
     }
 }
-

@@ -12,8 +12,6 @@ extern "C" {
 
 namespace MS {
     namespace Server {
-
-
         typedef std::function<int(const char *pData, int n32DataLength, SUserNetInfo netinfo)> PFGCMsgHandler;
         typedef std::map<int, PFGCMsgHandler> GCMsgHandlerMap;
     }
@@ -24,4 +22,3 @@ namespace MS {
 #endif
 
 #endif /* STDAFX_H */
-

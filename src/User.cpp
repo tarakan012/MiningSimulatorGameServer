@@ -2,7 +2,8 @@
 #include "UserManager.h"
 #include "Connection.h"
 #include "AllErrorCode.h"
-#include "util_time.h"
+#include "Time.h"
+
 
 namespace MS {
     namespace Server {
@@ -11,7 +12,7 @@ namespace MS {
             m_tStartAccamulEnergy = 0;
         }
 
-        void CUser::OnHeartBeart(int64_t n64Milsec, int64_t n64TickSpawn) {
+        void CUser::OnHeartBeart(TIME_MILSEC n64Milsec, TIME_MILSEC n64TickSpawn) {
             if (!GetUserDBData().EnergyIsFool() && ((n64Milsec - m_tStartAccamulEnergy) > 30 * 1000)) {
                 GetUserDBData().ChengeUserDBData(eUserDBData_Energy, 1);
                 m_tStartAccamulEnergy = GetTimeMillis();
@@ -47,22 +48,22 @@ namespace MS {
             m_sUserNetInfo.Clear();
         }
 
-        int CUser::KickOutOldUser() {
+        INT32 CUser::KickOutOldUser() {
             if (m_sUserNetInfo.IsValid()) {
                 OnOfline();
             }
             return 0;
         }
 
-        int CUser::StartMiningByComputer(GCToGS::AskStartMining &rsMsg) {
-            int ln32ComputerId = rsMsg.compid();
+        INT32 CUser::StartMiningByComputer(GCToGS::AskStartMining &rsMsg) {
+            INT32 ln32ComputerId = rsMsg.compid();
             if (!CheckComputerById(ln32ComputerId)) {
                 return eEC_InvalidCompId;
             }
             if (!CheckIfEnoughPay(eUserDBData_Energy, 1)) {
                 return eEC_NotEnoughEnergy;
             }
-            int ln32MiningGold = GetMiningGoldComputerById(ln32ComputerId);
+            INT32 ln32MiningGold = GetMiningGoldComputerById(ln32ComputerId);
 
             GetUserDBData().ChengeUserDBData(eUserDBData_Gold, ln32MiningGold);
             GetUserDBData().ChengeUserDBData(eUserDBData_Energy, -1);
@@ -71,7 +72,7 @@ namespace MS {
             return 0;
         }
 
-        bool CUser::CheckIfEnoughPay(eUserDBData_Type eType, int n32Pay) {
+        bool CUser::CheckIfEnoughPay(eUserDBData_Type eType, INT32 n32Pay) {
             switch (eType) {
                 case eUserDBData_Gold : {
                     return GetUserDBData().sPODUserDBData.n32Gold >= n32Pay;
@@ -85,7 +86,7 @@ namespace MS {
             return false;
         }
 
-        bool CUser::CheckComputerById(int n32CompId) {
+        bool CUser::CheckComputerById(INT32 n32CompId) {
             for (auto comp : m_sUserDBData.CompInfoMap) {
                 auto compinf = comp.second;
                 if (n32CompId == compinf.n32DBId) {
@@ -95,8 +96,8 @@ namespace MS {
             return false;
         }
 
-        int CUser::GetMiningGoldComputerById(int n32CompId) {
-            int ln32MiningGold = 0;
+        INT32 CUser::GetMiningGoldComputerById(INT32 n32CompId) {
+            INT32 ln32MiningGold = 0;
             for (auto const &comp : m_sUserDBData.CompInfoMap) {
                 auto compinf = comp.second;
                 if (n32CompId == compinf.n32DBId) {

@@ -33,20 +33,20 @@ namespace MS {
         void CUserManager::DBAsynQueryUser(SUserDBData &sUserDBData, DBToGS::QueryUser &sQueryUser,
                                            CDBConnector *pConnector) {
             std::stringstream strSql;
-            int guid = sUserDBData.sPODUserDBData.n32DBId;
+            INT32 guid = sUserDBData.sPODUserDBData.n32DBId;
             strSql << "select btc from game_user where id=" << guid;
             pConnector->ExecQuery(strSql.str());
             pConnector->GetQueryFieldData("btc", sUserDBData.sPODUserDBData.n32Gold);
             pConnector->CloseQuery();
             DBAsyn_QueryUserComputers(pConnector, guid, sQueryUser);
-            for (int i = 0; i < sQueryUser.computer_size(); ++i) {
+            for (INT32 i = 0; i < sQueryUser.computer_size(); ++i) {
                 auto comp = sQueryUser.mutable_computer(i);
                 sUserDBData.sPODUserDBData.n32Gold += comp->bufgold();
             }
-            sQueryUser.set_db((char *) &sUserDBData.sPODUserDBData, sizeof(sUserDBData.sPODUserDBData));
+            sQueryUser.set_db((CHAR *) &sUserDBData.sPODUserDBData, sizeof(sUserDBData.sPODUserDBData));
         }
 
-        void CUserManager::DBAsyn_QueryUserComputers(CDBConnector *pConnector, int n32UserID,
+        void CUserManager::DBAsyn_QueryUserComputers(CDBConnector *pConnector, INT32 n32UserID,
                                                      DBToGS::QueryUser &sQueryUser) {
             std::stringstream strSql;
             std::string IdCompList;
@@ -61,17 +61,17 @@ namespace MS {
             while (iter != iter_end) {
                 strSql.str(std::string());
                 std::string strcompid = *iter++;
-                int compid = atoi(strcompid.c_str());
+                INT32 compid = atoi(strcompid.c_str());
 
                 auto comp = sQueryUser.add_computer();
                 comp->set_id(compid);
                 strSql
-                        << "select round(extract(epoch from now() - \"start_mining\"))::int as work_time from computer_user where id="
+                        << "select round(extract(epoch from now() - \"start_mining\"))::INT32 as work_time from computer_user where id="
                         << strcompid;
                 pConnector->ExecQuery(strSql.str());
-                int worktime = 0;
-                int mininggold = 0;
-                int ln32BuffGold = 0;
+                INT32 worktime = 0;
+                INT32 mininggold = 0;
+                INT32 ln32BuffGold = 0;
                 pConnector->GetQueryFieldData("work_time", worktime);
                 comp->set_worktime(worktime);
                 pConnector->CloseQuery();
@@ -91,7 +91,7 @@ namespace MS {
 
         }
 
-        void CUserManager::DBAsyn_QueryUserItems(CDBConnector *pConnector, int n32ComputerId,
+        void CUserManager::DBAsyn_QueryUserItems(CDBConnector *pConnector, INT32 n32ComputerId,
                                                  DBToGS::QueryUser_ComputerInfo &rsComputerInfo) {
             std::string strItemsId;
             std::stringstream strSql;
@@ -105,7 +105,7 @@ namespace MS {
             while (iter != iter_end) {
                 strSql.str(std::string());
                 std::string strItemId = *iter++;
-                int l_n32ItemId = atoi(strItemId.c_str());
+                INT32 l_n32ItemId = atoi(strItemId.c_str());
                 auto item = rsComputerInfo.add_item();
                 item->set_id(l_n32ItemId);
             }

@@ -1,7 +1,8 @@
 #ifndef USERMANAGER_H
 #define USERMANAGER_H
 
-#include "util.h"
+#include "PreDefine.h"
+#include "Logging.h"
 #include "ConfigManager.h"
 #include "stdafx.h"
 #include "User.h"
@@ -37,15 +38,15 @@ namespace MS {
 
         struct SUserCombineKey {
             std::string m_nameGooglePlus;
-            int m_id_gps;
+            INT32 m_id_gps;
 
             SUserCombineKey() {}
 
-            SUserCombineKey(const std::string &nameGooglePlus, int id_gps) : m_nameGooglePlus(nameGooglePlus),
+            SUserCombineKey(const std::string &nameGooglePlus, INT32 id_gps) : m_nameGooglePlus(nameGooglePlus),
                                                                              m_id_gps(id_gps) {}
 
             bool operator<(const SUserCombineKey &sUserCombineKey) const {
-                int n32Result = m_nameGooglePlus.compare(sUserCombineKey.m_nameGooglePlus);
+                INT32 n32Result = m_nameGooglePlus.compare(sUserCombineKey.m_nameGooglePlus);
                 if (n32Result == 0) {
                     return m_id_gps < sUserCombineKey.m_id_gps;
                 }
@@ -68,13 +69,13 @@ namespace MS {
 
             void OnUsersUpdate();
 
-            int CombineGameUserID();
+            INT32 CombineGameUserID();
 
-            int CombineComputerID();
+            INT32 CombineComputerID();
 
-            int GenerateItemDBID();
+            INT32 GenerateItemDBID();
 
-            CDBConnector *GetDBSource(int actorID);
+            CDBConnector *GetDBSource(INT32 actorID);
 
             CDBActiveWrapper &GetNowWorkActor();
 
@@ -93,17 +94,17 @@ namespace MS {
 
             void DBAsynQueryUser(SUserDBData &sUserDBData, DBToGS::QueryUser &sQueryUser, CDBConnector *pConnector);
 
-            int AddUser(CUser *pUser);
+            INT32 AddUser(CUser *pUser);
 
-            int RemoveUser(CUser *pUser);
+            INT32 RemoveUser(CUser *pUser);
 
-            int OnUserOnline(CUser *pcUser, const SUserNetInfo &crsUserNetInfo);
+            INT32 OnUserOnline(CUser *pcUser, const SUserNetInfo &crsUserNetInfo);
 
-            int OnUserOffline(CUser *pcUser);
+            INT32 OnUserOffline(CUser *pcUser);
 
-            void DBAsyn_QueryUserComputers(CDBConnector *pConnector, int n32UserID, DBToGS::QueryUser &sQueryUser);
+            void DBAsyn_QueryUserComputers(CDBConnector *pConnector, INT32 n32UserID, DBToGS::QueryUser &sQueryUser);
 
-            void DBAsyn_QueryUserItems(CDBConnector *pConnector, int n32ComputerId,
+            void DBAsyn_QueryUserItems(CDBConnector *pConnector, INT32 n32ComputerId,
                                        DBToGS::QueryUser_ComputerInfo &rsComputerInfo);
 
             void DBAsyn_ExeSQL(CBuffer *pBuffer, CDBConnector *pConnector);
@@ -118,7 +119,7 @@ namespace MS {
 
             void SynHandleAllAccountCallback(CBuffer *pBuffer);
 
-            void InsertNewUserToDB(GCToGS::AskLogin &rLogin, CUser *pUser, int n32DBGameUserID);
+            void InsertNewUserToDB(GCToGS::AskLogin &rLogin, CUser *pUser, INT32 n32DBGameUserID);
 
             void UpdateUserItem(SItemRecord &rsItemRecord, eDBOperation operation);
 
@@ -132,31 +133,31 @@ namespace MS {
 
             CUser *GetUserByNetInfo(const SUserNetInfo netinfo);
 
-            int OnMSgFromGC_AskStartMining(const char *pMsg, int n32MsgLength, SUserNetInfo netinfo);
+            INT32 OnMSgFromGC_AskStartMining(const CHAR *pMsg, INT32 n32MsgLength, SUserNetInfo netinfo);
 
-            int OnMSgFromGC_AskLogin(const char *pMsg, int n32MsgLength, SUserNetInfo netinfo);
+            INT32 OnMSgFromGC_AskLogin(const CHAR *pMsg, INT32 n32MsgLength, SUserNetInfo netinfo);
 
-            int OnMsgFromGC_AskUpdateItemRet(const char *pMsg, int n32MsgLength, CConnection *pConn);
+            INT32 OnMsgFromGC_AskUpdateItemRet(const CHAR *pMsg, INT32 n32MsgLength, CConnection *pConn);
 
-            bool DBSynQueryAskUserItem(int n32UserId, int n32ItemId);
+            bool DBSynQueryAskUserItem(INT32 n32UserId, INT32 n32ItemId);
 
-            void EncodeAndSendToLogicThread(google::protobuf::Message &rMsg, int n32MsgId);
+            void EncodeAndSendToLogicThread(google::protobuf::Message &rMsg, INT32 n32MsgId);
 
-            bool PostMsgToGC_AskReturn(const SUserNetInfo netinfo, int n32ProtocolId, int n32RetFlag);
+            bool PostMsgToGC_AskReturn(const SUserNetInfo netinfo, INT32 n32ProtocolId, INT32 n32RetFlag);
 
         private:
-            int m_n32MaxGameUserID;
-            int m_n32MaxComputerID;
-            int m_n32MaxItemDBID;
-            int64_t m_n64LastUpdateTime;
+            INT32 m_n32MaxGameUserID;
+            INT32 m_n32MaxComputerID;
+            INT32 m_n32MaxItemDBID;
+            TIME_MILSEC m_n64LastUpdateTime;
             CDBConnector *m_pDBConnector;
             CDBActiveWrapper *m_pThreadDBWrapper;
             CDBActiveWrapper *m_UserCacheDBActiveWrapper;
             CDBActiveWrapper *m_LoginDBWrapper;
             std::queue<CBuffer *> m_DBCallbackQueue;
-            std::map<SUserCombineKey, int> m_AllUserNameIDMap;
+            std::map<SUserCombineKey, INT32> m_AllUserNameIDMap;
             CThreadSafeObjectPool<CBuffer> m_CallbackQueuePool;
-            typedef std::map<UINT64, CUser *> UserMap;
+            typedef std::map<INT32, CUser *> UserMap;
             UserMap m_cUserGUIDMap;
             UserMap m_cUserOnlineMap;
             std::map<SUserNetInfo, CUser *> m_cUserNetMap;

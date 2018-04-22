@@ -1,6 +1,6 @@
+#include "Connection.h"
 #include "Kernel.h"
-#include <iostream>
-#include "util.h"
+#include "Logging.h"
 #include "UserManager.h"
 
 namespace MS {

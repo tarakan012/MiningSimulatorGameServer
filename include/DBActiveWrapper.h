@@ -1,6 +1,7 @@
 #ifndef DBACTIVEWRAPER_H
 #define DBACTIVEWRAPER_H
 
+#include "PreDefine.h"
 #include "Active.h"
 #include <string>
 #include "DataSource.h"
@@ -19,9 +20,9 @@ public:
 
     MS::Server::CDBConnector *GetDBConnector();
 
-    bool EncodeAndSendToDBThread(google::protobuf::Message &rMsg, int n32MsgId);
+    bool EncodeAndSendToDBThread(google::protobuf::Message &rMsg, INT32 n32MsgId);
 
-    static bool EncodeProtoMsgToBuffer(google::protobuf::Message &rMsg, int n32MsgId, CBuffer *pBuffer);
+    static bool EncodeProtoMsgToBuffer(google::protobuf::Message &rMsg, INT32 n32MsgId, CBuffer *pBuffer);
 
     CDBActiveWrapper(Callback fCAllBack, BeginInThreadCallback fStartCallBack = nullptr);
 

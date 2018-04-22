@@ -1,5 +1,5 @@
 #include "ConfigManager.h"
-
+#include "PreDefine.h"
 #include "Json.h"
 
 #include <fstream>
@@ -32,22 +32,22 @@ namespace MS {
                 return false;
             }
             file.seekg(0, file.end);
-            int length = file.tellg();
+            INT32 length = file.tellg();
             file.seekg(0, file.beg);
-            char *pBuffer = new char[length];
+            CHAR *pBuffer = new CHAR[length];
             file.read(pBuffer, length);
 
             Json *json = Json_create(pBuffer);
             delete[]pBuffer;
             Json *obj = json->child;
-            for (int i = 0; i < json->size; ++i) {
+            for (INT32 i = 0; i < json->size; ++i) {
                 SShopCfg tempSCfg;
                 tempSCfg.n32typePage = Json_getInt(obj, "typePage", -1);
 
                 Json *jsonArray = Json_getItem(obj, "itemIdPage");
 
                 Json *JsonNumber = jsonArray->child;
-                for (int i = 0; jsonArray->size; ++i) {
+                for (INT32 i = 0; jsonArray->size; ++i) {
                     tempSCfg.szItemId[i] = JsonNumber->valueInt;
                     if (!JsonNumber->next) {
                         break;
@@ -74,17 +74,17 @@ namespace MS {
                 return false;
             }
             file.seekg(0, file.end);
-            int length = file.tellg();
+            INT32 length = file.tellg();
             file.seekg(0, file.beg);
-            char *pBuffer = new char[length];
+            CHAR *pBuffer = new CHAR[length];
             file.read(pBuffer, length);
 
             Json *json = Json_create(pBuffer);
             delete[]pBuffer;
             Json *obj = json->child;
-            for (int i = 0; i < json->size; ++i) {
+            for (INT32 i = 0; i < json->size; ++i) {
                 SItemRecord item;
-                const char *nameItem = Json_getString(obj, "name", "");
+                const CHAR *nameItem = Json_getString(obj, "name", "");
                 std::memcpy(&item.szName, nameItem, std::strlen(nameItem));
                 item.n32Id = Json_getInt(obj, "id", -1);
                 item.n32Lvl = Json_getInt(obj, "lvl", -1);
@@ -106,9 +106,7 @@ namespace MS {
 
             Json_dispose(json);
             file.close();
-
             return true;
-
         }
 
         bool CConfigManager::LoadStartSetCfg() {
@@ -119,24 +117,23 @@ namespace MS {
             }
             m_sStartSetCfg.sPODUserDBData.n32Energy = 10;
             file.seekg(0, file.end);
-            int length = file.tellg();
+            INT32 length = file.tellg();
             file.seekg(0, file.beg);
-            char *pBuffer = new char[length];
+            CHAR *pBuffer = new CHAR[length];
             file.read(pBuffer, length);
 
             Json *json = Json_create(pBuffer);
             delete[]pBuffer;
             Json *obj = json->child;
 
-            for (int numcomp = 0; numcomp < json->size; ++numcomp) {
+            for (INT32 numcomp = 0; numcomp < json->size; ++numcomp) {
                 Json *jsonArray = Json_getItem(obj, "list_id");
                 Json *JsonNumber = jsonArray->child;
-                for (int numitem = 0; numitem < jsonArray->size; ++numitem) {
-                    int n32ItemID = JsonNumber->valueInt;
+                for (INT32 numitem = 0; numitem < jsonArray->size; ++numitem) {
+                    INT32 n32ItemID = JsonNumber->valueInt;
                     auto iter = m_ItemRecordMap.find(n32ItemID);
                     if (iter != m_ItemRecordMap.end()) {
                         m_sStartSetCfg.CompInfoMap[numcomp].ItemRecordMap[numitem] = iter->second;
-
                     } else {
                         LogPrint(LogFlags::CFG, "The wrong ItemID - %d\n", n32ItemID);
                         return false;
@@ -146,13 +143,10 @@ namespace MS {
                     }
                     JsonNumber = JsonNumber->next;
                 }
-
-
             }
             Json_dispose(json);
             file.close();
             return true;
         }
-
     }
 }

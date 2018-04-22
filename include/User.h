@@ -1,8 +1,10 @@
 #ifndef USER_H
 #define USER_H
 
+#include "PreDefine.h"
+#include "UserNetInfo.h"
 #include "all_const.h"
-#include "stdafx.h"
+
 #include "UserDBDataStruct.h"
 #include "Kernel.h"
 
@@ -16,26 +18,26 @@ namespace MS {
 #ifdef __cplusplus
         extern "C" {
 #endif
-
+        //struct SUserNetInfo;
         class CUser {
         public:
             CUser();
 
             void LoadDBData(SUserDBData &sUserDBData);
 
-            int GetGameUserID() { return m_sUserDBData.sPODUserDBData.n32DBId; };
+            INT32 GetGameUserID() { return m_sUserDBData.sPODUserDBData.n32DBId; };
 
-            void OnHeartBeart(int64_t n64Milsec, int64_t n64TickSpawn);
+            void OnHeartBeart(TIME_MILSEC n64Milsec, TIME_MILSEC n64TickSpawn);
 
-            int KickOutOldUser();
+            INT32 KickOutOldUser();
 
-            int StartMiningByComputer(GCToGS::AskStartMining &rsMsg);
+            INT32 StartMiningByComputer(GCToGS::AskStartMining &rsMsg);
 
             SUserNetInfo &GetUserNetInfo() { return m_sUserNetInfo; };
 
             void ClearNetInfo();
 
-            void PostMsgToGC(google::protobuf::MessageLite &rMsg, int n32MsgID);
+            void PostMsgToGC(google::protobuf::MessageLite &rMsg, INT32 n32MsgID);
 
             void OnOnline(SUserNetInfo &sUserNetInfo);
 
@@ -51,15 +53,15 @@ namespace MS {
 
             bool AskUpdateItem(GCToGS::AskUpdateItemRet &Msg, CConnection *pConn);
 
-            bool CheckComputerById(int n32CompId);
+            bool CheckComputerById(INT32 n32CompId);
 
-            bool CheckIfEnoughPay(eUserDBData_Type eType, int n32Pay);
+            bool CheckIfEnoughPay(eUserDBData_Type eType, INT32 n32Pay);
 
-            int GetMiningGoldComputerById(int n32CompId);
+            INT32 GetMiningGoldComputerById(INT32 n32CompId);
 
         private:
-            int64_t m_n64LastUpdateTime;
-            int64_t m_tStartAccamulEnergy;
+            TIME_MILSEC m_n64LastUpdateTime;
+            TIME_MILSEC m_tStartAccamulEnergy;
             SUserNetInfo m_sUserNetInfo;
             SUserDBData m_sUserDBData;
         };

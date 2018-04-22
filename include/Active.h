@@ -1,13 +1,12 @@
 #ifndef ACTIVE_H
 #define ACTIVE_H
 
-#include "stdio.h"
 #include <queue>
 #include <string>
-#include "boost/thread/mutex.hpp"
-#include "boost/thread.hpp"
-#include "boost/atomic.hpp"
 #include <functional>
+#include "boost/thread/mutex.hpp"
+#include "boost/thread/thread.hpp"
+#include "boost/atomic.hpp"
 #include "Buffer.h"
 #include "ThreadSafeQueue.h"
 

@@ -1,11 +1,13 @@
 #ifndef DBMANAGER_H
 #define DBMANAGER_H
 
+#include "PreDefine.h"
 #include "stdio.h"
 #include "stdlib.h"
 #include "libpq-fe.h"
 #include <string>
 #include <vector>
+#include <map>
 
 namespace MS {
     namespace Server {
@@ -23,28 +25,28 @@ namespace MS {
 
             void CloseQuery();
 
-            void GetQueryFieldData(const char *cpszFieldName, int &rn32Data);
+            void GetQueryFieldData(const CHAR *cpszFieldName, INT32 &rn32Data);
 
-            void GetQueryFieldData(const char *cpszFieldName, std::string &rstrData);
+            void GetQueryFieldData(const CHAR *cpszFieldName, std::string &rstrData);
 
-            int GetQueryFieldNum();
+            INT32 GetQueryFieldNum();
 
-            int GetQueryFieldRowNum();
+            INT32 GetQueryFieldRowNum();
+
+            bool ConnectDB(const CHAR *cpszUserName, const CHAR *cpszUserPassword, const CHAR *cpszHostIP,
+                           const CHAR *cpszDBName);
 
             void GetQueryFields();
-
-            bool ConnectDB(const char *cpszUserName, const char *cpszUserPassword, const char *cpszHostIP,
-                           const char *cpszDBName);
 
         private:
             PGconn *m_pPGConn;
             PGresult *m_pPGResult;
             std::map<std::string, std::string> m_FieldsValue;
             std::vector<std::string> m_FiledVec;
-            int m_n32ServerPGVersion;
-            int m_TotalFields;
-            int m_TotalRows;
-            int m_CurRowIndx;
+            INT32 m_n32ServerPGVersion;
+            INT32 m_TotalFields;
+            INT32 m_TotalRows;
+            INT32 m_CurRowIndx;
         };
 
 

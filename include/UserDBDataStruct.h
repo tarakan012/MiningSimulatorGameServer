@@ -1,6 +1,7 @@
 #ifndef USERDBDATASTRUCT_H
 #define USERDBDATASTRUCT_H
 
+#include "PreDefine.h"
 #include "all_const.h"
 
 #ifdef __cplusplus
@@ -14,14 +15,14 @@ enum eUserDBData_Type {
     eUserDBData_End
 };
 struct SPODUserDBData {
-    int n32DBId;
-    int n32Gold;
-    int n32Energy;
+    INT32 n32DBId;
+    INT32 n32Gold;
+    INT32 n32Energy;
     bool bIfChangeArr[eUserDBData_End];
 };
 struct SUserDBData {
     SPODUserDBData sPODUserDBData;
-    std::map<int, SComputerInfo> CompInfoMap;
+    std::map<INT32, SComputerInfo> CompInfoMap;
 
     SUserDBData() {
         Clear();
@@ -36,7 +37,7 @@ struct SUserDBData {
         return (sPODUserDBData.n32Energy >= 10) ? true : false;
     }
 
-    void ChengeUserDBData(eUserDBData_Type type, int value) {
+    void ChengeUserDBData(eUserDBData_Type type, INT32 value) {
         switch (type) {
             case eUserDBData_Gold : {
                 sPODUserDBData.n32Gold += value;

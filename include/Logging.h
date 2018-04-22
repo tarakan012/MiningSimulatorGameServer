@@ -1,18 +1,16 @@
 #ifndef UTIL_H
-#define UTIL_H
+#include "PreDefine.h"
 
-#include <string>
+#define UTIL_H
 #include "tinyformat.h"
+#include <string>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-//void SeparatedByCommas(std::stringstream & str)
-//{
-//
-//
-//}
+extern bool gbPrintDebugToConsole;
+
 enum LogFlags {
     NONE = 0,
     DB = (1 << 0),
@@ -21,12 +19,20 @@ enum LogFlags {
     ALL = ~(int) 0,
 };
 
-int LogPrintStr(std::string str);
+INT32 LogPrintStr(std::string str);
 
 #define LogPrint(category, ...) do { \
     std::string logMsg; \
     logMsg = tfm::format(__VA_ARGS__); \
     LogPrintStr(logMsg); \
+    } while(0)
+
+#define LogPrintDebug(...) do { \
+    if(gbPrintDebugToConsole) { \
+    std::string logMsg; \
+    logMsg = tfm::format(__VA_ARGS__); \
+    LogPrintStr(logMsg); \
+    } \
     } while(0)
 
 

@@ -1,12 +1,12 @@
+#include "Logging.h"
 #include "Kernel.h"
-#include "util.h"
 
-using namespace std;
+using namespace MS::Server;
 
 int main(int argc, char **argv) {
     LogPrint(LogFlags::ALL, "Server Start\n");
 
-    MS::Server::CKernel &kernel = MS::Server::CKernel::GetInstance();
+    CKernel &kernel = CKernel::GetInstance();
     kernel.Initialize();
 
     return 0;

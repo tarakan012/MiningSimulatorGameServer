@@ -35,11 +35,11 @@ namespace MS {
             boost::shared_ptr<CUser> lpUser(new CUser());
             SUserNetInfo sUserNetInfo(sQueryUser->gcnetid());
             SUserDBData sUserDBData;
-            for (int i = 0; i < sQueryUser->computer_size(); ++i) {
+            for (INT32 i = 0; i < sQueryUser->computer_size(); ++i) {
                 auto comp = sQueryUser->mutable_computer(i);
-                int dbid = comp->id();
+                INT32 dbid = comp->id();
                 sUserDBData.CompInfoMap[i].n32DBId = dbid;
-                for (int j = 0; j < comp->item_size(); ++j) {
+                for (INT32 j = 0; j < comp->item_size(); ++j) {
                     sUserDBData.CompInfoMap[i].ItemRecordMap[j].n32DBId = comp->mutable_item(i)->id();
                 }
             }
@@ -77,18 +77,18 @@ namespace MS {
             std::stringstream SqlStr;
             SqlStr << "select id, name_googleplus, id_gps, nickname  from account_user";
             pGameDBConnector->ExecQuery(SqlStr.str());
-            int row = pGameDBConnector->GetQueryFieldRowNum();
+            INT32 row = pGameDBConnector->GetQueryFieldRowNum();
             DBToGS::QueryAllAccount sQueryAllAccount;
-            for (int i = 0; i < row; ++i) {
+            for (INT32 i = 0; i < row; ++i) {
                 auto pAccount = sQueryAllAccount.add_account();
 
-                int id = 0;
+                INT32 id = 0;
                 pGameDBConnector->GetQueryFieldData("id", id);
                 pAccount->set_id(id);
                 std::string name_googleplus;
                 pGameDBConnector->GetQueryFieldData("name_googleplus", name_googleplus);
                 pAccount->set_namegoogleplus(name_googleplus);
-                int id_gps = 0;
+                INT32 id_gps = 0;
                 pGameDBConnector->GetQueryFieldData("id_gps", id_gps);
                 pAccount->set_id_gps(id_gps);
                 std::string nickname;
