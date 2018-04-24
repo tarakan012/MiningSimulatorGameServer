@@ -61,7 +61,7 @@ namespace MS {
 
         private:
             TIME_MILSEC m_n64LastUpdateTime;
-            TIME_MILSEC m_tStartAccamulEnergy;
+            TIME_MILSEC m_tStartAccumEnergy;
             SUserNetInfo m_sUserNetInfo;
             SUserDBData m_sUserDBData;
         };

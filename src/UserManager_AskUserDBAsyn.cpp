@@ -1,5 +1,6 @@
 #include "UserManager.h"
-
+#include "Time.h"
+#include "ConfigConst.h"
 #include "boost/regex.hpp"
 
 namespace MS {
@@ -38,11 +39,41 @@ namespace MS {
             pConnector->ExecQuery(strSql.str());
             pConnector->GetQueryFieldData("btc", sUserDBData.sPODUserDBData.n32Gold);
             pConnector->CloseQuery();
-            DBAsyn_QueryUserComputers(pConnector, guid, sQueryUser);
-            for (INT32 i = 0; i < sQueryUser.computer_size(); ++i) {
-                auto comp = sQueryUser.mutable_computer(i);
-                sUserDBData.sPODUserDBData.n32Gold += comp->bufgold();
+            strSql.clear();
+            strSql.str("");
+            strSql << "select energy from game_user where id=" << guid;
+            pConnector->ExecQuery(strSql.str());
+            INT32 n32Energy = 0;
+            pConnector->GetQueryFieldData("energy", n32Energy);
+            sUserDBData.sPODUserDBData.n32Energy = n32Energy;
+            pConnector->CloseQuery();
+            if (!sUserDBData.EnergyIsFool()) {
+                strSql.clear();
+                strSql.str("");
+                TIME_MILSEC tLastStartMining = 0;
+                strSql << "select round(extract(epoch from \"last_start_mining\"))::int as last_start from game_user where id=" << guid;
+                pConnector->ExecQuery(strSql.str());
+                pConnector->GetQueryFieldData("last_start", tLastStartMining);
+                pConnector->CloseQuery();
+                if (tLastStartMining != 0) {
+                    TIME_MILSEC tNow = GetTimeSec();
+                    INT32 n32AccumEnergy = (tNow - tLastStartMining) / tACCUM_ONE_ENERGY;
+                    if (n32AccumEnergy == 0) {
+                        sUserDBData.sPODUserDBData.tLastStartMining = tLastStartMining;
+                    } else {
+                        n32AccumEnergy = std::min<INT32>(n32AccumEnergy,nMAX_ENERGY);
+                        if((n32AccumEnergy + n32Energy) <= nMAX_ENERGY)
+                        {
+                            sUserDBData.ChengeUserDBData(eUserDBData_Energy, n32AccumEnergy);
+                        } else
+                        {
+                            sUserDBData.ChengeUserDBData(eUserDBData_Energy, nMAX_ENERGY - n32Energy);
+                        }
+                    }
+                }
             }
+            DBAsyn_QueryUserComputers(pConnector, guid, sQueryUser);
+
             sQueryUser.set_db((CHAR *) &sUserDBData.sPODUserDBData, sizeof(sUserDBData.sPODUserDBData));
         }
 
@@ -62,33 +93,11 @@ namespace MS {
                 strSql.str(std::string());
                 std::string strcompid = *iter++;
                 INT32 compid = atoi(strcompid.c_str());
-
                 auto comp = sQueryUser.add_computer();
                 comp->set_id(compid);
-                strSql
-                        << "select round(extract(epoch from now() - \"start_mining\"))::INT32 as work_time from computer_user where id="
-                        << strcompid;
-                pConnector->ExecQuery(strSql.str());
-                INT32 worktime = 0;
-                INT32 mininggold = 0;
-                INT32 ln32BuffGold = 0;
-                pConnector->GetQueryFieldData("work_time", worktime);
-                comp->set_worktime(worktime);
-                pConnector->CloseQuery();
-                if (worktime > 0) {
-                    strSql.str(std::string());
-
-                    strSql << "select mining_gold from computer_user where id=" << strcompid;
-                    pConnector->ExecQuery(strSql.str());
-                    pConnector->GetQueryFieldData("mining_gold", mininggold);
-                    comp->set_mininggold(mininggold);
-                    pConnector->CloseQuery();
-                }
-                ln32BuffGold = mininggold * worktime;
-                comp->set_bufgold(ln32BuffGold);
-                LogPrint(LogFlags::ALL, "compid: %d, worktime: %d, mininggold: %d\n", compid, worktime, mininggold);
+//                strSql << "select round(extract(epoch from now() - \"last_start\"))::int as no_work_time from computer_user where id="
+//                       << strcompid;
             }
-
         }
 
         void CUserManager::DBAsyn_QueryUserItems(CDBConnector *pConnector, INT32 n32ComputerId,
@@ -112,4 +121,3 @@ namespace MS {
         }
     }
 }
-

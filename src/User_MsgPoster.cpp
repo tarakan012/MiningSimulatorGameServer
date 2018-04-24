@@ -12,6 +12,7 @@ namespace MS {
         void CUser::SynUserGameInfo() {
             GSToGC::UserGameInfo sUserGameInfo;
             sUserGameInfo.set_gold(m_sUserDBData.sPODUserDBData.n32Gold);
+            sUserGameInfo.set_energy(m_sUserDBData.sPODUserDBData.n32Energy);
             for (auto const &comp : m_sUserDBData.CompInfoMap) {
                 auto const &cCompDB = comp.second;
                 auto pNewComp = sUserGameInfo.add_comp();

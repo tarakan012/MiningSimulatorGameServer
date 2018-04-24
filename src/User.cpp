@@ -3,19 +3,19 @@
 #include "Connection.h"
 #include "AllErrorCode.h"
 #include "Time.h"
-
+#include "ConfigConst.h"
 
 namespace MS {
     namespace Server {
         CUser::CUser() {
             m_n64LastUpdateTime = 0;
-            m_tStartAccamulEnergy = 0;
+            m_tStartAccumEnergy = 0;
         }
 
         void CUser::OnHeartBeart(TIME_MILSEC n64Milsec, TIME_MILSEC n64TickSpawn) {
-            if (!GetUserDBData().EnergyIsFool() && ((n64Milsec - m_tStartAccamulEnergy) > 30 * 1000)) {
+            if (!GetUserDBData().EnergyIsFool() && ((n64Milsec / 1000 - m_tStartAccumEnergy) > tACCUM_ONE_ENERGY)) {
                 GetUserDBData().ChengeUserDBData(eUserDBData_Energy, 1);
-                m_tStartAccamulEnergy = GetTimeMillis();
+                m_tStartAccumEnergy = GetTimeSec();
                 SynPayInfo();
             }
         }
@@ -32,7 +32,6 @@ namespace MS {
             KickOutOldUser();
             CUserManager::GetInstance().OnUserOnline(this, sUserNetInfo);
             SynUserGameInfo();
-
         }
 
 
@@ -67,7 +66,8 @@ namespace MS {
 
             GetUserDBData().ChengeUserDBData(eUserDBData_Gold, ln32MiningGold);
             GetUserDBData().ChengeUserDBData(eUserDBData_Energy, -1);
-            m_tStartAccamulEnergy = GetTimeMillis();
+            m_tStartAccumEnergy = GetTimeSec();
+            GetUserDBData().ChengeUserDBData(eUserDBData_LastTimeM, m_tStartAccumEnergy);
             SynPayInfo();
             return 0;
         }

@@ -1,7 +1,7 @@
 #include "ConfigManager.h"
 #include "PreDefine.h"
 #include "Json.h"
-
+#include "ConfigConst.h"
 #include <fstream>
 
 namespace MS {
@@ -115,7 +115,7 @@ namespace MS {
             if (!file.is_open()) {
                 return false;
             }
-            m_sStartSetCfg.sPODUserDBData.n32Energy = 10;
+            m_sStartSetCfg.sPODUserDBData.n32Energy = nMAX_ENERGY;
             file.seekg(0, file.end);
             INT32 length = file.tellg();
             file.seekg(0, file.beg);

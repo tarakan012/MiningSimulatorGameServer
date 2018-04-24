@@ -18,6 +18,11 @@ void CUserDbDataMgr::UpdateUserDbData(SUserDBData &userdb, std::stringstream &st
         stream << "energy=" << userdb.sPODUserDBData.n32Energy;
         userdb.sPODUserDBData.bIfChangeArr[eUserDBData_Energy] = true;
     }
+    if (userdb.sPODUserDBData.bIfChangeArr[eUserDBData_LastTimeM]) {
+        CheckStreamAndInit(stream);
+        stream << "last_start_mining=to_timestamp(" << userdb.sPODUserDBData.tLastStartMining << ")";
+        userdb.sPODUserDBData.bIfChangeArr[eUserDBData_LastTimeM] = true;
+    }
     if (!stream.str().empty()) {
         stream << " where id=" << userdb.sPODUserDBData.n32DBId;
     }

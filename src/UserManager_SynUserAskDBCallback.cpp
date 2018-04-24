@@ -1,3 +1,4 @@
+#include <tinyformat.h>
 #include "UserManager.h"
 #include "UserDbDataMgr.h"
 
@@ -23,16 +24,15 @@ namespace MS {
                         break;
                     }
                 }
-
             }
-
         }
 
         void CUserManager::SynHandleQueryUserCallback(CBuffer *pBuffer) {
 
             boost::shared_ptr<DBToGS::QueryUser> sQueryUser = ParseProtoMsgInThread<DBToGS::QueryUser>(
                     pBuffer->GetCurData(), pBuffer->GetDataLength());
-            boost::shared_ptr<CUser> lpUser(new CUser());
+            CUser *lpUser = new CUser();
+            AddUser(lpUser);
             SUserNetInfo sUserNetInfo(sQueryUser->gcnetid());
             SUserDBData sUserDBData;
             for (INT32 i = 0; i < sQueryUser->computer_size(); ++i) {
@@ -57,8 +57,6 @@ namespace MS {
             pDBConnector->GetQueryFieldData("max", m_n32MaxItemDBID);
             pDBConnector->CloseQuery();
             LogPrint(LogFlags::ALL, "MaxComputerID: %d\n", m_n32MaxComputerID);
-
-
         }
 
         bool CUserManager::DBPoster_UpdateUser(CUser *pUser) {

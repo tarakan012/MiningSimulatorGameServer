@@ -26,7 +26,7 @@ namespace MS {
             void CloseQuery();
 
             void GetQueryFieldData(const CHAR *cpszFieldName, INT32 &rn32Data);
-
+            void GetQueryFieldData(const CHAR *cpszFieldName, UINT64 &rn32Data);
             void GetQueryFieldData(const CHAR *cpszFieldName, std::string &rstrData);
 
             INT32 GetQueryFieldNum();

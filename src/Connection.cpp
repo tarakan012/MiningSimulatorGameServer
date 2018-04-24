@@ -47,7 +47,11 @@ namespace MS {
             } else {
                 LogPrint(LogFlags::ALL, "Handle Read Fail, error: %s\n", error.message());
                 CUser *user = CUserManager::GetInstance().GetUserByNetInfo(m_sUserNerInfo);
-                if (user) CUserManager::GetInstance().RemoveUser(user);
+                if (user)
+                {
+                    CUserManager::GetInstance().RemoveUser(user);
+                    CUserManager::GetInstance().OnUserOffline(user);
+                }
             }
         }
 

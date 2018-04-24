@@ -13,7 +13,8 @@ enum MsgId {
 message UserGameInfo {
     optional MsgId msgid = 1 [default = eUserGameInfo];
     required uint32 gold = 2;
-    repeated ComputerInfo comp = 3;
+    required uint32 energy = 3;
+    repeated ComputerInfo comp = 4;
 
 }
 

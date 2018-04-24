@@ -3,6 +3,7 @@
 
 #include "PreDefine.h"
 #include "all_const.h"
+#include "ConfigConst.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,12 +13,14 @@ enum eUserDBData_Type {
     eUserDBData_None = 0,
     eUserDBData_Gold,
     eUserDBData_Energy,
+    eUserDBData_LastTimeM,
     eUserDBData_End
 };
 struct SPODUserDBData {
     INT32 n32DBId;
     INT32 n32Gold;
     INT32 n32Energy;
+    TIME_MILSEC tLastStartMining;
     bool bIfChangeArr[eUserDBData_End];
 };
 struct SUserDBData {
@@ -34,7 +37,7 @@ struct SUserDBData {
     }
 
     bool EnergyIsFool() {
-        return (sPODUserDBData.n32Energy >= 10) ? true : false;
+        return (sPODUserDBData.n32Energy >= nMAX_ENERGY) ? true : false;
     }
 
     void ChengeUserDBData(eUserDBData_Type type, INT32 value) {
@@ -45,6 +48,10 @@ struct SUserDBData {
             }
             case eUserDBData_Energy : {
                 sPODUserDBData.n32Energy += value;
+                break;
+            }
+            case eUserDBData_LastTimeM : {
+                sPODUserDBData.tLastStartMining = value;
                 break;
             }
         }

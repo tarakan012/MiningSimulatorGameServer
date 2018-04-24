@@ -41,6 +41,13 @@ namespace MS {
             }
         }
 
+        void CDBConnector::GetQueryFieldData(const CHAR *cpszFieldName, UINT64 &rn32Data) {
+            auto iter = m_FieldsValue.find(cpszFieldName);
+            if (iter != m_FieldsValue.end()) {
+                rn32Data = atol(iter->second.data());
+            }
+        }
+
         void CDBConnector::GetQueryFieldData(const CHAR *cpszFieldName, std::string &rstrData) {
             auto iter = m_FieldsValue.find(cpszFieldName);
             if (iter != m_FieldsValue.end()) {

@@ -25,7 +25,7 @@ message QueryUser {
     optional bytes db = 5;
     message ComputerInfo {
         optional uint32 id = 1;
-        optional uint32 worktime = 2;
+        optional uint32 noworktime = 2;
         optional uint32 mininggold = 3;
         optional uint32 bufgold = 5;
         message ItemInfo {
@@ -34,5 +34,5 @@ message QueryUser {
         }
         repeated ItemInfo item = 4;
     }
-    repeated ComputerInfo computer = 3;
+    repeated ComputerInfo computer = 6;
 }

@@ -6,7 +6,7 @@ namespace MS {
         bool CUserManager::UserAskLogin(GCToGS::AskLogin &rLogin, SUserNetInfo netinfo) {
             SUserCombineKey sUserCombineKey(rLogin.namegoogleplus(), rLogin.id_gps());
             auto iter = m_AllUserNameIDMap.find(sUserCombineKey);
-            if (iter == m_AllUserNameIDMap.end()) {
+            if (iter != m_AllUserNameIDMap.end()) {
                 LogPrintDebug("User Account Exist\n");
                 INT32 n32DBGameUserID = iter->second;
                 GSToDB::QueryUserReq sQueryUser;
