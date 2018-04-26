@@ -1,6 +1,7 @@
 #include "User.h"
-#include "Connection.h"
 #include "GSToGC.pb.h"
+#include "ConfigManager.h"
+
 
 namespace MS {
     namespace Server {
@@ -31,6 +32,25 @@ namespace MS {
             sUserPayInfo.set_gold(GetUserDBData().sPODUserDBData.n32Gold);
             sUserPayInfo.set_energy(GetUserDBData().sPODUserDBData.n32Energy);
             PostMsgToGC(sUserPayInfo, sUserPayInfo.msgid());
+        }
+
+        void CUser::SynShopPriceList() {
+            GSToGC::SynShopPriceList msg;
+            const auto & cShopCfg = CConfigManager::GetInstance().GetShopCfg();
+            for(auto const & page : cShopCfg)
+            {
+                auto pMsgPage = msg.add_page();
+                const std::vector<SItemRecord> &vPage = page.second;
+                for(auto const & item : vPage)
+                {
+                    auto pMsgItem = pMsgPage->add_item();
+                    pMsgItem->set_id(item.n32Id);
+                    pMsgItem->set_name(item.szName);
+                    pMsgItem->set_mining_gold(item.n32MiningGold);
+                    pMsgItem->set_cost(item.n32Cost);
+                }
+            }
+            PostMsgToGC(msg, msg.msgid());
         }
     }
 }

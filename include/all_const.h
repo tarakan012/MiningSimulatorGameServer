@@ -37,16 +37,6 @@ struct SItemRecord {
     }
 };
 
-struct SShopCfg {
-
-    int n32typePage;
-    int szItemId[cMaxItemInShop];
-
-    SShopCfg() {
-        std::memset(this, 0, sizeof(*this));
-    }
-};
-
 struct SPODComputerInfo {
     int n32ID;
     int n32MiningGold;

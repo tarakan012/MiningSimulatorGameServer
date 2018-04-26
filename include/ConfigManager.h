@@ -6,6 +6,7 @@
 #include "Logging.h"
 
 #include <map>
+#include <vector>
 
 namespace MS {
     namespace Server {
@@ -28,11 +29,15 @@ namespace MS {
                 return m_sStartSetCfg;
             }
 
+            const std::map<int/*page_type*/, std::vector<SItemRecord>> &GetShopCfg() {
+                return m_ShopCfgMap;
+            }
+
             static CConfigManager &GetInstance();
 
         private:
             std::map<int, SItemRecord> m_ItemRecordMap;
-            std::map<int, SShopCfg> m_ShopCfgMap;
+            std::map<int/*page_type*/, std::vector<SItemRecord>> m_ShopCfgMap;
             SUserDBData m_sStartSetCfg;
 
         };

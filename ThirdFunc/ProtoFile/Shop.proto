@@ -1,0 +1,17 @@
+syntax = 'proto2';
+option optimize_for = LITE_RUNTIME;
+
+import "Item.proto";
+
+enum TypePage
+{
+    eTypePage_GPU = 0;
+    eTypePage_CPU = 1;
+}
+
+message PageShop
+{
+    required TypePage type = 1;
+    repeated ItemInfo item = 2;
+}
+

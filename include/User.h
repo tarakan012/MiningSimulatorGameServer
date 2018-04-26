@@ -47,6 +47,8 @@ namespace MS {
 
             void SynUserGameInfo();
 
+            void SynShopPriceList();
+
             void SynPayInfo();
 
             SUserDBData &GetUserDBData() { return m_sUserDBData; }

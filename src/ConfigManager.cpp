@@ -41,19 +41,27 @@ namespace MS {
             delete[]pBuffer;
             Json *obj = json->child;
             for (INT32 i = 0; i < json->size; ++i) {
-                SShopCfg tempSCfg;
-                tempSCfg.n32typePage = Json_getInt(obj, "typePage", -1);
+                std::vector<SItemRecord> vPageShop;
+                INT32 n32PageType = Json_getInt(obj, "typePage", -1);
 
                 Json *jsonArray = Json_getItem(obj, "itemIdPage");
 
                 Json *JsonNumber = jsonArray->child;
                 for (INT32 i = 0; jsonArray->size; ++i) {
-                    tempSCfg.szItemId[i] = JsonNumber->valueInt;
+                    INT32 n32ItemId = JsonNumber->valueInt;
+                    auto iter = m_ItemRecordMap.find(n32ItemId);
+                    if (iter != m_ItemRecordMap.end()) {
+                        vPageShop.push_back(iter->second);
+                    } else {
+                        LogPrint(LogFlags::CFG, "The wrong ItemID - %d\n", n32ItemId);
+                        return false;
+                    }
                     if (!JsonNumber->next) {
                         break;
                     }
                     JsonNumber = JsonNumber->next;
                 }
+                m_ShopCfgMap[n32PageType] = vPageShop;
                 if (!obj->next) {
                     break;
                 }

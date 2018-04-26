@@ -1,17 +1,14 @@
 [
   {
     "itemIdPage": [
-      12,
-      12,
-      12
+    1000,
+    1001
     ],
     "typePage": 1
   },
   {
     "itemIdPage": [
-      1,
-      12,
-      1
+    2000
     ],
     "typePage": 2
   }

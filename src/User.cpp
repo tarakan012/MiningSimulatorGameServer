@@ -32,6 +32,7 @@ namespace MS {
             KickOutOldUser();
             CUserManager::GetInstance().OnUserOnline(this, sUserNetInfo);
             SynUserGameInfo();
+            SynShopPriceList();
         }
 
 
