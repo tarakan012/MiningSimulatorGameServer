@@ -41,7 +41,7 @@ namespace MS {
             delete[]pBuffer;
             Json *obj = json->child;
             for (INT32 i = 0; i < json->size; ++i) {
-                std::vector<SItemRecord> vPageShop;
+                std::map<INT32, SItemRecord> PageShopMap;
                 INT32 n32PageType = Json_getInt(obj, "typePage", -1);
 
                 Json *jsonArray = Json_getItem(obj, "itemIdPage");
@@ -51,7 +51,7 @@ namespace MS {
                     INT32 n32ItemId = JsonNumber->valueInt;
                     auto iter = m_ItemRecordMap.find(n32ItemId);
                     if (iter != m_ItemRecordMap.end()) {
-                        vPageShop.push_back(iter->second);
+                        PageShopMap[n32ItemId] = iter->second;
                     } else {
                         LogPrint(LogFlags::CFG, "The wrong ItemID - %d\n", n32ItemId);
                         return false;
@@ -61,7 +61,7 @@ namespace MS {
                     }
                     JsonNumber = JsonNumber->next;
                 }
-                m_ShopCfgMap[n32PageType] = vPageShop;
+                m_ShopCfgMap[n32PageType] = PageShopMap;
                 if (!obj->next) {
                     break;
                 }

@@ -37,12 +37,13 @@ namespace MS {
         void CUser::SynShopPriceList() {
             GSToGC::SynShopPriceList msg;
             const auto & cShopCfg = CConfigManager::GetInstance().GetShopCfg();
-            for(auto const & page : cShopCfg)
+            for (auto const &page_pair : cShopCfg)
             {
                 auto pMsgPage = msg.add_page();
-                const std::vector<SItemRecord> &vPage = page.second;
-                for(auto const & item : vPage)
+                const std::map<INT32, SItemRecord> &PageMap = page_pair.second;
+                for (auto const &item_pair : PageMap)
                 {
+                    const auto &item = item_pair.second;
                     auto pMsgItem = pMsgPage->add_item();
                     pMsgItem->set_id(item.n32Id);
                     pMsgItem->set_name(item.szName);

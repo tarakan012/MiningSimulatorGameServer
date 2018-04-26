@@ -29,7 +29,7 @@ namespace MS {
                 return m_sStartSetCfg;
             }
 
-            const std::map<int/*page_type*/, std::vector<SItemRecord>> &GetShopCfg() {
+            const std::map<int/*page_type*/, std::map<INT32/*item_id*/, SItemRecord>> &GetShopCfg() {
                 return m_ShopCfgMap;
             }
 
@@ -37,7 +37,7 @@ namespace MS {
 
         private:
             std::map<int, SItemRecord> m_ItemRecordMap;
-            std::map<int/*page_type*/, std::vector<SItemRecord>> m_ShopCfgMap;
+            std::map<int/*page_type*/, std::map<INT32/*item_id*/, SItemRecord>> m_ShopCfgMap;
             SUserDBData m_sStartSetCfg;
 
         };
