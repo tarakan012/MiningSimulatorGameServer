@@ -6,7 +6,9 @@
 #include "boost/asio.hpp"
 #include "boost/array.hpp"
 #include "boost/bind.hpp"
-#include "boost/shared_ptr.hpp"
+#include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/enable_shared_from_this.hpp>
 
 #include <stdio.h>
 
@@ -16,7 +18,7 @@ namespace MS {
 #ifdef __cplusplus
         extern "C" {
 #endif
-        class CConnection {
+        class CConnection : public boost::enable_shared_from_this<CConnection>, private boost::noncopyable {
         public:
             CConnection(boost::asio::io_service &io_service);
 

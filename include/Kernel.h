@@ -33,9 +33,12 @@ namespace MS {
 
             void HandleStop();
 
+            CConnectionManager &GetConnectionMgr() { return m_ConnectionManager; };
+
             void InitNetService(INT32 n32ThreadCount);
 
             bool Initialize();
+
         private:
             CKernel();
 

@@ -2,6 +2,7 @@
 #include "Kernel.h"
 #include "Logging.h"
 #include "UserManager.h"
+#include "Kernel.h"
 
 namespace MS {
     namespace Server {
@@ -51,6 +52,7 @@ namespace MS {
                 {
                     CUserManager::GetInstance().RemoveUser(user);
                     CUserManager::GetInstance().OnUserOffline(user);
+                    CKernel::GetInstance().GetConnectionMgr().Stop(shared_from_this());
                 }
             }
         }
