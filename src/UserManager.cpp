@@ -87,7 +87,7 @@ namespace MS {
             return 0;
         }
 
-        void CUserManager::EncodeAndSendToLogicThread(google::protobuf::Message &rMsg, INT32 n32MsgId) {
+        void CUserManager::EncodeAndSendToLogicThread(google::protobuf::MessageLite &rMsg, INT32 n32MsgId) {
             CBuffer *pBuffer = m_CallbackQueuePool.AcquireObject();
             CDBActiveWrapper::EncodeProtoMsgToBuffer(rMsg, n32MsgId, pBuffer);
             m_DBCallbackQueue.push(pBuffer);
@@ -222,7 +222,7 @@ namespace MS {
                 case eDBOperation::eOperationTypeAdd : {
                     std::stringstream strSql;
                     strSql << "insert into computer_user(id,item_id,mining_gold) values(";
-                    strSql << rsComputerInfo.n32ID << ", '{";
+                    strSql << rsComputerInfo.n32DBId << ", '{";
 
                     INT32 n32CountDelim = rsComputerInfo.ItemRecordMap.size() - 1;
                     INT32 genItemID = 0;

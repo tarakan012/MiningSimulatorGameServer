@@ -40,7 +40,9 @@ namespace MS {
                 INT32 dbid = comp->id();
                 sUserDBData.CompInfoMap[i].n32DBId = dbid;
                 for (INT32 j = 0; j < comp->item_size(); ++j) {
-                    sUserDBData.CompInfoMap[i].ItemRecordMap[j].n32DBId = comp->mutable_item(i)->id();
+                    sUserDBData.CompInfoMap[i].ItemRecordMap[j].n32DBId = comp->mutable_item(j)->id();
+                    sUserDBData.CompInfoMap[i].ItemRecordMap[j].n32MiningGold = comp->mutable_item(j)->mining_gold();
+                    //sUserDBData.CompInfoMap[i].ItemRecordMap[j].szName = comp->mutable_item(i)->name();
                 }
             }
             std::memcpy(&sUserDBData, sQueryUser->db().c_str(), sQueryUser->db().size());

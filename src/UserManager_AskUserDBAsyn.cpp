@@ -95,28 +95,42 @@ namespace MS {
                 INT32 compid = atoi(strcompid.c_str());
                 auto comp = sQueryUser.add_computer();
                 comp->set_id(compid);
+                DBAsyn_QueryUserItems(pConnector, compid, comp);
 //                strSql << "select round(extract(epoch from now() - \"last_start\"))::int as no_work_time from computer_user where id="
 //                       << strcompid;
             }
         }
 
         void CUserManager::DBAsyn_QueryUserItems(CDBConnector *pConnector, INT32 n32ComputerId,
-                                                 DBToGS::QueryUser_ComputerInfo &rsComputerInfo) {
+                                                 DBToGS::QueryUser_ComputerInfo *pMsgCompInfo) {
             std::string strItemsId;
             std::stringstream strSql;
             strSql << "select array_to_string(item_id,',') as iditemlist from computer_user where id=" << n32ComputerId;
             pConnector->ExecQuery(strSql.str());
-            pConnector->GetQueryFieldData("idcomplist", strItemsId);
+            pConnector->GetQueryFieldData("iditemlist", strItemsId);
             pConnector->CloseQuery();
             boost::regex delim("\\,");
             boost::sregex_token_iterator iter(strItemsId.begin(), strItemsId.end(), delim, -1);
             boost::sregex_token_iterator iter_end;
             while (iter != iter_end) {
+                strSql.clear();
                 strSql.str(std::string());
                 std::string strItemId = *iter++;
                 INT32 l_n32ItemId = atoi(strItemId.c_str());
-                auto item = rsComputerInfo.add_item();
+                auto item = pMsgCompInfo->add_item();
                 item->set_id(l_n32ItemId);
+                strSql << "select name, mining_gold, item_id from item_user where id=" << l_n32ItemId;
+                pConnector->ExecQuery(strSql.str());
+                INT32 mining_gold = 0;
+                pConnector->GetQueryFieldData("mining_gold", mining_gold);
+                item->set_mining_gold(mining_gold);
+                INT32 item_id = 0;
+
+
+                std::string name("");
+                pConnector->GetQueryFieldData("name", name);
+                item->set_name(name);
+                pConnector->CloseQuery();
             }
         }
     }

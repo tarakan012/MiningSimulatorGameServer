@@ -20,9 +20,9 @@ public:
 
     MS::Server::CDBConnector *GetDBConnector();
 
-    bool EncodeAndSendToDBThread(google::protobuf::Message &rMsg, INT32 n32MsgId);
+    bool EncodeAndSendToDBThread(google::protobuf::MessageLite &rMsg, INT32 n32MsgId);
 
-    static bool EncodeProtoMsgToBuffer(google::protobuf::Message &rMsg, INT32 n32MsgId, CBuffer *pBuffer);
+    static bool EncodeProtoMsgToBuffer(google::protobuf::MessageLite &rMsg, INT32 n32MsgId, CBuffer *pBuffer);
 
     CDBActiveWrapper(Callback fCAllBack, BeginInThreadCallback fStartCallBack = nullptr);
 

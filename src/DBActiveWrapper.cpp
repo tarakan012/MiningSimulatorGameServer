@@ -17,14 +17,14 @@ void CDBActiveWrapper::InitInThread() {
     }
 }
 
-bool CDBActiveWrapper::EncodeAndSendToDBThread(google::protobuf::Message &rMsg, int n32MsgId) {
+bool CDBActiveWrapper::EncodeAndSendToDBThread(google::protobuf::MessageLite &rMsg, int n32MsgId) {
     CBuffer *pBuffer = m_pActive->GetBuffer();
     EncodeProtoMsgToBuffer(rMsg, n32MsgId, pBuffer);
     m_pActive->Send(pBuffer);
     return true;
 }
 
-bool CDBActiveWrapper::EncodeProtoMsgToBuffer(google::protobuf::Message &rMsg, int n32MsgId, CBuffer *pBuffer) {
+bool CDBActiveWrapper::EncodeProtoMsgToBuffer(google::protobuf::MessageLite &rMsg, int n32MsgId, CBuffer *pBuffer) {
     std::string str = rMsg.SerializeAsString();
     if (pBuffer == NULL) return false;
     pBuffer->Append(str);

@@ -105,7 +105,7 @@ namespace MS {
             void DBAsyn_QueryUserComputers(CDBConnector *pConnector, INT32 n32UserID, DBToGS::QueryUser &sQueryUser);
 
             void DBAsyn_QueryUserItems(CDBConnector *pConnector, INT32 n32ComputerId,
-                                       DBToGS::QueryUser_ComputerInfo &rsComputerInfo);
+                                       DBToGS::QueryUser_ComputerInfo *pMsgCompInfo);
 
             void DBAsyn_ExeSQL(CBuffer *pBuffer, CDBConnector *pConnector);
 
@@ -141,7 +141,7 @@ namespace MS {
 
             bool DBSynQueryAskUserItem(INT32 n32UserId, INT32 n32ItemId);
 
-            void EncodeAndSendToLogicThread(google::protobuf::Message &rMsg, INT32 n32MsgId);
+            void EncodeAndSendToLogicThread(google::protobuf::MessageLite &rMsg, INT32 n32MsgId);
 
             bool PostMsgToGC_AskReturn(const SUserNetInfo netinfo, INT32 n32ProtocolId, INT32 n32RetFlag);
 

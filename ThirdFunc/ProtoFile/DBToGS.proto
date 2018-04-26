@@ -1,4 +1,6 @@
 syntax = 'proto2';
+option optimize_for = LITE_RUNTIME;
+import "Item.proto";
 
 package DBToGS;
 
@@ -28,10 +30,6 @@ message QueryUser {
         optional uint32 noworktime = 2;
         optional uint32 mininggold = 3;
         optional uint32 bufgold = 5;
-        message ItemInfo {
-            optional uint32 id = 1;
-
-        }
         repeated ItemInfo item = 4;
     }
     repeated ComputerInfo computer = 6;
