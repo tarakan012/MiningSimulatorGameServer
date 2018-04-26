@@ -139,14 +139,12 @@ namespace MS {
             pConnector->CloseQuery();
         }
 
+#define GCCallback(Callback) std::bind(Callback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
         void CUserManager::RegisterMsgHandle(GCMsgHandlerMap &GCMsgHandlerMap) {
-            GCMsgHandlerMap[GCToGS::eMsgToGSFromGC_AskLogin] = std::bind(&CUserManager::OnMSgFromGC_AskLogin,
-                                                                         this, std::placeholders::_1,
-                                                                         std::placeholders::_2, std::placeholders::_3);
-            GCMsgHandlerMap[GCToGS::eMsgToGSFromGC_AskStartMining] = std::bind(
-                    &CUserManager::OnMSgFromGC_AskStartMining,
-                    this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+            GCMsgHandlerMap[GCToGS::eMsgToGSFromGC_AskLogin] = GCCallback(&CUserManager::OnMSgFromGC_AskLogin)
+            GCMsgHandlerMap[GCToGS::eMsgToGSFromGC_AskStartMining] = GCCallback(
+                                                                             &CUserManager::OnMSgFromGC_AskStartMining)
         }
 
 
