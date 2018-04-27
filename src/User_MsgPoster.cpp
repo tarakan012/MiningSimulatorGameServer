@@ -53,5 +53,17 @@ namespace MS {
             }
             PostMsgToGC(msg, msg.msgid());
         }
+
+        void CUser::SynInventory() {
+            GSToGC::SynInventory msg;
+            for (auto &item_pair : GetUserDBData().Inventory) {
+                auto &item = item_pair.second;
+                auto pMsgItem = msg.add_item();
+                pMsgItem->set_dbid(item.n32DBId);
+                pMsgItem->set_name(item.szName);
+                pMsgItem->set_mining_gold(item.n32MiningGold);
+            }
+            PostMsgToGC(msg, msg.msgid());
+        }
     }
 }

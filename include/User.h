@@ -51,6 +51,7 @@ namespace MS {
 
             void SynPayInfo();
 
+            void SynInventory();
             SUserDBData &GetUserDBData() { return m_sUserDBData; }
 
             INT32 GetGold() { return m_sUserDBData.sPODUserDBData.n32Gold; }
