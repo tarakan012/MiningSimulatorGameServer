@@ -23,6 +23,20 @@ namespace MS {
             m_n64LastUpdateTime = 0;
         }
 
+        bool CUserManager::Initialize() {
+            m_n32MaxGameUserID = 0;
+            m_n32MaxComputerID = 0;
+            m_n32MaxItemDBID = 0;
+            m_UserCacheDBActiveWrapper = new CDBActiveWrapper(
+                    std::bind(&CUserManager::UserCacheDBAsynHandler, this, std::placeholders::_1),
+                    std::bind(&CUserManager::DBAsyn_QueryWhenThreadBegin, this));
+            m_UserCacheDBActiveWrapper->Start();
+            m_LoginDBWrapper = new CDBActiveWrapper(
+                    std::bind(&CUserManager::UserAskDBAsynHandler, this, std::placeholders::_1),
+                    std::bind(&CUserManager::GPSThreadBeginCallback, this));
+            m_LoginDBWrapper->Start();
+        }
+
         void CUserManager::OnHeartBeatImmediately() {
 
             OnUsersUpdate();
@@ -91,21 +105,6 @@ namespace MS {
             CBuffer *pBuffer = m_CallbackQueuePool.AcquireObject();
             CDBActiveWrapper::EncodeProtoMsgToBuffer(rMsg, n32MsgId, pBuffer);
             m_DBCallbackQueue.push(pBuffer);
-        }
-
-
-        bool CUserManager::Initialize() {
-            m_UserCacheDBActiveWrapper = new CDBActiveWrapper(
-                    std::bind(&CUserManager::UserCacheDBAsynHandler, this, std::placeholders::_1),
-                    std::bind(&CUserManager::DBAsyn_QueryWhenThreadBegin, this));
-            m_UserCacheDBActiveWrapper->Start();
-            m_LoginDBWrapper = new CDBActiveWrapper(
-                    std::bind(&CUserManager::UserAskDBAsynHandler, this, std::placeholders::_1),
-                    std::bind(&CUserManager::GPSThreadBeginCallback, this));
-            m_LoginDBWrapper->Start();
-            m_n32MaxGameUserID = 0;
-            m_n32MaxComputerID = 0;
-            m_n32MaxItemDBID = 0;
         }
 
         INT32 CUserManager::CombineGameUserID() {
