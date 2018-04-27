@@ -55,7 +55,7 @@ namespace MS {
             return 0;
         }
 
-        INT32 CUser::StartMiningByComputer(GCToGS::AskStartMining &rsMsg) {
+        INT32 CUser::AskStartMining(GCToGS::AskStartMining &rsMsg) {
             INT32 ln32ComputerId = rsMsg.compid();
             if (!CheckComputerById(ln32ComputerId)) {
                 return eEC_InvalidCompId;

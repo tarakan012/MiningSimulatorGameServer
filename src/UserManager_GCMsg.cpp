@@ -50,7 +50,7 @@ namespace MS {
                 return 0;
             }
 
-            INT32 n32RetFlag = pcUser->StartMiningByComputer(sMsg);
+            INT32 n32RetFlag = pcUser->AskStartMining(sMsg);
             if (eNormal != n32RetFlag) {
                 PostMsgToGC_AskReturn(netinfo, sMsg.msgid(), n32RetFlag);
             }

@@ -31,7 +31,7 @@ namespace MS {
 
             INT32 KickOutOldUser();
 
-            INT32 StartMiningByComputer(GCToGS::AskStartMining &rsMsg);
+            INT32 AskStartMining(GCToGS::AskStartMining &rsMsg);
 
             SUserNetInfo &GetUserNetInfo() { return m_sUserNetInfo; };
 
