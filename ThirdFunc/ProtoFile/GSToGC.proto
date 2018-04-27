@@ -30,7 +30,7 @@ message SynShopPriceList {
 
 message SynInventory {
     optional MsgId msgid = 1 [default = eSyn_Inventory];
-    required ItemInfo item = 2;
+    repeated ItemInfo item = 2;
 }
 
 message UserPayInfo {
