@@ -37,7 +37,7 @@ namespace MS {
             SUserDBData sUserDBData;
             for (INT32 i = 0; i < sQueryUser->computer_size(); ++i) {
                 auto comp = sQueryUser->mutable_computer(i);
-                INT32 dbid = comp->id();
+                INT32 dbid = comp->dbid();
                 sUserDBData.CompInfoMap[i].n32DBId = dbid;
                 for (INT32 j = 0; j < comp->item_size(); ++j) {
                     sUserDBData.CompInfoMap[i].ItemRecordMap[j].n32DBId = comp->mutable_item(j)->id();

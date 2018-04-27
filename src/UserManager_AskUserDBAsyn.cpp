@@ -92,17 +92,17 @@ namespace MS {
             while (iter != iter_end) {
                 strSql.str(std::string());
                 std::string strcompid = *iter++;
-                INT32 compid = atoi(strcompid.c_str());
+                INT32 comp_dbid = atoi(strcompid.c_str());
                 auto comp = sQueryUser.add_computer();
-                comp->set_id(compid);
-                DBAsyn_QueryUserItems(pConnector, compid, comp);
+                comp->set_dbid(comp_dbid);
+                DBAsyn_QueryUserItems(pConnector, comp_dbid, comp);
 //                strSql << "select round(extract(epoch from now() - \"last_start\"))::int as no_work_time from computer_user where id="
 //                       << strcompid;
             }
         }
 
         void CUserManager::DBAsyn_QueryUserItems(CDBConnector *pConnector, INT32 n32ComputerId,
-                                                 DBToGS::QueryUser_ComputerInfo *pMsgCompInfo) {
+                                                 ComputerInfo *pMsgCompInfo) {
             std::string strItemsId;
             std::stringstream strSql;
             strSql << "select array_to_string(item_id,',') as iditemlist from computer_user where id=" << n32ComputerId;
