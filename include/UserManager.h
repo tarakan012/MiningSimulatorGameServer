@@ -125,6 +125,7 @@ namespace MS {
 
             void UpdateUserComputer(SComputerInfo &rsComputerInfo, eDBOperation operation);
 
+            void UpdateUserItemInInvenoty(CUser *user, SItemRecord &item_record);
             void OnHeartBeatImmediately();
 
             void GPSThreadBeginCallback();

@@ -257,6 +257,16 @@ namespace MS {
 
         }
 
+        void CUserManager::UpdateUserItemInInvenoty(CUser *user, SItemRecord &item_record) {
+            GSToDB::ExeSQL_Call exeSql;
+            std::stringstream strSql;
+            strSql << "update game_user set inventory=inv from (select array_append(inventory," << item_record.n32DBId
+                   << ") as inv from game_user) as foo";
+            exeSql.set_sql(strSql.str());
+            m_LoginDBWrapper->EncodeAndSendToDBThread(exeSql, exeSql.id());
+            UpdateUserItem(item_record, eDBOperation::eOperationTypeAdd);
+        }
+
         bool CUserManager::PostMsgToGC_AskReturn(const SUserNetInfo netinfo, INT32 n32ProtocolId, INT32 n32RetFlag) {
             GSToGC::AskRet msg;
             msg.set_askid(n32ProtocolId);
