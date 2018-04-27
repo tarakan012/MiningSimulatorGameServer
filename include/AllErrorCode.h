@@ -9,7 +9,8 @@ enum eAllErrorCode {
     eEC_Begin = 0,
     eEC_InvalidCompId,
     eEC_NotEnoughEnergy,
-
+    eEC_NotEnoughGold,
+    eEC_InvalidItemId,
     eEC_End
 };
 
