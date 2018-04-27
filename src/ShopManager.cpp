@@ -25,6 +25,7 @@ namespace MS {
                         INT32 item_dbid = CUserManager::GetInstance().GenerateItemDBID();
                         item.n32DBId = item_dbid;
                         user->GetUserDBData().Inventory[item.n32DBId] = item;
+                        CUserManager::GetInstance().UpdateUserItemInInvenoty(user, item);
                         return eNormal;
                     } else {
                         return eEC_NotEnoughGold;
