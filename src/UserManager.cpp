@@ -145,6 +145,8 @@ namespace MS {
             GCMsgHandlerMap[GCToGS::eMsgToGSFromGC_AskLogin] = GCCallback(&CUserManager::OnMSgFromGC_AskLogin)
             GCMsgHandlerMap[GCToGS::eMsgToGSFromGC_AskStartMining] = GCCallback(
                                                                              &CUserManager::OnMSgFromGC_AskStartMining)
+            GCMsgHandlerMap[GCToGS::eMsgToGSFromGC_AskStartMining] = GCCallback(
+                                                                             &CUserManager::OnMsgFromGC_AskBuyItem)
         }
 
 
