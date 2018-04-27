@@ -26,7 +26,7 @@ struct SPODUserDBData {
 struct SUserDBData {
     SPODUserDBData sPODUserDBData;
     std::map<INT32, SComputerInfo> CompInfoMap;
-
+    std::map<INT32/*dbid*/, SItemRecord> Inventory;
     SUserDBData() {
         Clear();
     }
