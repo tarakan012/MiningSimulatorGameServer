@@ -139,10 +139,6 @@ namespace MS {
 
             INT32 OnMsgFromGC_AskBuyItem(const CHAR *pMsg, INT32 n32MsgLength, const SUserNetInfo netinfo);
 
-            INT32 OnMsgFromGC_AskUpdateItemRet(const CHAR *pMsg, INT32 n32MsgLength, CConnection *pConn);
-
-            bool DBSynQueryAskUserItem(INT32 n32UserId, INT32 n32ItemId);
-
             void EncodeAndSendToLogicThread(google::protobuf::MessageLite &rMsg, INT32 n32MsgId);
 
             bool PostMsgToGC_AskReturn(const SUserNetInfo netinfo, INT32 n32ProtocolId, INT32 n32RetFlag);

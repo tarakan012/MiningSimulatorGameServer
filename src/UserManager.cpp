@@ -148,13 +148,6 @@ namespace MS {
                                                                              &CUserManager::OnMsgFromGC_AskBuyItem)
         }
 
-
-        bool CUserManager::DBSynQueryAskUserItem(INT32 n32UserId, INT32 n32ItemId) {
-            std::stringstream ss;
-            ss << "select * from account where id=" << n32UserId;
-            std::string str = ss.str();
-        }
-
         void CUserManager::InsertNewUserToDB(GCToGS::AskLogin &rLogin, CUser *pUser, INT32 n32DBGameUserID) {
             GSToDB::ExeSQL_Call exeSql;
             std::stringstream strSql;

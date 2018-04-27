@@ -33,9 +33,6 @@ namespace MS {
             return 1;
         }
 
-        INT32 CUserManager::OnMsgFromGC_AskUpdateItemRet(const CHAR *pMsg, INT32 n32MsgLength, CConnection *pConn) {
-        }
-
         INT32
         CUserManager::OnMSgFromGC_AskStartMining(const CHAR *pMsg, INT32 n32MsgLength, const SUserNetInfo netinfo) {
             CUser *pcUser = CheckAndGetUserByNetInfo(netinfo);
