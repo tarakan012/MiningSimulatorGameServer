@@ -43,7 +43,7 @@ namespace MS {
             SUserCombineKey() {}
 
             SUserCombineKey(const std::string &nameGooglePlus, INT32 id_gps) : m_nameGooglePlus(nameGooglePlus),
-                                                                             m_id_gps(id_gps) {}
+                                                                               m_id_gps(id_gps) {}
 
             bool operator<(const SUserCombineKey &sUserCombineKey) const {
                 INT32 n32Result = m_nameGooglePlus.compare(sUserCombineKey.m_nameGooglePlus);
@@ -136,6 +136,8 @@ namespace MS {
             INT32 OnMSgFromGC_AskStartMining(const CHAR *pMsg, INT32 n32MsgLength, SUserNetInfo netinfo);
 
             INT32 OnMSgFromGC_AskLogin(const CHAR *pMsg, INT32 n32MsgLength, SUserNetInfo netinfo);
+
+            INT32 OnMsgFromGC_AskBuyItem(const CHAR *pMsg, INT32 n32MsgLength, const SUserNetInfo netinfo);
 
             INT32 OnMsgFromGC_AskUpdateItemRet(const CHAR *pMsg, INT32 n32MsgLength, CConnection *pConn);
 
