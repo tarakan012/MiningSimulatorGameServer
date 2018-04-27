@@ -1,7 +1,8 @@
 syntax = 'proto2';
 
-import "util.proto";
+import "Computer.proto";
 import "Shop.proto";
+import "Item.proto";
 
 option optimize_for = LITE_RUNTIME;
 package GSToGC;
@@ -11,6 +12,7 @@ enum MsgId {
     eUserPayInfo = 11;
     eAskRet = 12;
     eSyn_ShopPriceList = 13;
+    eSyn_Inventory = 14;
 }
 
 message UserGameInfo {
@@ -24,6 +26,11 @@ message UserGameInfo {
 message SynShopPriceList {
     optional MsgId msgid = 1 [default = eSyn_ShopPriceList];
     repeated PageShop page = 2;
+}
+
+message SynInventory {
+    optional MsgId msgid = 1 [default = eSyn_Inventory];
+    required ItemInfo item = 2;
 }
 
 message UserPayInfo {
