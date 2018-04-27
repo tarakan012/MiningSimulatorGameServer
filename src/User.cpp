@@ -4,6 +4,7 @@
 #include "AllErrorCode.h"
 #include "Time.h"
 #include "ConfigConst.h"
+#include "ShopManager.h"
 
 namespace MS {
     namespace Server {
@@ -71,6 +72,15 @@ namespace MS {
             GetUserDBData().ChengeUserDBData(eUserDBData_LastTimeM, m_tStartAccumEnergy);
             SynPayInfo();
             return 0;
+        }
+
+        INT32 CUser::AskBuyItem(GCToGS::AskBuyItem &rsMsg) {
+            INT32 n32RetFlag = 0;
+            n32RetFlag = CShopManager::GetInstance().Buy(this, rsMsg.item_id());
+            if (n32RetFlag == eNormal) {
+                SynInventory();
+            }
+            return n32RetFlag;
         }
 
         bool CUser::CheckIfEnoughPay(eUserDBData_Type eType, INT32 n32Pay) {

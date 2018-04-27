@@ -2,7 +2,6 @@
 #include "google/protobuf/message.h"
 #include "ParseProto.h"
 #include "AllErrorCode.h"
-#include "ShopManager.h"
 
 namespace MS {
     namespace Server {
@@ -27,7 +26,7 @@ namespace MS {
             GCToGS::AskBuyItem sMsg;
             if (!ParseProtoMsg(pMsg, n32MsgLength, sMsg)) return 0;
 
-            INT32 n32RetFlag = CShopManager::GetInstance().Buy(pcUser, sMsg.item_id());
+            INT32 n32RetFlag = pcUser->AskBuyItem(sMsg);
             if (eNormal != n32RetFlag) {
                 PostMsgToGC_AskReturn(netinfo, sMsg.msgid(), n32RetFlag);
             }

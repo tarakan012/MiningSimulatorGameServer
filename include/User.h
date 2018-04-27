@@ -33,6 +33,7 @@ namespace MS {
 
             INT32 AskStartMining(GCToGS::AskStartMining &rsMsg);
 
+            INT32 AskBuyItem(GCToGS::AskBuyItem &rsMsg);
             SUserNetInfo &GetUserNetInfo() { return m_sUserNetInfo; };
 
             void ClearNetInfo();
