@@ -29,7 +29,7 @@ namespace MS {
                 return m_sStartSetCfg;
             }
 
-            const std::map<int/*page_type*/, std::map<INT32/*item_id*/, SItemRecord>> &GetShopCfg() {
+            std::map<int/*page_type*/, std::map<INT32/*item_id*/, SItemRecord>> &GetShopCfg() {
                 return m_ShopCfgMap;
             }
 
