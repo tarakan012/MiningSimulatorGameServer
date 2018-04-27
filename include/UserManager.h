@@ -104,8 +104,7 @@ namespace MS {
 
             void DBAsyn_QueryUserComputers(CDBConnector *pConnector, INT32 n32UserID, DBToGS::QueryUser &sQueryUser);
 
-            void DBAsyn_QueryUserItems(CDBConnector *pConnector, INT32 n32ComputerId,
-                                       DBToGS::QueryUser_ComputerInfo *pMsgCompInfo);
+            void DBAsyn_QueryUserItems(CDBConnector *pConnector, INT32 n32ComputerId, ComputerInfo *pMsgCompInfo);
 
             void DBAsyn_ExeSQL(CBuffer *pBuffer, CDBConnector *pConnector);
 
