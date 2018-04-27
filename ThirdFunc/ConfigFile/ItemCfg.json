@@ -11,7 +11,7 @@
     "expansionSlot": 3,
     "lvlGrind": 10,
     "strength": 100,
-    "cost": 5000
+    "cost": 50
   },
   {
     "id": 1001,
@@ -25,7 +25,7 @@
     "expansionSlot": 3,
     "lvlGrind": 1,
     "strength": 100,
-    "cost": 8000
+    "cost": 80
   },
   {
     "id": 2000,
@@ -39,6 +39,6 @@
     "expansionSlot": 3,
     "lvlGrind": 1,
     "strength": 100,
-    "cost": 10500
+    "cost": 70
   }
 ]
