@@ -1,14 +1,12 @@
 syntax = "proto2";
 option optimize_for = LITE_RUNTIME;
+import "Item.proto";
+
 message ComputerInfo {
     optional uint32 id = 1;
     optional uint32 dbid = 6;
     optional uint32 worktime = 2;
     optional uint32 mininggold = 3;
     optional uint32 bufgold = 5;
-    message ItemInfo {
-        optional uint32 id = 1;
-
-    }
     repeated ItemInfo item = 4;
 }
