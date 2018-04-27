@@ -12,9 +12,10 @@ enum TypeItem
 message ItemInfo
 {
     required uint32 id = 1;
-    required TypeItem type = 2;
-    required string name = 3;
-    required uint32 mining_gold = 4;
-    required uint32 cost = 5;
+    required uint32 dbid = 2;
+    required TypeItem type = 3;
+    required string name = 4;
+    required uint32 mining_gold = 5;
+    required uint32 cost = 6;
 }
 
