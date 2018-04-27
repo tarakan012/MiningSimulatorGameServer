@@ -3,10 +3,7 @@ option optimize_for = LITE_RUNTIME;
 import "Item.proto";
 
 message ComputerInfo {
-    optional uint32 id = 1;
-    optional uint32 dbid = 6;
-    optional uint32 worktime = 2;
-    optional uint32 mininggold = 3;
-    optional uint32 bufgold = 5;
-    repeated ItemInfo item = 4;
+    optional uint32 dbid = 1;
+    optional uint32 mining_gold = 2;
+    repeated ItemInfo item = 3;
 }
