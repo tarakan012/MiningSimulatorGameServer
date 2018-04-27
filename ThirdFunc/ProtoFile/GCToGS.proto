@@ -6,6 +6,7 @@ enum MsgId {
     eMsgToGSFromGC_AskUpdateItemRet = 100;
     eMsgToGSFromGC_AskLogin = 101;
     eMsgToGSFromGC_AskStartMining = 102;
+    eMsgToGSFromGC_AskBuyItem = 103;
 }
 
 message AskUpdateItemRet {
@@ -23,4 +24,9 @@ message AskLogin {
 message AskStartMining {
     optional MsgId msgid = 1 [default = eMsgToGSFromGC_AskStartMining];
     required uint32 compid = 2;
+}
+
+message AskBuyItem {
+    optional MsgId msgid = 1 [default = eMsgToGSFromGC_AskBuyItem];
+    required uint32 item_id = 2;
 }
