@@ -47,7 +47,7 @@ find_package(Protobuf REQUIRED)
 include_directories(${PROTOBUF_INCLUDE_DIRS})
 SET_SOURCE_FILES_PROPERTIES(${PROTO_SRCS} ${PROTO_HDRS} PROPERTIES GENERATED TRUE)
 set(PROTO_FILE
-        ${Protobuf_IMPORT_DIRS}/util.proto
+        ${Protobuf_IMPORT_DIRS}/Computer.proto
         ${Protobuf_IMPORT_DIRS}/Item.proto
         ${Protobuf_IMPORT_DIRS}/Shop.proto
         ${Protobuf_IMPORT_DIRS}/DBToGS.proto
