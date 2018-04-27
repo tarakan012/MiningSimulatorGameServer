@@ -27,7 +27,7 @@ namespace MS {
             GCToGS::AskBuyItem sMsg;
             if (!ParseProtoMsg(pMsg, n32MsgLength, sMsg)) return 0;
 
-            INT32 n32RetFlag = CShopManager::GetInstance().Buy(pcUser, sMsg.itemid());
+            INT32 n32RetFlag = CShopManager::GetInstance().Buy(pcUser, sMsg.item_id());
             if (eNormal != n32RetFlag) {
                 PostMsgToGC_AskReturn(netinfo, sMsg.msgid(), n32RetFlag);
             }
