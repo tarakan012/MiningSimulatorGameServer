@@ -19,22 +19,54 @@ enum LogFlags {
     ALL = ~(int) 0,
 };
 
-INT32 LogPrintStr(std::string str);
+enum LoggingEnum {
+    LOG_INFO,
+    LOG_DEBUG,
+    LOG_ERROR,
+    LOG_WARNNING,
+    LOG_SpecialDebug,
+    LOG_ASSERT,
+    LOG_END
+};
+
+enum GLogColor {
+    COLOR_DEFAULT,
+    COLOR_RED,
+    COLOR_GREEN,
+    COLOR_YELLOW,
+    COLOR_BLUE,
+};
+
+INT32 LogPrintStr(std::string str, LoggingEnum loglvl);
 
 #define LogPrint(category, ...) do { \
     std::string logMsg; \
     logMsg = tfm::format(__VA_ARGS__); \
-    LogPrintStr(logMsg); \
+    LogPrintStr(logMsg, LoggingEnum::LOG_INFO); \
     } while(0)
 
 #define LogPrintDebug(...) do { \
     if(gbPrintDebugToConsole) { \
     std::string logMsg; \
+    std::string nameFunc; \
+    std::string typeLog; \
+    nameFunc = tfm::format(__PRETTY_FUNCTION__); \
     logMsg = tfm::format(__VA_ARGS__); \
-    LogPrintStr(logMsg); \
+    std::string result = tfm::format("[DEBUG] [%s] [%s]\n",nameFunc, logMsg); \
+    LogPrintStr(result, LoggingEnum::LOG_DEBUG); \
     } \
     } while(0)
 
+#define LogPrintError(...) do { \
+    if(gbPrintDebugToConsole) { \
+    std::string logMsg; \
+    std::string nameFunc; \
+    nameFunc = tfm::format(__PRETTY_FUNCTION__); \
+    logMsg = tfm::format(__VA_ARGS__); \
+    std::string result = tfm::format("[ERROR] [%s] [%s]\n",nameFunc, logMsg); \
+    LogPrintStr(result, LoggingEnum::LOG_ERROR); \
+    } \
+    } while(0)
 
 #ifdef __cplusplus
 }
