@@ -64,6 +64,7 @@ struct SUserDBData {
         }
         memcpy(&this->sPODUserDBData, &sUsrDBData.sPODUserDBData, sizeof(sUsrDBData.sPODUserDBData));
         CompInfoMap = sUsrDBData.CompInfoMap;
+        Inventory = sUsrDBData.Inventory;
         return *this;
     }
 };
