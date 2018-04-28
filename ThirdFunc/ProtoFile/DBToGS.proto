@@ -21,10 +21,15 @@ message QueryAllAccount {
     repeated Account account = 2;
 }
 
+message Inventory {
+    repeated ItemInfo item = 1;
+}
+
 message QueryUser {
     optional MsgID msgid = 1 [default = eQueryUser_DBCallBack];
     optional uint32 btc = 2;
     optional uint32 gcnetid = 3;
     optional bytes db = 4;
     repeated ComputerInfo computer = 5;
+    required Inventory invenotry = 6;
 }
