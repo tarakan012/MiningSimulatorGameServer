@@ -20,7 +20,7 @@ namespace MS {
         extern "C" {
 #endif
         //struct SUserNetInfo;
-        class CUser : public boost::enable_shared_from_this<CUser> {
+        class CUser : public boost::enable_shared_from_this<CUser>, private boost::noncopyable {
         public:
             CUser();
 
