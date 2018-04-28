@@ -144,6 +144,11 @@ namespace MS {
             bool PostMsgToGC_AskReturn(const SUserNetInfo netinfo, INT32 n32ProtocolId, INT32 n32RetFlag);
 
         private:
+
+            void DBAsyn_QueryUserInvenory(CDBConnector *pConnector, INT32 n32UserID,
+                                          DBToGS::QueryUser &sQueryUser);
+
+        private:
             INT32 m_n32MaxGameUserID;
             INT32 m_n32MaxComputerID;
             INT32 m_n32MaxItemDBID;
@@ -160,7 +165,6 @@ namespace MS {
             UserMap m_cUserOnlineMap;
             std::map<SUserNetInfo, CUser *> m_cUserNetMap;
             std::stringstream m_SaveUserStream;
-
         };
 
 

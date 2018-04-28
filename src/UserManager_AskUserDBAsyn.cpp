@@ -73,7 +73,7 @@ namespace MS {
                 }
             }
             DBAsyn_QueryUserComputers(pConnector, guid, sQueryUser);
-
+            DBAsyn_QueryUserInvenory(pConnector, guid, sQueryUser);
             sQueryUser.set_db((CHAR *) &sUserDBData.sPODUserDBData, sizeof(sUserDBData.sPODUserDBData));
         }
 
@@ -120,6 +120,40 @@ namespace MS {
                 auto item = pMsgCompInfo->add_item();
                 item->set_id(l_n32ItemId);
                 strSql << "select name, mining_gold, item_id from item_user where id=" << l_n32ItemId;
+                pConnector->ExecQuery(strSql.str());
+                INT32 mining_gold = 0;
+                pConnector->GetQueryFieldData("mining_gold", mining_gold);
+                item->set_mining_gold(mining_gold);
+                INT32 item_id = 0;
+
+
+                std::string name("");
+                pConnector->GetQueryFieldData("name", name);
+                item->set_name(name);
+                pConnector->CloseQuery();
+            }
+        }
+
+        void CUserManager::DBAsyn_QueryUserInvenory(CDBConnector *pConnector, INT32 n32UserDBId,
+                                                    DBToGS::QueryUser &sQueryUser) {
+            std::stringstream strSql;
+            std::string ItemsDbIdList;
+            strSql << "select array_to_string(inventory, ',') as iditemlist from game_user where id=" << n32UserDBId;
+            pConnector->ExecQuery(strSql.str());
+            pConnector->GetQueryFieldData("iditemlist", ItemsDbIdList);
+            pConnector->CloseQuery();
+            auto MsgInventory = sQueryUser.mutable_invenotry();
+            boost::regex delim("\\,");
+            boost::sregex_token_iterator iter(ItemsDbIdList.begin(), ItemsDbIdList.end(), delim, -1);
+            boost::sregex_token_iterator iter_end;
+            while (iter != iter_end) {
+                strSql.clear();
+                strSql.str(std::string());
+                std::string ItemDBId = *iter++;
+                INT32 n32ItemDBId = atoi(ItemDBId.c_str());
+                auto item = MsgInventory->add_item();
+                item->set_dbid(n32ItemDBId);
+                strSql << "select name, mining_gold, item_id from item_user where id=" << ItemDBId;
                 pConnector->ExecQuery(strSql.str());
                 INT32 mining_gold = 0;
                 pConnector->GetQueryFieldData("mining_gold", mining_gold);

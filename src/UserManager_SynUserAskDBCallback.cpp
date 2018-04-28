@@ -45,6 +45,13 @@ namespace MS {
                     //sUserDBData.CompInfoMap[i].ItemRecordMap[j].szName = comp->mutable_item(i)->name();
                 }
             }
+            auto MsgInventory = sQueryUser->invenotry();
+            for (INT32 i = 0; i < MsgInventory.item_size(); ++i) {
+                auto item = MsgInventory.mutable_item(i);
+                INT32 dbid = item->dbid();
+                sUserDBData.Inventory[dbid].n32DBId = dbid;
+                sUserDBData.Inventory[dbid].n32MiningGold = item->mining_gold();
+            }
             std::memcpy(&sUserDBData, sQueryUser->db().c_str(), sQueryUser->db().size());
             lpUser->LoadDBData(sUserDBData);
             lpUser->OnOnline(sUserNetInfo);
