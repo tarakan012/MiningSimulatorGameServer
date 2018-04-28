@@ -20,7 +20,7 @@ namespace MS {
         }
 
         INT32 CUserManager::OnMsgFromGC_AskBuyItem(const CHAR *pMsg, INT32 n32MsgLength, const SUserNetInfo netinfo) {
-            CUser *pcUser = CheckAndGetUserByNetInfo(netinfo);
+            UserPtr pcUser = CheckAndGetUserByNetInfo(netinfo);
 
             if (pcUser == NULL) return 0;
             GCToGS::AskBuyItem sMsg;
@@ -35,7 +35,7 @@ namespace MS {
 
         INT32
         CUserManager::OnMSgFromGC_AskStartMining(const CHAR *pMsg, INT32 n32MsgLength, const SUserNetInfo netinfo) {
-            CUser *pcUser = CheckAndGetUserByNetInfo(netinfo);
+            UserPtr pcUser = CheckAndGetUserByNetInfo(netinfo);
 
             if (pcUser == NULL) {
 

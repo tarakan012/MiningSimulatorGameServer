@@ -31,14 +31,14 @@ namespace MS {
 
         void CUser::OnOnline(SUserNetInfo &sUserNetInfo) {
             KickOutOldUser();
-            CUserManager::GetInstance().OnUserOnline(this, sUserNetInfo);
+            CUserManager::GetInstance().OnUserOnline(shared_from_this(), sUserNetInfo);
             SynUserGameInfo();
             SynShopPriceList();
         }
 
 
         void CUser::OnOfline() {
-            CUserManager::GetInstance().OnUserOffline(this);
+            CUserManager::GetInstance().OnUserOffline(shared_from_this());
         }
 
         void CUser::SetUserNetInfo(const SUserNetInfo &sUserNetInfo) {
@@ -76,7 +76,7 @@ namespace MS {
 
         INT32 CUser::AskBuyItem(GCToGS::AskBuyItem &rsMsg) {
             INT32 n32RetFlag = 0;
-            n32RetFlag = CShopManager::GetInstance().Buy(this, rsMsg.item_id());
+            n32RetFlag = CShopManager::GetInstance().Buy(shared_from_this(), rsMsg.item_id());
             if (n32RetFlag == eNormal) {
                 SynInventory();
             }

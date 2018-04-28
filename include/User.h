@@ -11,6 +11,7 @@
 #include "GCToGS.pb.h"
 
 #include "google/protobuf/message.h"
+#include <boost/shared_ptr.hpp>
 
 namespace MS {
     namespace Server {
@@ -19,7 +20,7 @@ namespace MS {
         extern "C" {
 #endif
         //struct SUserNetInfo;
-        class CUser {
+        class CUser : public boost::enable_shared_from_this<CUser> {
         public:
             CUser();
 
@@ -71,6 +72,8 @@ namespace MS {
             SUserNetInfo m_sUserNetInfo;
             SUserDBData m_sUserDBData;
         };
+
+        typedef boost::shared_ptr<CUser> UserPtr;
 
 #ifdef __cplusplus
         }

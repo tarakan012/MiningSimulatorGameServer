@@ -31,7 +31,7 @@ namespace MS {
 
             boost::shared_ptr<DBToGS::QueryUser> sQueryUser = ParseProtoMsgInThread<DBToGS::QueryUser>(
                     pBuffer->GetCurData(), pBuffer->GetDataLength());
-            CUser *lpUser = new CUser();
+            UserPtr lpUser{new CUser()};
             AddUser(lpUser);
             SUserNetInfo sUserNetInfo(sQueryUser->gcnetid());
             SUserDBData sUserDBData;
@@ -68,7 +68,7 @@ namespace MS {
             LogPrint(LogFlags::ALL, "MaxComputerID: %d\n", m_n32MaxComputerID);
         }
 
-        bool CUserManager::DBPoster_UpdateUser(CUser *pUser) {
+        bool CUserManager::DBPoster_UpdateUser(UserPtr pUser) {
             SUserDBData &rsUserDBData = pUser->GetUserDBData();
             CUserDbDataMgr::UpdateUserDbData(rsUserDBData, m_SaveUserStream);
             if (!m_SaveUserStream.str().empty()) {

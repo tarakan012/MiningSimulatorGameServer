@@ -49,26 +49,25 @@ namespace MS {
             m_n64LastUpdateTime = n64TimeNow;
 
             for (auto const &user : m_cUserOnlineMap) {
-                CUser *pUser = user.second;
+                UserPtr pUser = user.second;
                 pUser->OnHeartBeart(n64TimeNow, n64TickSpawn);
             }
         }
 
-        INT32  CUserManager::AddUser(CUser *pUser) {
+        INT32 CUserManager::AddUser(UserPtr pUser) {
             unsigned un32ObjIndex = pUser->GetGameUserID();
             m_cUserGUIDMap.insert(std::make_pair(un32ObjIndex, pUser));
             return 0;
         }
 
-        INT32 CUserManager::RemoveUser(CUser *pUser) {
+        INT32 CUserManager::RemoveUser(UserPtr pUser) {
             DBPoster_UpdateUser(pUser);
             m_cUserGUIDMap.erase(pUser->GetGameUserID());
-            delete pUser;
             return 0;
         }
 
-        CUser *CUserManager::GetUserByNetInfo(const SUserNetInfo netinfo) {
-            CUser *pcUser = NULL;
+        UserPtr CUserManager::GetUserByNetInfo(const SUserNetInfo netinfo) {
+            UserPtr pcUser = NULL;
             auto iterUser = m_cUserNetMap.find(netinfo);
             if (m_cUserNetMap.end() != iterUser) {
                 pcUser = iterUser->second;
@@ -76,24 +75,22 @@ namespace MS {
             return pcUser;
         }
 
-        CUser *CUserManager::CheckAndGetUserByNetInfo(const SUserNetInfo netinfo) {
-            CUser *pcUser = GetUserByNetInfo(netinfo);
+        UserPtr CUserManager::CheckAndGetUserByNetInfo(const SUserNetInfo netinfo) {
+            UserPtr pcUser = GetUserByNetInfo(netinfo);
             if (pcUser == NULL) {
                 LogPrint(LogFlags::ALL, "CheckGetUserByNetInfo failed\n");
-
             }
             return pcUser;
-
         }
 
-        INT32 CUserManager::OnUserOnline(CUser *pcUser, const SUserNetInfo &crsUserNetInfo) {
+        INT32 CUserManager::OnUserOnline(UserPtr pcUser, const SUserNetInfo &crsUserNetInfo) {
             m_cUserNetMap.insert(std::make_pair(crsUserNetInfo, pcUser));
             m_cUserOnlineMap.insert(std::make_pair(pcUser->GetGameUserID(), pcUser));
             pcUser->SetUserNetInfo(crsUserNetInfo);
             return 0;
         }
 
-        INT32 CUserManager::OnUserOffline(CUser *pcUser) {
+        INT32 CUserManager::OnUserOffline(UserPtr pcUser) {
             m_cUserNetMap.erase(pcUser->GetUserNetInfo());
 
             m_cUserOnlineMap.erase(pcUser->GetGameUserID());
@@ -148,7 +145,7 @@ namespace MS {
                                                                              &CUserManager::OnMsgFromGC_AskBuyItem)
         }
 
-        void CUserManager::InsertNewUserToDB(GCToGS::AskLogin &rLogin, CUser *pUser, INT32 n32DBGameUserID) {
+        void CUserManager::InsertNewUserToDB(GCToGS::AskLogin &rLogin, UserPtr pUser, INT32 n32DBGameUserID) {
             GSToDB::ExeSQL_Call exeSql;
             std::stringstream strSql;
 
@@ -257,7 +254,7 @@ namespace MS {
 
         }
 
-        void CUserManager::UpdateUserItemInInvenoty(CUser *user, SItemRecord &item_record) {
+        void CUserManager::UpdateUserItemInInvenoty(UserPtr user, SItemRecord &item_record) {
             GSToDB::ExeSQL_Call exeSql;
             std::stringstream strSql;
             strSql << "update game_user set inventory=inv from (select array_append(inventory," << item_record.n32DBId

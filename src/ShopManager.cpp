@@ -13,7 +13,7 @@ namespace MS {
 
         IMPLEMENT_SINGLETON(CShopManager)
 
-        INT32 CShopManager::Buy(CUser *user, INT32 item_id) {
+        INT32 CShopManager::Buy(UserPtr user, INT32 item_id) {
             auto &cShopCfg = CConfigManager::GetInstance().GetShopCfg();
             for (auto &page_pair : cShopCfg) {
                 std::map<INT32, SItemRecord> &PageShopMap = page_pair.second;

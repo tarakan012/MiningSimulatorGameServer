@@ -7,20 +7,20 @@
 
 #include "PreDefine.h"
 #include "Singleton.h"
+#include "User.h"
 
 namespace MS {
     namespace Server {
-
-        class CUser;
 
         class CShopManager {
         public:
         DECLARE_SINGLETON(CShopManager)
 
-            INT32 Buy(CUser *user, INT32 item_id);
+            INT32 Buy(UserPtr user, INT32 item_id);
+
+        private:
+
         };
-
-
     }
 }
 

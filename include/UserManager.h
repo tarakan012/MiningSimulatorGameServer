@@ -94,13 +94,13 @@ namespace MS {
 
             void DBAsynQueryUser(SUserDBData &sUserDBData, DBToGS::QueryUser &sQueryUser, CDBConnector *pConnector);
 
-            INT32 AddUser(CUser *pUser);
+            INT32 AddUser(UserPtr pUser);
 
-            INT32 RemoveUser(CUser *pUser);
+            INT32 RemoveUser(UserPtr pUser);
 
-            INT32 OnUserOnline(CUser *pcUser, const SUserNetInfo &crsUserNetInfo);
+            INT32 OnUserOnline(UserPtr pcUser, const SUserNetInfo &crsUserNetInfo);
 
-            INT32 OnUserOffline(CUser *pcUser);
+            INT32 OnUserOffline(UserPtr pcUser);
 
             void DBAsyn_QueryUserComputers(CDBConnector *pConnector, INT32 n32UserID, DBToGS::QueryUser &sQueryUser);
 
@@ -114,24 +114,24 @@ namespace MS {
 
             void SynHandleQueryUserCallback(CBuffer *pBuffer);
 
-            bool DBPoster_UpdateUser(CUser *pUser);
+            bool DBPoster_UpdateUser(UserPtr pUser);
 
             void SynHandleAllAccountCallback(CBuffer *pBuffer);
 
-            void InsertNewUserToDB(GCToGS::AskLogin &rLogin, CUser *pUser, INT32 n32DBGameUserID);
+            void InsertNewUserToDB(GCToGS::AskLogin &rLogin, UserPtr pUser, INT32 n32DBGameUserID);
 
             void UpdateUserItem(SItemRecord &rsItemRecord, eDBOperation operation);
 
             void UpdateUserComputer(SComputerInfo &rsComputerInfo, eDBOperation operation);
 
-            void UpdateUserItemInInvenoty(CUser *user, SItemRecord &item_record);
+            void UpdateUserItemInInvenoty(UserPtr user, SItemRecord &item_record);
             void OnHeartBeatImmediately();
 
             void GPSThreadBeginCallback();
 
-            CUser *CheckAndGetUserByNetInfo(const SUserNetInfo netinfo);
+            UserPtr CheckAndGetUserByNetInfo(const SUserNetInfo netinfo);
 
-            CUser *GetUserByNetInfo(const SUserNetInfo netinfo);
+            UserPtr GetUserByNetInfo(const SUserNetInfo netinfo);
 
             INT32 OnMSgFromGC_AskStartMining(const CHAR *pMsg, INT32 n32MsgLength, SUserNetInfo netinfo);
 
@@ -160,10 +160,10 @@ namespace MS {
             std::queue<CBuffer *> m_DBCallbackQueue;
             std::map<SUserCombineKey, INT32> m_AllUserNameIDMap;
             CThreadSafeObjectPool<CBuffer> m_CallbackQueuePool;
-            typedef std::map<INT32, CUser *> UserMap;
+            typedef std::map<INT32, UserPtr> UserMap;
             UserMap m_cUserGUIDMap;
             UserMap m_cUserOnlineMap;
-            std::map<SUserNetInfo, CUser *> m_cUserNetMap;
+            std::map<SUserNetInfo, UserPtr> m_cUserNetMap;
             std::stringstream m_SaveUserStream;
         };
 

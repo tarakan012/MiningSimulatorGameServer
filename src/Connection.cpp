@@ -47,7 +47,7 @@ namespace MS {
                                                                   bytes_transferred, m_sUserNerInfo);
             } else {
                 LogPrint(LogFlags::ALL, "Handle Read Fail, error: %s\n", error.message());
-                CUser *user = CUserManager::GetInstance().GetUserByNetInfo(m_sUserNerInfo);
+                UserPtr user = CUserManager::GetInstance().GetUserByNetInfo(m_sUserNerInfo);
                 if (user)
                 {
                     CUserManager::GetInstance().RemoveUser(user);

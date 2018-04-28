@@ -16,7 +16,7 @@ namespace MS {
                 GetNowWorkActor().EncodeAndSendToDBThread(sQueryUser, sQueryUser.msgid());
             } else {
                 LogPrintDebug("User Account No Exist\n");
-                CUser *pUser = new CUser();
+                UserPtr pUser{new CUser()};
                 INT32 guid = CombineGameUserID();
                 m_AllUserNameIDMap.insert(std::make_pair(sUserCombineKey, guid));
                 SUserDBData &sUserDBData = CConfigManager::GetInstance().GetStartSet();
