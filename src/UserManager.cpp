@@ -201,7 +201,7 @@ namespace MS {
                     m_n32MaxGameUserID = pAccount.id();
                 }
             }
-            LogPrint(LogFlags::ALL, "MaxGameUserID : %d\n", m_n32MaxGameUserID);
+            LogPrint(LogFlags::DB, "Number Game Users : %d\n", m_n32MaxGameUserID);
 
         }
 

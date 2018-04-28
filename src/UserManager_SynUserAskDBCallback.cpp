@@ -61,11 +61,12 @@ namespace MS {
             CDBConnector *pDBConnector = m_UserCacheDBActiveWrapper->GetDBConnector();
             pDBConnector->ExecQuery("select max(id) from (select unnest(comp_id) as id from game_user) as foo");
             pDBConnector->GetQueryFieldData("max", m_n32MaxComputerID);
+            LogPrint(LogFlags::DB, "Number Computers : %d\n", m_n32MaxComputerID);
             pDBConnector->CloseQuery();
             pDBConnector->ExecQuery("select max(id) from (select id from item_user) as foo");
             pDBConnector->GetQueryFieldData("max", m_n32MaxItemDBID);
+            LogPrint(LogFlags::DB, "Number Items : %d\n", m_n32MaxItemDBID);
             pDBConnector->CloseQuery();
-            LogPrint(LogFlags::ALL, "MaxComputerID: %d\n", m_n32MaxComputerID);
         }
 
         bool CUserManager::DBPoster_UpdateUser(UserPtr pUser) {
