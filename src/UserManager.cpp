@@ -171,7 +171,6 @@ namespace MS {
                     }
                 }
                 strSql << "}')";
-                LogPrint(LogFlags::ALL, "sql %s", strSql.str());
                 exeSql.set_sql(strSql.str());
                 m_LoginDBWrapper->EncodeAndSendToDBThread(exeSql, exeSql.id());
             }
@@ -231,8 +230,6 @@ namespace MS {
                     rsComputerInfo.n32MiningGold = ln32MiningGoldComp;
                     strSql << "}'," << ln32MiningGoldComp << ")";
                     exeSql.set_sql(strSql.str());
-                    LogPrint(LogFlags::ALL, "sql %s", strSql.str());
-
                 }
             }
             m_LoginDBWrapper->EncodeAndSendToDBThread(exeSql, exeSql.id());

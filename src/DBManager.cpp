@@ -16,16 +16,16 @@ namespace MS {
         }
 
         bool CDBConnector::ExecQuery(const std::string &rData) {
-            LogPrint(LogFlags::ALL, "ExecQuery: %s\n", rData);
+            LogPrintDebug("ExecQuery: %s", rData);
             m_pPGResult = PQexec(m_pPGConn, rData.c_str());
             INT32 status = PQresultStatus(m_pPGResult);
             if (PQresultStatus(m_pPGResult) == PGRES_COMMAND_OK) {
 
-                LogPrint(LogFlags::DB, "Query Success. Status: %d\n", status);
+                LogPrintDebug("Query Success. Status: %d", status);
                 return true;
             }
             if (PQresultStatus(m_pPGResult) != PGRES_TUPLES_OK) {
-                LogPrint(LogFlags::DB, "Query Fail. Status: %d\n", status);
+                LogPrintError("Query Fail. Status: %d", status);
                 return false;
             }
 
@@ -65,7 +65,7 @@ namespace MS {
             std::string strNameColumn;
             m_FieldsValue.clear();
             if (!m_TotalRows) {
-                LogPrint(LogFlags::DB, "Rows NULL\n");
+                LogPrintDebug("Rows NULL");
                 return;
             }
             for (INT32 field = 0; field < m_TotalFields; ++field) {
@@ -100,7 +100,7 @@ namespace MS {
                                      const CHAR *cpszDBName) {
             m_pPGConn = PQconnectdb("user=postgres password=12345 host=127.0.0.1 dbname=gamems");
             if (PQstatus(m_pPGConn) != CONNECTION_OK) {
-                LogPrint(LogFlags::DB, "Connect DB Fail\n");
+                LogPrintError("Connect DB Fail");
                 return false;
             }
             LogPrint(LogFlags::DB, "Connect DB Success\n");

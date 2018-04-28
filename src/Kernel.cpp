@@ -82,14 +82,14 @@ namespace MS {
 
         void CKernel::HandleAccept(const boost::system::error_code &ec) {
             if (!m_pAcceptor->is_open()) {
-                LogPrintDebug("Acceptor Close\n");
+                LogPrintDebug("Acceptor Close");
                 return;
             }
             if (!ec) {
-                LogPrintDebug("Handle Accept Succes\n");
+                LogPrintDebug("Handle Accept Succes");
                 m_ConnectionManager.Start(m_shpNewConnecion);
             } else {
-                LogPrintDebug("Handle Accept Error: \n", ec);
+                LogPrintDebug("Handle Accept Error: %s", ec.message());
             }
             PrepareForNextAccept();
 
@@ -98,15 +98,15 @@ namespace MS {
         bool CKernel::HandleMsgFromGC(const CHAR *pMsg, INT32 n32MsgLength, SUserNetInfo netinfo) {
             INT32 n32MsgLen = n32MsgLength - 2 * sizeof(INT32);
             INT32 n32MsgId = *(INT32 *) (pMsg + 1 * sizeof(INT32));
-            LogPrintDebug("Message ID: %d\n", n32MsgId);
+            LogPrintDebug("Message ID: %d", n32MsgId);
             if (!GCToGS::MsgId_IsValid(n32MsgId)) return false;
             auto iter = m_GCMsgHandlerMap.find(n32MsgId);
             if (iter != m_GCMsgHandlerMap.end()) {
-                LogPrintDebug("Handle Message Find\n");
+                LogPrintDebug("Handle Message Find");
                 (iter->second)(pMsg + 2 * sizeof(INT32), n32MsgLen, netinfo);
                 return true;
             } else {
-                LogPrintDebug("Handle Message No Find\n");
+                LogPrintDebug("Handle Message No Find");
                 return false;
             }
         }

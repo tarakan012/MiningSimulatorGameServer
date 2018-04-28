@@ -46,7 +46,7 @@ namespace MS {
                 bool ret = CKernel::GetInstance().HandleMsgFromGC(m_Buffer.data(),
                                                                   bytes_transferred, m_sUserNerInfo);
             } else {
-                LogPrint(LogFlags::ALL, "Handle Read Fail, error: %s\n", error.message());
+                LogPrintError("Handle Read Fail, error: %s", error.message());
                 UserPtr user = CUserManager::GetInstance().GetUserByNetInfo(m_sUserNerInfo);
                 if (user)
                 {
@@ -59,9 +59,9 @@ namespace MS {
 
         void CConnection::HandleWrite(const boost::system::error_code &error, size_t length) {
             if (!error) {
-                LogPrint(LogFlags::ALL, "Send Msg Succes, size %d\n", length);
+                LogPrintDebug("Send Msg Succes, size %d", length);
             } else {
-                LogPrint(LogFlags::ALL, "Send Msg Fail, error %d\n", error);
+                LogPrintDebug("Send Msg Fail, error %d", error);
             }
             Read();
         }

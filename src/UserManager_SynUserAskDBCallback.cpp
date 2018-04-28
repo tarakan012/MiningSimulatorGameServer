@@ -8,7 +8,6 @@ namespace MS {
         void CUserManager::SynUserAskDBCallBack() {
             while (!m_DBCallbackQueue.empty()) {
                 CBuffer *pBuffer = m_DBCallbackQueue.back();
-                LogPrint(LogFlags::ALL, "SynUserAskDBCallBack pBuffer->LogLvl: %d\n", pBuffer->m_LogLvl);
                 switch (pBuffer->m_LogLvl) {
                     case DBToGS::eQueryAllAccount_CallBack : {
                         SynHandleAllAccountCallback(pBuffer);
@@ -21,6 +20,7 @@ namespace MS {
                         break;
                     }
                     default : {
+                        LogPrintDebug("Unknown Msg");
                         break;
                     }
                 }

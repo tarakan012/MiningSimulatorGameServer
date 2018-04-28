@@ -7,10 +7,9 @@ namespace MS {
     namespace Server {
 
         void CUserManager::UserAskDBAsynHandler(CBuffer *pBuffer) {
-            LogPrint(LogFlags::ALL, "log UserAskDBAsynHandler\n");
             CDBConnector *pConnector = GetDBSource(pBuffer->m_ActorID);
             if (!pConnector) {
-                LogPrint(LogFlags::ALL, "DBConnector NULL\n");
+                LogPrintDebug("DBConnector NULL");
                 return;
             }
             switch (pBuffer->m_LogLvl) {
@@ -24,7 +23,7 @@ namespace MS {
 
                 }
                 default : {
-                    LogPrint(LogFlags::ALL, "Unknown Msg\n");
+                    LogPrintDebug("Unknown Msg");
                     break;
                 }
             }
