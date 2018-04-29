@@ -45,10 +45,10 @@ namespace MS {
 
             INT32 GetDbId() { return m_DBId; }
 
-        private:
-            UserPtr GetOwner() { return m_pOwner; }
-
             ENERGY GetConsumEnergy() { return m_ConsumptionEnergy; }
+        private:
+
+            UserPtr GetOwner() { return m_pOwner; }
 
             void UpdateMiningGold(GOLD gold) { m_MiningGoldOnes += gold; }
 
