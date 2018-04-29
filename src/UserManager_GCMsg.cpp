@@ -27,9 +27,8 @@ namespace MS {
             if (!ParseProtoMsg(pMsg, n32MsgLength, sMsg)) return 0;
 
             INT32 n32RetFlag = pcUser->AskBuyItem(sMsg);
-            if (eNormal != n32RetFlag) {
-                PostMsgToGC_AskReturn(netinfo, sMsg.msgid(), n32RetFlag);
-            }
+            PostMsgToGC_AskReturn(netinfo, sMsg.msgid(), n32RetFlag);
+
             return 1;
         }
 
@@ -47,9 +46,8 @@ namespace MS {
             }
 
             INT32 n32RetFlag = pcUser->AskStartMining(sMsg);
-            if (eNormal != n32RetFlag) {
-                PostMsgToGC_AskReturn(netinfo, sMsg.msgid(), n32RetFlag);
-            }
+            PostMsgToGC_AskReturn(netinfo, sMsg.msgid(), n32RetFlag);
+
             return 1;
         }
 
@@ -66,9 +64,8 @@ namespace MS {
                 return 0;
             }
             INT32 n32RetFlag = pcUser->AskInstallCCInComp(sMsg);
-            if (eNormal != n32RetFlag) {
-                PostMsgToGC_AskReturn(netinfo, sMsg.msgid(), n32RetFlag);
-            }
+            PostMsgToGC_AskReturn(netinfo, sMsg.msgid(), n32RetFlag);
+
             return 1;
         }
     }
