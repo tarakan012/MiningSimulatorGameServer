@@ -57,17 +57,18 @@ namespace MS {
         }
 
         INT32 CUser::AskStartMining(GCToGS::AskStartMining &rsMsg) {
-            INT32 ln32ComputerId = rsMsg.compid();
-            if (!CheckComputerById(ln32ComputerId)) {
+            auto comp = GetComputerById(rsMsg.compid());
+            if (comp == NULL) {
                 return eEC_InvalidCompId;
             }
-            if (!CheckIfEnoughPay(eUserDBData_Energy, 1)) {
-                return eEC_NotEnoughEnergy;
+            auto result = comp->StartMining();
+            INT32 error = std::get<0>(result);
+            GOLD gold = std::get<1>(result);
+            if (!error) {
+                return error;
             }
-            INT32 ln32MiningGold = GetMiningGoldComputerById(ln32ComputerId);
-
-            GetUserDBData().ChengeUserDBData(eUserDBData_Gold, ln32MiningGold);
-            GetUserDBData().ChengeUserDBData(eUserDBData_Energy, -1);
+            GetUserDBData().ChengeUserDBData(eUserDBData_Gold, gold);
+            GetUserDBData().ChengeUserDBData(eUserDBData_Energy, -comp->GetConsumEnergy());
             m_tStartAccumEnergy = GetTimeSec();
             GetUserDBData().ChengeUserDBData(eUserDBData_LastTimeM, m_tStartAccumEnergy);
             SynPayInfo();
