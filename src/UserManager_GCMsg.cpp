@@ -47,7 +47,9 @@ namespace MS {
 
             INT32 n32RetFlag = pcUser->AskStartMining(sMsg);
             PostMsgToGC_AskReturn(netinfo, sMsg.msgid(), n32RetFlag);
-
+            if (n32RetFlag == eNormal) {
+                pcUser->SynPayInfo();
+            }
             return 1;
         }
 

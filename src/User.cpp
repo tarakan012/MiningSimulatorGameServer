@@ -71,7 +71,6 @@ namespace MS {
             GetUserDBData().ChengeUserDBData(eUserDBData_Energy, -comp->GetConsumEnergy());
             m_tStartAccumEnergy = GetTimeSec();
             GetUserDBData().ChengeUserDBData(eUserDBData_LastTimeM, m_tStartAccumEnergy);
-            SynPayInfo();
             return 0;
         }
 
