@@ -40,8 +40,8 @@ namespace MS {
                 INT32 dbid = pMsgComp->dbid();
                 sUserDBData.CompInfoMap[i].n32DBId = dbid;
                 auto pcComp = boost::make_shared<CComputer>(lpUser);
-                lpUser->InsertComputer(pcComp);
                 pcComp->SetDbId(dbid);
+                lpUser->InsertComputer(pcComp);
                 for (INT32 j = 0; j < pMsgComp->item_size(); ++j) {
                     auto pMsgItem = pMsgComp->mutable_item(j);
                     sUserDBData.CompInfoMap[i].ItemRecordMap[j].n32DBId = pMsgItem->id();
