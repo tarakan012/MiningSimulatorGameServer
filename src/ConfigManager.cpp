@@ -95,6 +95,7 @@ namespace MS {
                 const CHAR *nameItem = Json_getString(obj, "name", "");
                 std::memcpy(&item.szName, nameItem, std::strlen(nameItem));
                 item.n32Id = Json_getInt(obj, "id", -1);
+                item.n32Type = Json_getInt(obj, "type", -1);
                 item.n32Lvl = Json_getInt(obj, "lvl", -1);
                 item.n32Icon = Json_getInt(obj, "icon", -1);
                 item.n32MiningGold = Json_getInt(obj, "miningGold", -1);
