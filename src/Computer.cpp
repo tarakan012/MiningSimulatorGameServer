@@ -13,7 +13,7 @@ namespace MS {
         }
 
         bool CComputer::CheckIfEnoughEnergy() {
-            return GetOwner()->CheckIfEnoughPay(eUserDBData_Energy, GetRequiredEnergy());
+            return GetOwner()->CheckIfEnoughPay(eUserDBData_Energy, GetConsumEnergy());
         }
 
         std::tuple<INT32, GOLD> CComputer::StartMining() {

@@ -48,7 +48,7 @@ namespace MS {
         private:
             UserPtr GetOwner() { return m_pOwner; }
 
-            ENERGY GetRequiredEnergy() { return m_ConsumptionEnergy; }
+            ENERGY GetConsumEnergy() { return m_ConsumptionEnergy; }
 
             void UpdateMiningGold(GOLD gold) { m_MiningGoldOnes += gold; }
 
