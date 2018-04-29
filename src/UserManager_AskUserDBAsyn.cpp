@@ -152,14 +152,17 @@ namespace MS {
                 INT32 n32ItemDBId = atoi(ItemDBId.c_str());
                 auto item = MsgInventory->add_item();
                 item->set_dbid(n32ItemDBId);
-                strSql << "select name, mining_gold, item_id from item_user where id=" << ItemDBId;
+                strSql << "select name, mining_gold, item_id, type from item_user where id=" << ItemDBId;
                 pConnector->ExecQuery(strSql.str());
                 INT32 mining_gold = 0;
                 pConnector->GetQueryFieldData("mining_gold", mining_gold);
                 item->set_mining_gold(mining_gold);
                 INT32 item_id = 0;
-
-
+                pConnector->GetQueryFieldData("item_id", item_id);
+                item->set_id(item_id);
+                INT32 type = 0;
+                pConnector->GetQueryFieldData("type", type);
+                item->set_type(type);
                 std::string name("");
                 pConnector->GetQueryFieldData("name", name);
                 item->set_name(name);
