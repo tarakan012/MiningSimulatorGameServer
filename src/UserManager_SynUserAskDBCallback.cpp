@@ -36,21 +36,72 @@ namespace MS {
             SUserNetInfo sUserNetInfo(sQueryUser->gcnetid());
             SUserDBData sUserDBData;
             for (INT32 i = 0; i < sQueryUser->computer_size(); ++i) {
-                auto comp = sQueryUser->mutable_computer(i);
-                INT32 dbid = comp->dbid();
+                auto pMsgComp = sQueryUser->mutable_computer(i);
+                INT32 dbid = pMsgComp->dbid();
                 sUserDBData.CompInfoMap[i].n32DBId = dbid;
-                for (INT32 j = 0; j < comp->item_size(); ++j) {
-                    sUserDBData.CompInfoMap[i].ItemRecordMap[j].n32DBId = comp->mutable_item(j)->id();
-                    sUserDBData.CompInfoMap[i].ItemRecordMap[j].n32MiningGold = comp->mutable_item(j)->mining_gold();
+                auto pcComp = boost::make_shared<CComputer>(lpUser);
+                lpUser->InsertComputer(pcComp);
+                pcComp->SetDbId(dbid);
+                for (INT32 j = 0; j < pMsgComp->item_size(); ++j) {
+                    auto pMsgItem = pMsgComp->mutable_item(j);
+                    sUserDBData.CompInfoMap[i].ItemRecordMap[j].n32DBId = pMsgItem->id();
+                    sUserDBData.CompInfoMap[i].ItemRecordMap[j].n32MiningGold = pMsgItem->mining_gold();
                     //sUserDBData.CompInfoMap[i].ItemRecordMap[j].szName = comp->mutable_item(i)->name();
+                    switch (pMsgItem->type()) {
+                        case eTypeItem_CPU: {
+                            auto cpu = boost::make_shared<SCCCpu>(sUserDBData.CompInfoMap[i].ItemRecordMap[j]);
+                            pcComp->InstallCpu(cpu);
+                            break;
+                        }
+                        case eTypeItem_GPU: {
+                            auto gpu = boost::make_shared<SCCGpu>(sUserDBData.CompInfoMap[i].ItemRecordMap[j]);
+                            pcComp->InstallGpu(gpu);
+                            break;
+                        }
+                        case eTypeItem_Matherboard: {
+                            auto matherboard = boost::make_shared<SCCMatherboard>(
+                                    sUserDBData.CompInfoMap[i].ItemRecordMap[j]);
+                            pcComp->ReplaceMatherbord(matherboard);
+                            break;
+                        }
+                        default:
+                            LogPrintDebug("Invalid Item Type");
+                            break;
+                    }
+
                 }
             }
             auto MsgInventory = sQueryUser->invenotry();
+            auto pcInventory = boost::make_shared<CInventory>(lpUser);
+            lpUser->SetInventory(pcInventory);
             for (INT32 i = 0; i < MsgInventory.item_size(); ++i) {
-                auto item = MsgInventory.mutable_item(i);
-                INT32 dbid = item->dbid();
+                auto pMsgItem = MsgInventory.mutable_item(i);
+                INT32 dbid = pMsgItem->dbid();
                 sUserDBData.Inventory[dbid].n32DBId = dbid;
-                sUserDBData.Inventory[dbid].n32MiningGold = item->mining_gold();
+                sUserDBData.Inventory[dbid].n32MiningGold = pMsgItem->mining_gold();
+                switch (pMsgItem->type()) {
+                    case eTypeItem_CPU: {
+                        auto cpu = boost::make_shared<SCCCpu>(sUserDBData.Inventory[dbid]);
+                        auto item = boost::static_pointer_cast<SItemRecord>(cpu);
+                        pcInventory->InsertItem(item);
+                        break;
+                    }
+                    case eTypeItem_GPU: {
+                        auto gpu = boost::make_shared<SCCGpu>(sUserDBData.Inventory[dbid]);
+                        auto item = boost::static_pointer_cast<SItemRecord>(gpu);
+                        pcInventory->InsertItem(item);
+                        break;
+                    }
+                    case eTypeItem_Matherboard: {
+                        auto matherboard = boost::make_shared<SCCMatherboard>(sUserDBData.Inventory[dbid]);
+                        auto item = boost::static_pointer_cast<SItemRecord>(matherboard);
+                        pcInventory->InsertItem(item);
+                        break;
+                    }
+                    default:
+                        LogPrintDebug("Invalid Item Type");
+                        break;
+                }
             }
             std::memcpy(&sUserDBData, sQueryUser->db().c_str(), sQueryUser->db().size());
             lpUser->LoadDBData(sUserDBData);

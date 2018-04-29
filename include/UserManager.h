@@ -125,6 +125,7 @@ namespace MS {
             void UpdateUserComputer(SComputerInfo &rsComputerInfo, eDBOperation operation);
 
             void UpdateUserItemInInvenoty(UserPtr user, SItemRecord &item_record);
+
             void OnHeartBeatImmediately();
 
             void GPSThreadBeginCallback();
@@ -138,6 +139,8 @@ namespace MS {
             INT32 OnMSgFromGC_AskLogin(const CHAR *pMsg, INT32 n32MsgLength, SUserNetInfo netinfo);
 
             INT32 OnMsgFromGC_AskBuyItem(const CHAR *pMsg, INT32 n32MsgLength, const SUserNetInfo netinfo);
+
+            INT32 OnMSgFromGC_AskInstallCCInComp(const CHAR *pMsg, INT32 n32MsgLength, const SUserNetInfo netinfo);
 
             void EncodeAndSendToLogicThread(google::protobuf::MessageLite &rMsg, INT32 n32MsgId);
 

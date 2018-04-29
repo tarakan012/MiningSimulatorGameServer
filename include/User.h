@@ -7,7 +7,8 @@
 
 #include "UserDBDataStruct.h"
 #include "Kernel.h"
-
+#include "Computer.h"
+#include "Inventory.h"
 #include "GCToGS.pb.h"
 
 #include "google/protobuf/message.h"
@@ -35,6 +36,9 @@ namespace MS {
             INT32 AskStartMining(GCToGS::AskStartMining &rsMsg);
 
             INT32 AskBuyItem(GCToGS::AskBuyItem &rsMsg);
+
+            INT32 AskInstallCCInComp(GCToGS::AskInstallCCInComp &rsMsg);
+
             SUserNetInfo &GetUserNetInfo() { return m_sUserNetInfo; };
 
             void ClearNetInfo();
@@ -64,13 +68,20 @@ namespace MS {
 
             bool CheckIfEnoughPay(eUserDBData_Type eType, INT32 n32Pay);
 
+            ComputerPtr GetComputerById(INT32 compid);
             INT32 GetMiningGoldComputerById(INT32 n32CompId);
+
+            void InsertComputer(ComputerPtr comp) { m_CompMap[comp->GetDbId()] = comp; }
+
+            void SetInventory(boost::shared_ptr<CInventory> inventory) { m_pcInventory = inventory; }
 
         private:
             TIME_MILSEC m_n64LastUpdateTime;
             TIME_MILSEC m_tStartAccumEnergy;
             SUserNetInfo m_sUserNetInfo;
             SUserDBData m_sUserDBData;
+            std::map<INT32/*compid*/, ComputerPtr> m_CompMap;
+            boost::shared_ptr<CInventory> m_pcInventory;
         };
 
         typedef boost::shared_ptr<CUser> UserPtr;

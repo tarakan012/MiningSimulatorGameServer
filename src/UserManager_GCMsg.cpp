@@ -52,5 +52,24 @@ namespace MS {
             }
             return 1;
         }
+
+        INT32
+        CUserManager::OnMSgFromGC_AskInstallCCInComp(const CHAR *pMsg, INT32 n32MsgLength, const SUserNetInfo netinfo) {
+            UserPtr pcUser = CheckAndGetUserByNetInfo(netinfo);
+
+            if (pcUser == NULL) {
+
+                return 0;
+            }
+            GCToGS::AskInstallCCInComp sMsg;
+            if (!ParseProtoMsg(pMsg, n32MsgLength, sMsg)) {
+                return 0;
+            }
+            INT32 n32RetFlag = pcUser->AskInstallCCInComp(sMsg);
+            if (eNormal != n32RetFlag) {
+                PostMsgToGC_AskReturn(netinfo, sMsg.msgid(), n32RetFlag);
+            }
+            return 1;
+        }
     }
 }

@@ -141,8 +141,9 @@ namespace MS {
             GCMsgHandlerMap[GCToGS::eMsgToGSFromGC_AskLogin] = GCCallback(&CUserManager::OnMSgFromGC_AskLogin)
             GCMsgHandlerMap[GCToGS::eMsgToGSFromGC_AskStartMining] = GCCallback(
                                                                              &CUserManager::OnMSgFromGC_AskStartMining)
-            GCMsgHandlerMap[GCToGS::eMsgToGSFromGC_AskBuyItem] = GCCallback(
-                                                                             &CUserManager::OnMsgFromGC_AskBuyItem)
+            GCMsgHandlerMap[GCToGS::eMsgToGSFromGC_AskBuyItem] = GCCallback(&CUserManager::OnMsgFromGC_AskBuyItem)
+            GCMsgHandlerMap[GCToGS::eMsgToGSFromGC_InstallCCInComp] = GCCallback(
+                                                                              &CUserManager::OnMSgFromGC_AskInstallCCInComp)
         }
 
         void CUserManager::InsertNewUserToDB(GCToGS::AskLogin &rLogin, UserPtr pUser, INT32 n32DBGameUserID) {
