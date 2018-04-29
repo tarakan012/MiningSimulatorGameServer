@@ -242,9 +242,13 @@ namespace MS {
                 case eDBOperation::eOperationTypeAdd : {
 
                     std::stringstream strSql;
-                    strSql << "insert into item_user(id,name,mining_gold,item_id ) values(" << rsItemRecord.n32DBId
-                           << ",'" << rsItemRecord.szName << "'," << rsItemRecord.n32MiningGold << ","
-                           << rsItemRecord.n32Id << ")";
+                    strSql << "insert into item_user(id,name,mining_gold,item_id, type ) values("
+                           << rsItemRecord.n32DBId
+                           << ",'" << rsItemRecord.szName
+                           << "'," << rsItemRecord.n32MiningGold
+                           << "," << rsItemRecord.n32Id
+                           << "," << rsItemRecord.n32Type
+                           << ")";
                     exeSql.set_sql(strSql.str());
                 }
             }
