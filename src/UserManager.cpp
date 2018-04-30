@@ -165,7 +165,6 @@ namespace MS {
                 for (auto &comp : rsUserCompInfo) {
                     counter++;
                     SComputerInfo &rCompInfo = comp.second;
-                    rCompInfo.n32DBId = CombineComputerID();
                     strSql << rCompInfo.n32DBId;
                     if (counter != n32NumComp) {
                         strSql << ",";
@@ -219,10 +218,8 @@ namespace MS {
                     for (auto &item : rsComputerInfo.ItemRecordMap) {
                         SItemRecord &rItemRecord = item.second;
                         ln32MiningGoldComp += rItemRecord.n32MiningGold;
-                        genItemID = GenerateItemDBID();
-                        rItemRecord.n32DBId = genItemID;
                         UpdateUserItem(rItemRecord, eDBOperation::eOperationTypeAdd);
-                        strSql << genItemID;
+                        strSql << rItemRecord.n32DBId;
                         if (n32CountDelim > 0) {
                             strSql << ",";
                             n32CountDelim--;
