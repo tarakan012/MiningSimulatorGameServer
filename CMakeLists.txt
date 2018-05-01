@@ -9,6 +9,7 @@ set(TinyFormat_DIRS ${PROJECT_SOURCE_DIR}/ThirdFunc/TinyFormat)
 set(JsonCocos_DIRS ${PROJECT_SOURCE_DIR}/ThirdFunc/JsonCocos)
 
 include_directories(${TinyFormat_DIRS} ${JsonCocos_DIRS})
+include_directories("${PROJECT_SOURCE_DIR}/include/")
 
 set(THIRDFUNC_HEADERS
         ${JsonCocos_DIRS}/Json.h
@@ -21,8 +22,20 @@ set(THIRDFUNC_SOURCES
         ${JsonCocos_DIRS}/extension.c
         )
 
-file(GLOB HEADER_FILES "include/*.h")
-file(GLOB SOURCE_FILES "src/*.cpp")
+file(GLOB HEADER_FILES
+        "include/ServerMS/*.h"
+        "include/ServerMS/Network/*.h"
+        "include/ServerMS/Time/*.h"
+        "include/ServerMS/Log/*.h"
+        "include/ServerMS/DB/*.h"
+        )
+file(GLOB SOURCE_FILES
+        "src/ServerMS/*.cpp"
+        "src/ServerMS/Network/*.cpp"
+        "src/ServerMS/Time/*.cpp"
+        "src/ServerMS/Log/*.cpp"
+        "src/ServerMS/DB/*.cpp"
+        )
 
 include_directories("${PROJECT_SOURCE_DIR}/src/" "${PROJECT_SOURCE_DIR}/include")
 include_directories("${PROJECT_SOURCE_DIR}/ThirdFunc/MsgLists/")
