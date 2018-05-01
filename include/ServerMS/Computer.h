@@ -5,12 +5,8 @@
 #ifndef MININGSIMULATORGAMESERVER_COMPUTER_H
 #define MININGSIMULATORGAMESERVER_COMPUTER_H
 
-#include "boost/shared_ptr.hpp"
 #include "boost/enable_shared_from_this.hpp"
-#include "ServerMS/PreDefine.h"
 #include "ServerMS/ComputerComponent.h"
-
-#include <map>
 
 namespace ServerMS {
 

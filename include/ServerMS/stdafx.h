@@ -1,10 +1,18 @@
 #ifndef STDAFX_H
 #define STDAFX_H
 
-#include "ServerMS/UserNetInfo.h"
-
+#include "stdio.h"
+#include <string>
+#include <vector>
 #include <functional>
+#include <queue>
 #include <map>
+#include <boost/shared_ptr.hpp>
+#include "boost/atomic.hpp"
+#include "google/protobuf/message.h"
+
+#include "ServerMS/PreDefine.h"
+#include "ServerMS/UserNetInfo.h"
 
 namespace ServerMS {
 

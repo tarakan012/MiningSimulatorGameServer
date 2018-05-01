@@ -1,7 +1,6 @@
 #ifndef USERDBDATASTRUCT_H
 #define USERDBDATASTRUCT_H
 
-#include "ServerMS/PreDefine.h"
 #include "ServerMS/all_const.h"
 #include "ServerMS/ConfigConst.h"
 

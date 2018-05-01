@@ -5,7 +5,6 @@
 #ifndef MININGSIMULATORGAMESERVER_COMPUTERCOMPONENT_H
 #define MININGSIMULATORGAMESERVER_COMPUTERCOMPONENT_H
 
-#include "ServerMS/PreDefine.h"
 #include "ServerMS/all_const.h"
 
 struct SComputerComponent : public SItemRecord {

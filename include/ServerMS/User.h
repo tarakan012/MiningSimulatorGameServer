@@ -1,18 +1,12 @@
 #ifndef USER_H
 #define USER_H
 
-#include "ServerMS/PreDefine.h"
-#include "ServerMS/UserNetInfo.h"
 #include "ServerMS/all_const.h"
-
 #include "ServerMS/UserDBDataStruct.h"
 #include "ServerMS/Kernel.h"
 #include "ServerMS/Computer.h"
 #include "ServerMS/Inventory.h"
 #include "GCToGS.pb.h"
-
-#include "google/protobuf/message.h"
-#include <boost/shared_ptr.hpp>
 
 namespace ServerMS {
 

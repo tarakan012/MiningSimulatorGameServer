@@ -1,13 +1,7 @@
 #ifndef DBMANAGER_H
 #define DBMANAGER_H
 
-#include "ServerMS/PreDefine.h"
-#include "stdio.h"
-#include "stdlib.h"
 #include "libpq-fe.h"
-#include <string>
-#include <vector>
-#include <map>
 
 namespace DB {
 

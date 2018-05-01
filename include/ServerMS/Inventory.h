@@ -5,18 +5,11 @@
 #ifndef MININGSIMULATORGAMESERVER_INVENTORY_H
 #define MININGSIMULATORGAMESERVER_INVENTORY_H
 
-#include "ServerMS/PreDefine.h"
-#include "ServerMS/UserNetInfo.h"
 #include "ServerMS/all_const.h"
-
 #include "ServerMS/UserDBDataStruct.h"
 #include "ServerMS/Kernel.h"
 #include "ServerMS/Computer.h"
 #include "GCToGS.pb.h"
-
-#include "google/protobuf/message.h"
-#include <boost/shared_ptr.hpp>
-#include "ServerMS/all_const.h"
 
 namespace ServerMS {
 

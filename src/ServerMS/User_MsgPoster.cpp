@@ -2,7 +2,6 @@
 #include "GSToGC.pb.h"
 #include "ServerMS/ConfigManager.h"
 
-
 namespace ServerMS {
 
     void CUser::PostMsgToGC(google::protobuf::MessageLite &rMsg, int n32MsgID) {

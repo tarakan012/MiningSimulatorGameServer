@@ -1,5 +1,4 @@
 #include "ServerMS/UserManager.h"
-#include "google/protobuf/message.h"
 #include "ServerMS/ParseProto.h"
 #include "ServerMS/AllErrorCode.h"
 

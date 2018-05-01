@@ -1,12 +1,9 @@
 #ifndef DBACTIVEWRAPER_H
 #define DBACTIVEWRAPER_H
 
-#include "ServerMS/PreDefine.h"
 #include "ServerMS/Active.h"
-#include <string>
 #include "ServerMS/DataSource.h"
 #include "ServerMS/Buffer.h"
-#include "google/protobuf/message.h"
 
 class CDBActiveWrapper {
 public:

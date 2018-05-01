@@ -1,11 +1,9 @@
 #include "ServerMS/UserManager.h"
 #include "ServerMS/DB/DBManager.h"
-#include <stdio.h>
-#include "GCToGS.pb.h"
-
-#include <strstream>
-#include <GSToGC.pb.h>
 #include "ServerMS/Time/Time.h"
+#include "GCToGS.pb.h"
+#include "GSToGC.pb.h"
+#include <strstream>
 
 using namespace Log;
 

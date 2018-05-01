@@ -5,8 +5,6 @@
 #ifndef MININGSIMULATORGAMESERVER_USERNETINFO_H
 #define MININGSIMULATORGAMESERVER_USERNETINFO_H
 
-#include "ServerMS/PreDefine.h"
-
 struct SUserNetInfo {
     INT32 n32GCConnID;
     TIME_MILSEC m_tLastConnMilsec;

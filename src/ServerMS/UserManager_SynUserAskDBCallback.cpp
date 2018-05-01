@@ -1,4 +1,3 @@
-#include <tinyformat.h>
 #include "ServerMS/UserManager.h"
 #include "ServerMS/UserDbDataMgr.h"
 

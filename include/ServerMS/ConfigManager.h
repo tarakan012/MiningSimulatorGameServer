@@ -5,9 +5,6 @@
 #include "ServerMS/UserDBDataStruct.h"
 #include "ServerMS/Log/Logging.h"
 
-#include <map>
-#include <vector>
-
 namespace ServerMS {
 
     class CConfigManager {

@@ -5,7 +5,6 @@
 #ifndef MININGSIMULATORGAMESERVER_SHOPMANAGER_H
 #define MININGSIMULATORGAMESERVER_SHOPMANAGER_H
 
-#include "ServerMS/PreDefine.h"
 #include "ServerMS/Singleton.h"
 #include "ServerMS/User.h"
 

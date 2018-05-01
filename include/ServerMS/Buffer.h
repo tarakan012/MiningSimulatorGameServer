@@ -1,8 +1,6 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
-#include <string>
-
 class CBuffer {
 public:
     CBuffer() : m_MaxLength(1024 * 10), m_OriMaxLength(m_MaxLength), m_pMsg(new char[m_MaxLength]) {}

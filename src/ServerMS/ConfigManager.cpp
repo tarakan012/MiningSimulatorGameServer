@@ -1,5 +1,4 @@
 #include "ServerMS/ConfigManager.h"
-#include "ServerMS/PreDefine.h"
 #include "Json.h"
 #include "ServerMS/ConfigConst.h"
 #include <fstream>

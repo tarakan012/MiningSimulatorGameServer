@@ -2,8 +2,6 @@
 #define CONNECTIONMANAGER_H
 
 #include <set>
-#include "boost/atomic.hpp"
-#include "ServerMS/PreDefine.h"
 #include "ServerMS/Network/Connection.h"
 
 namespace Network {

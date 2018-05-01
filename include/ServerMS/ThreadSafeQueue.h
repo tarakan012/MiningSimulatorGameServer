@@ -1,10 +1,6 @@
 #ifndef THREADSAFEQUEUE_H
 #define THREADSAFEQUEUE_H
 
-#include "ServerMS/PreDefine.h"
-#include <boost/atomic.hpp>
-#include <queue>
-
 template<class T>
 class CThreadSafeObjectPool {
 public:

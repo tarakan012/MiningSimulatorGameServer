@@ -2,8 +2,6 @@
 #define UTIL_H
 
 #include "tinyformat.h"
-#include <string>
-#include "ServerMS/PreDefine.h"
 
 namespace Log {
 

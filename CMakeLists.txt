@@ -82,4 +82,17 @@ add_executable(${APP_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${PROTOBUF_SOURCES} $
         ${THIRDFUNC_HEADERS} ${THIRDFUNC_SOURCES} ${PROTO_HDRS} ${PROTO_SRCS}
         )
 
-target_link_libraries(${APP_NAME} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} ${PostgreSQL_LIBRARIES} -lpthread)
+get_filename_component(full_path_stdafx ${CMAKE_CURRENT_SOURCE_DIR}/include/ServerMS/stdafx.h ABSOLUTE)
+list(REMOVE_ITEM HEADER_FILES "${full_path_stdafx}")
+message("${HEADER_FILES}")
+
+ADD_LIBRARY(PCH STATIC "src/ServerMS/stdafx.cpp" "include/ServerMS/stdafx.h")
+
+ADD_CUSTOM_COMMAND(TARGET PCH
+        PRE_BUILD
+        COMMAND ${CMAKE_CXX_COMMAND} -x c++-header ${CMAKE_CURRENT_SOURCE_DIR}/include/ServerMS/stdafx.h -o stdafx.h.pch)
+SET_SOURCE_FILES_PROPERTIES(${SOURCE_FILES} ${HEADER_FILES}
+        PROPERTIES
+        COMPILE_FLAGS "-include ${CMAKE_CURRENT_SOURCE_DIR}/include/ServerMS/stdafx.h")
+
+target_link_libraries(${APP_NAME} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} ${PostgreSQL_LIBRARIES} PCH -lpthread)

@@ -1,16 +1,11 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-#include "ServerMS/PreDefine.h"
-#include "ServerMS/UserNetInfo.h"
 #include "boost/asio.hpp"
 #include "boost/array.hpp"
 #include "boost/bind.hpp"
-#include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/enable_shared_from_this.hpp>
-
-#include <stdio.h>
+#include "boost/noncopyable.hpp"
+#include "boost/enable_shared_from_this.hpp"
 
 namespace Network {
 

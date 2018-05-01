@@ -2,14 +2,7 @@
 #include "ServerMS/Log/Logging.h"
 #include "ServerMS/ConfigManager.h"
 #include "ServerMS/UserManager.h"
-#include "Json.h"
-#include "google/protobuf/util/json_util.h"
-#include "google/protobuf/message.h"
-#include <string>
-#include <tinyformat.h>
 #include "GCToGS.pb.h"
-#include "boost/thread.hpp"
-#include "boost/atomic.hpp"
 
 using namespace Log;
 

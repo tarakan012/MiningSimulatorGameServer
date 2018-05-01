@@ -1,7 +1,6 @@
 #ifndef ALL_CONST
 #define ALL_CONST
 
-#include <map>
 #include <cstring>
 
 const int cMaxLenNameItem = 32;

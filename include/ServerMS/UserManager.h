@@ -1,31 +1,19 @@
 #ifndef USERMANAGER_H
 #define USERMANAGER_H
 
-#include "ServerMS/PreDefine.h"
 #include "ServerMS/Log/Logging.h"
 #include "ServerMS/ConfigManager.h"
-#include "ServerMS/stdafx.h"
 #include "ServerMS/User.h"
 #include "ServerMS/DB/DBManager.h"
 #include "ServerMS/Network/Connection.h"
-#include "ServerMS/UserNetInfo.h"
 #include "ServerMS/DBActiveWrapper.h"
 #include "ServerMS/ThreadSafeQueue.h"
 #include "ServerMS/UserDBDataStruct.h"
 #include "ServerMS/all_const.h"
 #include "ServerMS/ParseProto.h"
-
 #include "GCToGS.pb.h"
 #include "GSToDB.pb.h"
 #include "DBToGS.pb.h"
-
-#include <queue>
-#include <map>
-
-#include "boost/shared_ptr.hpp"
-
-#include "google/protobuf/util/json_util.h"
-#include "google/protobuf/message.h"
 #include <sstream>
 
 namespace ServerMS {

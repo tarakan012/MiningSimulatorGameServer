@@ -4,12 +4,7 @@
 #define BOOST_SIGNALS_NAMESPACE boost_signals
 #define BOOST_SIGNALS_NO_DEPRECATION_WARNING
 
-#include "ServerMS/stdafx.h"
-#include "ServerMS/PreDefine.h"
-#include "ServerMS/UserNetInfo.h"
 #include "ServerMS/Network/ConnectionManager.h"
-
-#include "google/protobuf/message_lite.h"
 #include "boost/signal.hpp"
 #include "boost/asio.hpp"
 #include "boost/bind.hpp"

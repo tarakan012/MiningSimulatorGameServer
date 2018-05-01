@@ -1,5 +1,4 @@
 #include "ServerMS/Network/Connection.h"
-#include "ServerMS/Kernel.h"
 #include "ServerMS/Log/Logging.h"
 #include "ServerMS/UserManager.h"
 #include "ServerMS/Kernel.h"
