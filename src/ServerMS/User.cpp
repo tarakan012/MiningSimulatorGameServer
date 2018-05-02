@@ -10,7 +10,8 @@ using namespace Log;
 
 namespace ServerMS {
 
-    CUser::CUser() {
+    CUser::CUser(boost::shared_ptr<CUserManager> pUsrMgr)
+            : m_pUsrMgr(pUsrMgr) {
         m_n64LastUpdateTime = 0;
         m_tStartAccumEnergy = 0;
     }
@@ -33,14 +34,14 @@ namespace ServerMS {
 
     void CUser::OnOnline(SUserNetInfo &sUserNetInfo) {
         KickOutOldUser();
-        CUserManager::GetInstance().OnUserOnline(shared_from_this(), sUserNetInfo);
+        m_pUsrMgr->OnUserOnline(shared_from_this(), sUserNetInfo);
         SynUserGameInfo();
         SynShopPriceList();
     }
 
 
     void CUser::OnOfline() {
-        CUserManager::GetInstance().OnUserOffline(shared_from_this());
+        m_pUsrMgr->OnUserOffline(shared_from_this());
     }
 
     void CUser::SetUserNetInfo(const SUserNetInfo &sUserNetInfo) {
@@ -111,7 +112,7 @@ namespace ServerMS {
 
     INT32 CUser::AskBuyItem(GCToGS::AskBuyItem &rsMsg) {
         INT32 n32RetFlag = 0;
-        n32RetFlag = CShopManager::GetInstance().Buy(shared_from_this(), rsMsg.item_id());
+        n32RetFlag = m_pUsrMgr->GetShopMgr()->Buy(shared_from_this(), rsMsg.item_id());
         if (n32RetFlag == eNormal) {
             SynInventory();
         }

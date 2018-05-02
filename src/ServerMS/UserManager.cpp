@@ -4,21 +4,14 @@
 #include "GCToGS.pb.h"
 #include "GSToGC.pb.h"
 #include <strstream>
+#include "ServerMS/Kernel.h"
 
 using namespace Log;
 
 namespace ServerMS {
 
-    static CUserManager *pUMInstance = nullptr;
-
-    CUserManager &CUserManager::GetInstance() {
-        if (NULL == pUMInstance) {
-            pUMInstance = new CUserManager;
-        }
-        return *pUMInstance;
-    }
-
-    CUserManager::CUserManager() {
+    CUserManager::CUserManager(boost::shared_ptr<CKernel> pKernel)
+            : m_pKernel(pKernel) {
         m_n64LastUpdateTime = 0;
     }
 
@@ -266,8 +259,12 @@ namespace ServerMS {
         GSToGC::AskRet msg;
         msg.set_askid(n32ProtocolId);
         msg.set_errorcode(n32RetFlag);
-        CKernel::GetInstance().PostMsgToGC(netinfo.n32GCConnID, msg, msg.msgid());
+        m_pKernel->PostMsgToGC(netinfo.n32GCConnID, msg, msg.msgid());
         return false;
+    }
+
+    void CUserManager::PostMsgToGC(INT32 n32ConnID, google::protobuf::MessageLite &rMsg, INT32 n32MsgID) {
+        m_pKernel->PostMsgToGC(n32ConnID, rMsg, n32MsgID);
     }
 
 }

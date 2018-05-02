@@ -37,13 +37,13 @@ namespace ServerMS {
         }
     };
 
-    class CUserManager {
+    class CKernel;
+
+    class CUserManager : public boost::enable_shared_from_this<CUserManager>, private boost::noncopyable {
     public:
-        CUserManager();
+        CUserManager(boost::shared_ptr<CKernel> pKernel);
 
         bool Initialize();
-
-        static CUserManager &GetInstance();
 
         void RegisterMsgHandle(GCMsgHandlerMap &GCMsgHandlerMap);
 
@@ -61,6 +61,7 @@ namespace ServerMS {
 
         CDBActiveWrapper &GetNowWorkActor();
 
+        void PostMsgToGC(INT32 n32ConnID, google::protobuf::MessageLite &rMsg, INT32 n32MsgID);
         void PostSaveCmd(); // empty 1
         bool UserAskLogin(GCToGS::AskLogin &rLogin, SUserNetInfo netinfo);
 
@@ -100,6 +101,9 @@ namespace ServerMS {
 
         void SynHandleAllAccountCallback(CBuffer *pBuffer);
 
+        const boost::shared_ptr<CConfigManager> &GetConfMgr() { return m_pKernel->GetConfMgr(); }
+
+        const boost::shared_ptr<CShopManager> &GetShopMgr() { return m_pKernel->GetShopMgr(); }
         void InsertNewUserToDB(GCToGS::AskLogin &rLogin, UserPtr pUser, INT32 n32DBGameUserID);
 
         void UpdateUserItem(SItemRecord &rsItemRecord, eDBOperation operation);
@@ -150,6 +154,7 @@ namespace ServerMS {
         UserMap m_cUserOnlineMap;
         std::map<SUserNetInfo, UserPtr> m_cUserNetMap;
         std::stringstream m_SaveUserStream;
+        boost::shared_ptr<CKernel> m_pKernel;
     };
 
 }

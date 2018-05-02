@@ -7,15 +7,6 @@ using namespace Log;
 
 namespace ServerMS {
 
-    static CConfigManager *pIRMInstance = nullptr;
-
-    CConfigManager &CConfigManager::GetInstance() {
-        if (NULL == pIRMInstance) {
-            pIRMInstance = new CConfigManager;
-        }
-        return *pIRMInstance;
-    }
-
     bool CConfigManager::Initialize() {
         bool bLoadRet = true;
         if (bLoadRet) bLoadRet = LoadItemCfg();

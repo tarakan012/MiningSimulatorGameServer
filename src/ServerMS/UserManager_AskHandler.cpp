@@ -17,12 +17,12 @@ namespace ServerMS {
             GetNowWorkActor().EncodeAndSendToDBThread(sQueryUser, sQueryUser.msgid());
         } else {
             LogPrintDebug("User Account No Exist");
-            UserPtr pUser{new CUser()};
+            UserPtr pUser = boost::make_shared<CUser>(shared_from_this());
             auto pcInventory = boost::make_shared<CInventory>(pUser);
             pUser->SetInventory(pcInventory);
             INT32 guid = CombineGameUserID();
             m_AllUserNameIDMap.insert(std::make_pair(sUserCombineKey, guid));
-            SUserDBData sUserDBData = CConfigManager::GetInstance().GetStartSet();
+            SUserDBData sUserDBData = m_pKernel->GetConfMgr()->GetStartSet();
             sUserDBData.sPODUserDBData.n32DBId = guid;
             INT32 comp_dbid = CombineComputerID();
             auto pcComp = boost::make_shared<CComputer>(pUser);

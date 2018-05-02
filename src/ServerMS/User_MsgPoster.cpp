@@ -1,11 +1,12 @@
 #include "ServerMS/User.h"
 #include "GSToGC.pb.h"
 #include "ServerMS/ConfigManager.h"
+#include "ServerMS/UserManager.h"
 
 namespace ServerMS {
 
     void CUser::PostMsgToGC(google::protobuf::MessageLite &rMsg, int n32MsgID) {
-        CKernel::GetInstance().PostMsgToGC(m_sUserNetInfo.n32GCConnID, rMsg, n32MsgID);
+        m_pUsrMgr->PostMsgToGC(m_sUserNetInfo.n32GCConnID, rMsg, n32MsgID);
     }
 
     void CUser::SynUserGameInfo() {
@@ -34,7 +35,7 @@ namespace ServerMS {
 
     void CUser::SynShopPriceList() {
         GSToGC::SynShopPriceList msg;
-        const auto &cShopCfg = CConfigManager::GetInstance().GetShopCfg();
+        const auto &cShopCfg = m_pUsrMgr->GetConfMgr()->GetShopCfg();
         for (auto const &page_pair : cShopCfg) {
             auto pMsgPage = msg.add_page();
             const std::map<INT32, SItemRecord> &PageMap = page_pair.second;

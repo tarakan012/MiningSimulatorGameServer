@@ -31,7 +31,7 @@ namespace ServerMS {
 
         boost::shared_ptr<DBToGS::QueryUser> sQueryUser = ParseProtoMsgInThread<DBToGS::QueryUser>(
                 pBuffer->GetCurData(), pBuffer->GetDataLength());
-        UserPtr lpUser{new CUser()};
+        UserPtr lpUser = boost::make_shared<CUser>(shared_from_this());
         AddUser(lpUser);
         SUserNetInfo sUserNetInfo(sQueryUser->gcnetid());
         SUserDBData sUserDBData;

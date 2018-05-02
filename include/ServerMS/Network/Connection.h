@@ -9,9 +9,10 @@
 
 namespace Network {
 
+    class CConnectionManager;
     class CConnection : public boost::enable_shared_from_this<CConnection>, private boost::noncopyable {
     public:
-        CConnection(boost::asio::io_service &io_service);
+        CConnection(boost::shared_ptr<CConnectionManager> pConnMgr, boost::asio::io_service &io_service);
 
         ~CConnection();
 
@@ -41,6 +42,7 @@ namespace Network {
     private:
         boost::asio::ip::tcp::socket m_Socket;
         boost::array<CHAR, 8192> m_Buffer;
+        boost::shared_ptr<CConnectionManager> m_pConnMgr;
         SUserNetInfo m_sUserNerInfo;
     };
 

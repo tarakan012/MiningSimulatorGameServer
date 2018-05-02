@@ -10,14 +10,14 @@
 
 namespace ServerMS {
 
+    class CUserManager;
     class CShopManager {
     public:
-    DECLARE_SINGLETON(CShopManager)
-
+        CShopManager(boost::shared_ptr<CUserManager> &rUsrMgr);
         INT32 Buy(UserPtr user, INT32 item_id);
 
     private:
-
+        boost::shared_ptr<CUserManager> &m_rUsrMgr;
     };
 
 }

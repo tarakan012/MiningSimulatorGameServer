@@ -5,15 +5,17 @@
 #include "ServerMS/ShopManager.h"
 #include "ServerMS/ConfigManager.h"
 #include "ServerMS/AllErrorCode.h"
-#include "ServerMS/User.h"
 #include "ServerMS/UserManager.h"
 
 namespace ServerMS {
 
-    IMPLEMENT_SINGLETON(CShopManager)
+    CShopManager::CShopManager(boost::shared_ptr<CUserManager> &rUsrMgr)
+            : m_rUsrMgr(rUsrMgr) {
+
+    }
 
     INT32 CShopManager::Buy(UserPtr user, INT32 item_id) {
-        auto &cShopCfg = CConfigManager::GetInstance().GetShopCfg();
+        auto &cShopCfg = m_rUsrMgr->GetConfMgr()->GetShopCfg();
         for (auto &page_pair : cShopCfg) {
             std::map<INT32, SItemRecord> &PageShopMap = page_pair.second;
             auto iter = PageShopMap.find(item_id);
@@ -21,10 +23,10 @@ namespace ServerMS {
                 auto item = PageShopMap[item_id];
                 if (user->GetGold() >= item.n32Cost) {
                     user->GetUserDBData().ChengeUserDBData(eUserDBData_Gold, -item.n32Cost);
-                    INT32 item_dbid = CUserManager::GetInstance().GenerateItemDBID();
+                    INT32 item_dbid = m_rUsrMgr->GenerateItemDBID();
                     item.n32DBId = item_dbid;
                     user->GetUserDBData().Inventory[item.n32DBId] = item;
-                    CUserManager::GetInstance().UpdateUserItemInInvenoty(user, item);
+                    m_rUsrMgr->UpdateUserItemInInvenoty(user, item);
                     return eNormal;
                 } else {
                     return eEC_NotEnoughGold;

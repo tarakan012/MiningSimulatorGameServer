@@ -10,9 +10,10 @@
 
 namespace ServerMS {
 
+    class CUserManager;
     class CUser : public boost::enable_shared_from_this<CUser>, private boost::noncopyable {
     public:
-        CUser();
+        CUser(boost::shared_ptr<CUserManager> pUsrMgr);
 
         void LoadDBData(SUserDBData &sUserDBData);
 
@@ -73,6 +74,7 @@ namespace ServerMS {
         SUserDBData m_sUserDBData;
         std::map<INT32/*compid*/, ComputerPtr> m_CompMap;
         boost::shared_ptr<CInventory> m_pcInventory;
+        boost::shared_ptr<CUserManager> m_pUsrMgr;
     };
 
     typedef boost::shared_ptr<CUser> UserPtr;

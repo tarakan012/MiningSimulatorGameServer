@@ -25,8 +25,6 @@ namespace ServerMS {
             return m_ShopCfgMap;
         }
 
-        static CConfigManager &GetInstance();
-
     private:
         std::map<int, SItemRecord> m_ItemRecordMap;
         std::map<int/*page_type*/, std::map<INT32/*item_id*/, SItemRecord>> m_ShopCfgMap;

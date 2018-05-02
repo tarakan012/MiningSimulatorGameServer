@@ -1,11 +1,12 @@
 #include "ServerMS/Kernel.h"
 #include "ServerMS/UserManager.h"
+#include "ServerMS/Network/ConnectionManager.h"
 
 namespace ServerMS {
 
     void CKernel::MainLoop() {
         while (true) {
-            CUserManager::GetInstance().OnHeartBeatImmediately();
+            m_pUsrMgr->OnHeartBeatImmediately();
             sleep(1);
         }
     }
@@ -21,7 +22,7 @@ namespace ServerMS {
         std::memcpy(lshBuffer + 0 * sizeof(INT32), (CHAR *) &n32Len, sizeof(INT32));
         std::memcpy(lshBuffer + 1 * sizeof(INT32), (CHAR *) &n32MsgID, sizeof(INT32));
         bool res = rMsg.SerializeToArray(lshBuffer + 2 * sizeof(INT32), n32MsgLen);
-        m_ConnectionManager.SendMsgToConnection(n32ConnID, lshBuffer, n32Len);
+        m_pConnMgr->SendMsgToConnection(n32ConnID, lshBuffer, n32Len);
         delete lshBuffer;
     }
 

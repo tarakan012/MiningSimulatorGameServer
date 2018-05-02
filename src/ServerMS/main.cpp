@@ -6,8 +6,8 @@ using namespace Log;
 int main(int argc, char **argv) {
     LogPrint(LogFlags::ALL, "Server Start\n");
 
-    ServerMS::CKernel &kernel = ServerMS::CKernel::GetInstance();
-    kernel.Initialize();
-
+    auto kernel = boost::make_shared<ServerMS::CKernel>();
+    kernel->Initialize();
+    kernel->MainLoop();
     return 0;
 }
