@@ -6,12 +6,12 @@ project(${APP_NAME})
 add_definitions("-std=c++11 -lpq")
 
 include_directories(${PROJECT_SOURCE_DIR}/ThirdFunc)
-
+include_directories(${PROJECT_SOURCE_DIR}/ThirdFunc/json/single_include)
 include_directories("${PROJECT_SOURCE_DIR}/include/")
 
 set(THIRDFUNC_HEADERS
-        ${PROJECT_SOURCE_DIR}/ThirdFunc/nlohmann/json.hpp
-        ${PROJECT_SOURCE_DIR}/ThirdFunc/TinyFormat/tinyformat.h
+        ${PROJECT_SOURCE_DIR}/ThirdFunc/json/single_include/nlohmann/json.hpp
+        ${PROJECT_SOURCE_DIR}/ThirdFunc/tinyformat/tinyformat.h
         ${PROJECT_SOURCE_DIR}/ThirdFunc/fast-cpp-csv-parser/csv.h
         )
 
