@@ -33,7 +33,4 @@ namespace Network {
         }
     }
 
-    bool CConnectionManager::HandleMsgFromGC(const CHAR *pMsg, INT32 n32MsgLength, SUserNetInfo netinfo) {
-        return m_pKernel->HandleMsgFromGC(pMsg, n32MsgLength, netinfo);
-    }
 }
