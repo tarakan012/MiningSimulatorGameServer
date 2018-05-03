@@ -1,16 +1,26 @@
 [
   {
-    "itemIdPage": [
+    "PageNumber": 1,
+    "Type": 1,
+    "ItemIDArray": [
     1000,
     1001
-    ],
-    "typePage": 1
+    ]
+
   },
   {
-    "itemIdPage": [
-    2000
-    ],
-    "typePage": 2
+    "PageNumber": 2,
+    "Type": 2,
+    "ItemIDArray": [
+      2000
+    ]
+  },
+  {
+    "PageNumber": 3,
+    "Type": 3,
+    "ItemIDArray": [
+      3000
+    ]
   }
 ]
 

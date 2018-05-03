@@ -1,0 +1,5 @@
+id,name,type,lvl,icon_id,mining_gold,mining_resources,energy_consumption,strength,cost,number_slots
+1000,1030 nvidia,1,1,1000,60,10,1,100,50,0
+1001,1050 nvidia,1,1,1001,90,15,1,100,90,0
+2000,xeon e5 2680 v2,2,5,2000,90,100,3,100,300,0
+3000,asus rog strix,3,3,3000,0,0,0,100,500,3
