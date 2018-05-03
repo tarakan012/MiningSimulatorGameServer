@@ -5,21 +5,18 @@ project(${APP_NAME})
 
 add_definitions("-std=c++11 -lpq")
 
-set(TinyFormat_DIRS ${PROJECT_SOURCE_DIR}/ThirdFunc/TinyFormat)
-set(JsonCocos_DIRS ${PROJECT_SOURCE_DIR}/ThirdFunc/JsonCocos)
+include_directories(${PROJECT_SOURCE_DIR}/ThirdFunc)
 
-include_directories(${TinyFormat_DIRS} ${JsonCocos_DIRS})
 include_directories("${PROJECT_SOURCE_DIR}/include/")
 
 set(THIRDFUNC_HEADERS
-        ${JsonCocos_DIRS}/Json.h
-        ${TinyFormat_DIRS}/tinyformat.h
-        ${JsonCocos_DIRS}/extension.c
+        ${PROJECT_SOURCE_DIR}/ThirdFunc/nlohmann/json.hpp
+        ${PROJECT_SOURCE_DIR}/ThirdFunc/TinyFormat/tinyformat.h
+        ${PROJECT_SOURCE_DIR}/ThirdFunc/fast-cpp-csv-parser/csv.h
         )
 
 set(THIRDFUNC_SOURCES
-        ${JsonCocos_DIRS}/Json.c
-        ${JsonCocos_DIRS}/extension.c
+
         )
 
 file(GLOB HEADER_FILES
