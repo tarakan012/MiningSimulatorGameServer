@@ -1,7 +1,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include "tinyformat.h"
+#include "TinyFormat/tinyformat.h"
 
 namespace Log {
 
