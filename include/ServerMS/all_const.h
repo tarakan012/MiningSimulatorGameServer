@@ -17,23 +17,18 @@ enum eDBOperation {
 
 struct SItemRecord {
 
-    int n32Id;
-    int n32DBId;
-    char szName[cMaxLenNameItem];
-    int n32Lvl;
-    int n32Type;
-    int n32Icon;
-    int n32MiningGold;
-    int n32MiningResourses;
-    int n32PowerConsumption;
-    int n32ExpansionSlot;
-    int n32LvlGrind;
-    int n32Cost;
-    int n32Strength;
-
-    SItemRecord() {
-        std::memset(this, 0, sizeof(*this));
-    }
+    int n32Id{};
+    int n32DBId{};
+    std::string NameStr;
+    int n32Type{};
+    int n32Lvl{};
+    int n32Icon{};
+    int n32MiningGold{};
+    int n32MiningResourses{};
+    int n32EnergyConsumption{};
+    int n32Strength{};
+    int n32Cost{};
+    int n32NumberSlots{};
 };
 
 struct SPODComputerInfo {

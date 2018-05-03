@@ -43,7 +43,7 @@ namespace ServerMS {
                 const auto &item = item_pair.second;
                 auto pMsgItem = pMsgPage->add_item();
                 pMsgItem->set_id(item.n32Id);
-                pMsgItem->set_name(item.szName);
+                pMsgItem->set_name(item.NameStr);
                 pMsgItem->set_mining_gold(item.n32MiningGold);
                 pMsgItem->set_cost(item.n32Cost);
             }
@@ -57,7 +57,7 @@ namespace ServerMS {
             auto &item = item_pair.second;
             auto pMsgItem = msg.add_item();
             pMsgItem->set_dbid(item.n32DBId);
-            pMsgItem->set_name(item.szName);
+            pMsgItem->set_name(item.NameStr);
             pMsgItem->set_mining_gold(item.n32MiningGold);
         }
         PostMsgToGC(msg, msg.msgid());
